@@ -4,4 +4,5 @@
   roles:
     - system-accounts
     - common-packages
+    - cron-apt
 
