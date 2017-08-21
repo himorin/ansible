@@ -1,5 +1,6 @@
 ---
 - name: System wide groups
+  become: yes
   group: >
     name={{ item.gname }}
     gid={{ item.gid }}
@@ -15,6 +16,7 @@
     - gname: kvm
       gid: 204
 - name: System wide account, libvirt
+  become: yes
   user: >
     name="libvirt-qemu"
     uid=200
@@ -26,6 +28,7 @@
     system=yes
     password=no
 - name: System wide account, munin
+  become: yes
   user: >
     name="munin"
     uid=201
@@ -36,6 +39,7 @@
     system=yes
     password=no
 - name: System wide account, postgres
+  become: yes
   user: >
     name="postgres"
     uid=203
