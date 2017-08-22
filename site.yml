@@ -9,4 +9,5 @@
     - ntp
     - munin-node
     - exim4
+    - ldap
 
