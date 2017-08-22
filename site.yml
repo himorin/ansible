@@ -7,4 +7,5 @@
     - common-packages
     - cron-apt
     - ntp
+    - munin-node
 

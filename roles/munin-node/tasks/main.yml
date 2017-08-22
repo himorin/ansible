@@ -1,0 +1,20 @@
+---
+- name: munin-node package
+  become: yes
+  apt: >
+    name={{ item }}
+    state=present
+  with_items:
+    - munin-node
+    - munin-plugins-core
+    - munin-plugins-extra
+- name: munin-node cidr_allow
+  become: yes
+  lineinfile: >
+    dest=/etc/munin/munin-node.conf
+    owner=root group=root mode=0644 backup=no
+    regexp="^cidr_allow"
+    insertafter="^#server"
+    line="cidr_allow {{ site_config.munin_cidr }}"
+  notify: restart munin-node
+
