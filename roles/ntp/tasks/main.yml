@@ -1,0 +1,29 @@
+---
+- name: NTP package
+  become: yes
+  apt: >
+    name={{ item }}
+    state=present
+  with_items:
+    - ntp
+    - ntpdate
+    - ntpstat
+- name: NTP config remove pools
+  become: yes
+  lineinfile: >
+    dest=/etc/ntp.conf
+    owner=root group=root mode=0644 backup=no
+    regexp="^pool"
+    state=absent
+  notify: restart ntp
+- name: NTP config add server lines
+  become: yes
+  lineinfile: >
+    dest=/etc/ntp.conf
+    owner=root group=root mode=0644 backup=no
+    regexp="^server"
+    insertafter="^#server"
+    line="server {{ item }}"
+  with_items: "{{ site_config.ntp }}"
+  notify: restart ntp
+

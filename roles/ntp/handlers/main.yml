@@ -1,0 +1,8 @@
+---
+- name: restart ntp
+  systemd:
+    name: ntp.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes

@@ -1,8 +1,10 @@
 ---
 - hosts: all
-  gather_facts: no
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
     - system-accounts
     - common-packages
     - cron-apt
+    - ntp
 
