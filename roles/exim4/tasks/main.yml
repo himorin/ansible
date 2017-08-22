@@ -1,0 +1,27 @@
+---
+- name: exim4 package
+  become: yes
+  apt: >
+    name={{ item }}
+    state=present
+  with_items:
+    - exim4
+    - exim4-config
+- name: exim4 config update-exim4 add server lines
+  become: yes
+  lineinfile: >
+    dest=/etc/exim4/update-exim4.conf.conf
+    owner=root group=root mode=0644 backup=no
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+    - regexp: '^dc_eximconfig_configtype'
+      line: "dc_eximconfig_configtype='satellite'"
+    - regexp: '^dc_readhost'
+      line: "dc_readhost='{{ ansible_dns.domain }}'"
+    - regexp: '^dc_smarthost'
+      line: "dc_smarthost='{{ site_config.exim4_smarthost }}'"
+    - regexp: '^dc_hide_mailname'
+      line: "dc_hide_mailname='true'"
+  notify: restart exim4
+

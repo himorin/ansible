@@ -4,4 +4,5 @@ site_config:
     - "157.82.226.81"
   munin_cidr: "10.100.200.0/24"
   cron_apt_hour: "4"
+  exim4_smarthost: "10.100.200.2"
 

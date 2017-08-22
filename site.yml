@@ -8,4 +8,5 @@
     - cron-apt
     - ntp
     - munin-node
+    - exim4
 

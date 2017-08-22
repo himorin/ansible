@@ -1,0 +1,8 @@
+---
+- name: restart exim4
+  systemd:
+    name: exim4.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
