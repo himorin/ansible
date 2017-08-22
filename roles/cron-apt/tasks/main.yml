@@ -16,7 +16,7 @@
   with_items:
     - regexp: '^dist-upgrade'
       line: 'dist-upgrade -y -o APT::Get::Show-Upgraded=true'
-- name: cron-apt action hour to 11am
+- name: cron-apt action hour to {{ site_config.cron_apt_hour }}
   become: yes
   lineinfile: >
     dest=/etc/cron.d/cron-apt
@@ -25,4 +25,6 @@
     line="{{ item.line }}"
   with_items:
     - regexp: '/usr/sbin/cron-apt$'
-      line: '0 11    * * *   root    test -x /usr/sbin/cron-apt && /usr/sbin/cron-apt'
+      line: "0 {{ site_config.cron_apt_hour }}    * * *   root    test -x /usr/sbin/cron-apt && /usr/sbin/cron-apt"
+  notify: restart cron
+
