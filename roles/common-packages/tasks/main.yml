@@ -9,3 +9,5 @@
     - vim-nox
     - vim-addon-manager
     - vim-scripts
+    - tcsh
+    - zsh
