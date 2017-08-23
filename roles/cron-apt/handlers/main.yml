@@ -1,0 +1,8 @@
+---
+- name: restart cron
+  systemd:
+    name: cron.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes

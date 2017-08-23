@@ -1,0 +1,38 @@
+---
+- name: ldap package
+  become: yes
+  apt: >
+    name={{ item }}
+    state=present
+  with_items:
+    - nslcd
+    - libnss-ldapd
+- name: nslcd configuration
+  become: yes
+  lineinfile: >
+    dest=/etc/nslcd.conf
+    owner=root group=nslcd mode=0640 backup=no
+    regexp="{{ item.regexp }}"
+    insertafter="{{ item.insertafter }}"
+    line="{{ item.line }}"
+  with_items: 
+    - regexp: '^uri'
+      insertafter: '^#uri'
+      line: "uri {{ site_config.ldap_uri }}"
+    - regexp: '^base'
+      insertafter: '^#base'
+      line: "base {{ site_config.ldap_base }}"
+  notify: restart nslcd
+- name: nsswitch configuration
+  become: yes
+  lineinfile: >
+    dest=/etc/nsswitch.conf
+    owner=root group=root mode=0644 backup=no
+    regexp="^{{ item }}"
+    line="{{ item }}: compat ldap"
+  with_items: 
+    - "passwd"
+    - "group"
+    - "shadow"
+  notify: restart nslcd
+

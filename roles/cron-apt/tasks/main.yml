@@ -1,0 +1,30 @@
+---
+- name: cron-apt package installation
+  become: yes
+  apt: >
+    name={{ item }}
+    state=present
+  with_items:
+    - cron-apt
+- name: cron-apt 3-download to autoinstall
+  become: yes
+  lineinfile: >
+    dest=/etc/cron-apt/action.d/3-download
+    owner=root group=root mode=0644 backup=no
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+    - regexp: '^dist-upgrade'
+      line: 'dist-upgrade -y -o APT::Get::Show-Upgraded=true'
+- name: cron-apt action hour to {{ site_config.cron_apt_hour }}
+  become: yes
+  lineinfile: >
+    dest=/etc/cron.d/cron-apt
+    owner=root group=root mode=0644 backup=no
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+    - regexp: '/usr/sbin/cron-apt$'
+      line: "0 {{ site_config.cron_apt_hour }}    * * *   root    test -x /usr/sbin/cron-apt && /usr/sbin/cron-apt"
+  notify: restart cron
+

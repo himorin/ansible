@@ -1,0 +1,8 @@
+---
+- name: restart nslcd
+  systemd:
+    name: nslcd.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
