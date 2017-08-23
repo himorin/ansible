@@ -7,4 +7,10 @@ site_config:
   exim4_smarthost: "10.100.200.2"
   ldap_uri: "ldap://10.100.200.2/"
   ldap_base: "dc=shell,dc=pfs,dc=ipmu,dc=jp"
+  nfs:
+    common:
+      - source: "10.100.200.4:/data1"
+        target: "/data1"
+      - source: "10.100.200.3:/server/home"
+        target: "/home"
 

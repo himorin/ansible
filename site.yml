@@ -10,4 +10,5 @@
     - munin-node
     - exim4
     - ldap
+    - { role: nfs, nfsv3_target: "{{ site_config.nfs.common }}" }
 
