@@ -13,4 +13,8 @@ site_config:
         target: "/data1"
       - source: "10.100.200.3:/server/home"
         target: "/home"
+  virt:
+    nfsdisk: "10.100.200.3:/virt"
+    pki:
+      local: "/virt/pki/"
 
