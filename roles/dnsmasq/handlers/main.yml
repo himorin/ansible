@@ -1,0 +1,8 @@
+---
+- name: restart dnsmasq
+  systemd:
+    name: dnsmasq.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes

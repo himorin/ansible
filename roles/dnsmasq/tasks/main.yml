@@ -1,0 +1,38 @@
+---
+- name: dnsmasq package
+  become: yes
+  apt: >
+    name={{ item }}
+    state=present
+  with_items:
+    - dnsmasq
+    - dnsmasq-utils
+    - git
+- name: Remove README in dnsmasq.d
+  become: yes
+  file:
+    path: "/etc/dnsmasq.d/README"
+    state: absent
+- name: Checkout ics_dnsmasq repository
+  become: yes
+  git:
+    repo: "https://github.com/Subaru-PFS/ics_dnsmasq.git"
+    dest: "/etc/dnsmasq.d/"
+    update: yes
+    force: yes
+- name: Make symlink to dnsmasq-site
+  become: yes
+  file:
+    src: "/etc/dnsmasq.d/dnsmasq-site.{{ site_config.dnsmasq.site }}"
+    dest: "/etc/dnsmasq.d/dnsmasq-site.conf"
+    state: link
+- name: dnsmasq service config
+  become: yes
+  lineinfile: >
+    dest=/etc/default/dnsmasq
+    owner=root group=root mode=0644 backup=no
+    regexp="^CONFIG_DIR="
+    insertafter="^#CONFIG_DIR"
+    line="CONFIG_DIR=/etc/dnsmasq.d,*.conf"
+  notify: restart dnsmasq
+
