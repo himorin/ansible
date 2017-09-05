@@ -48,4 +48,16 @@
     src: "/data/ics/{{ ansible_hostname }}/products/eups/default/bin/setups.sh"
     dest: "~/setups.sh"
     state: link
-
+- name: Add export to .bashrc
+  lineinfile:
+    dest: "~/.bashrc"
+    regexp: "^export {{ item.name }}="
+    line: "export {{ item.name }}={{ item.value }}"
+  with_items:
+    - name: "ICS_ROOT"
+      value: "/data/ics/{{ ansible_hostname }}/"
+    - name: "ICS_MHS_ROOT"
+      value: "/data/ics/{{ ansible_hostname }}/"
+    - name: "ICS_DEVEL_ROOT"
+      value: "/data/ics/{{ ansible_hostname }}/devel/"
+    
