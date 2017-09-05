@@ -1,0 +1,51 @@
+---
+- name: Install pip packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-apt
+    - python-pip
+    - git
+- name: Install required packages
+  become: yes
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - astropy
+    - matplotlib
+    - scipy
+    - twisted
+- name: Create target directory
+  become: yes
+  file:
+    path: "/data/ics/{{ ansible_hostname }}/devel/"
+    state: directory
+    mode: 0755
+    owner: "pfs"
+    group: "pfs"
+- name: Clone EUPS
+  git:
+    repo: "https://github.com/RobertLuptonTheGood/eups.git"
+    dest: "/data/ics/{{ ansible_hostname }}/devel/eups/"
+    update: yes
+    force: yes
+    version: "{{ eups.version }}"
+- name: Configure EUPS install
+  command: ./configure --with-eups=/data/ics/{{ ansible_hostname }}/products --prefix=/data/ics/{{ ansible_hostname }}/products/eups/{{ eups.version }} chdir=/data/ics/{{ ansible_hostname }}/devel/eups/
+- name: Build EUPS
+  make:
+    chdir: "/data/ics/{{ ansible_hostname }}/devel/eups/"
+    target: install
+- name: Symlink EUPS default directory
+  file:
+    src: "/data/ics/{{ ansible_hostname }}/products/eups/{{ eups.version }}"
+    dest: "/data/ics/{{ ansible_hostname }}/products/eups/default"
+    state: link
+- name: Symlink EUPS setups at home
+  file:
+    src: "/data/ics/{{ ansible_hostname }}/products/eups/default/bin/setups.sh"
+    dest: "~/setups.sh"
+    state: link
+
