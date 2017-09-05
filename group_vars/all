@@ -1,0 +1,15 @@
+---
+ansible_ssh_user: pfs
+site_config:
+  ntp: 
+    - "ntp"
+#  munin_cidr: "<CONFIG BY SITE - CIDR ALL>"
+  cron_apt_hour: "4"
+#  exim4_smarthost: "<EMAIL GATEWAY>"
+#  ldap_uri: "ldap://<SERVER>/"
+#  ldap_base: "<BASE_DN>"
+  nfs:
+    common:
+# PAIR OF source, target
+
+
