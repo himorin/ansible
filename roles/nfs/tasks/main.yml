@@ -1,12 +1,4 @@
 ---
-- name: Add NFSv3 to fstab
-  become: yes
-  lineinfile: >
-    dest=/etc/fstab
-    owner=root group=root mode=0644 backup=no
-    regexp="^{{ item.source }} {{ item.target }}"
-    line="{{ item.source }} {{ item.target }} nfs nfsvers=3,bg,hard,rw 0 0"
-  with_items: "{{ nfsv3_target }}"
 - name: Install nfs client
   become: yes
   apt: >
@@ -14,15 +6,13 @@
     state=present
   with_items:
     - nfs-common
-- name: Create directory
+- name: Mount NFSv3 directories
   become: yes
-  file:
-    path: "{{ item.target }}"
-    state: directory
-    mode: 0755
-  with_items: "{{ nfsv3_target }}"
-- name: Mount all
-  become: yes
-  command: /bin/mount "{{ item.target }}"
+  mount:
+    name: "{{ item.target }}"
+    state: mounted
+    src: "{{ item.source }}"
+    fstype: "nfs"
+    opts: "nfsvers=3,bg,hard,rw"
   with_items: "{{ nfsv3_target }}"
 
