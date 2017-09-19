@@ -72,4 +72,24 @@
     regexp="^libvirtd_opts="
     line="libvirtd_opts=\"-d -l\""
   notify: restart libvirtd
+- name: Configure default network interface to br0
+  become: yes
+  template:
+    src: br0.j2
+    owner: root
+    group: root
+    mode: 0644
+    dest: "/etc/network/interfaces.d/br0.cfg"
+  when: ansible_br0 is undefined
+- name: Remove configuration of default network interface from interfaces
+  become: yes
+  lineinfile: >
+    dest=/etc/network/interfaces
+    owner=root group=root mode=0644 backup=no
+    regexp="{{ item }}"
+    state=absent
+  with_items:
+    - "^allow-hotplug {{ ansible_default_ipv4.interface }}"
+    - "^iface {{ ansible_default_ipv4.interface }}"
+  when: ansible_br0 is undefined
 
