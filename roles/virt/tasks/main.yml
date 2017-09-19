@@ -1,0 +1,95 @@
+---
+- name: Install nfs client
+  become: yes
+  apt: >
+    name={{ item }}
+    state=present
+  with_items:
+    - nfs-common
+- name: Install virt environment
+  become: yes
+  apt: >
+    name={{ item }}
+    state=present
+  with_items:
+    - "libvirt-daemon"
+    - "virt-top"
+    - "virt-goodies"
+- name: Create directory
+  become: yes
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "/etc/pki/"
+    - "/etc/pki/libvirt/"
+    - "/etc/pki/CA/"
+- name: Mount virt disk image storage
+  mount:
+    name: /virt
+    state: mounted
+    src: "{{ site_config.virt.nfsdisk }}"
+    fstype: "nfs"
+    opts: "nfsvers=3,bg,hard,rw"
+  become: yes
+- name: Copy PKI
+  become: yes
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - src: "{{ site_config.virt.pki.local }}/certs/{{ ansible_default_ipv4.address }}.pem"
+      dest: "/etc/pki/libvirt/host.pem"
+    - src: "{{ site_config.virt.pki.local }}/private/{{ ansible_default_ipv4.address }}.key"
+      dest: "/etc/pki/libvirt/host.key"
+    - src: "{{ site_config.virt.pki.local }}/cacert.pem"
+      dest: "/etc/pki/CA/cacert.pem"
+- name: Configure libvirtd for PKI
+  become: yes
+  lineinfile: >
+    dest=/etc/libvirt/libvirtd.conf
+    owner=root group=root mode=0644 backup=no
+    regexp="^{{ item.key }}"
+    line="{{ item.key }} = {{ item.value }}"
+  with_items:
+    - key: "key_file"
+      value: "\"/etc/pki/libvirt/host.key\""
+    - key: "cert_file"
+      value: "\"/etc/pki/libvirt/host.pem\""
+    - key: "ca_file"
+      value: "\"/etc/pki/CA/cacert.pem\""
+    - key: "tls_no_verify_certificate"
+      value: "1"
+- name: Configure libvirtd for PKI II
+  become: yes
+  lineinfile: >
+    dest=/etc/default/libvirtd
+    owner=root group=root mode=0644 backup=no
+    regexp="^libvirtd_opts="
+    line="libvirtd_opts=\"-d -l\""
+  notify: restart libvirtd
+- name: Configure default network interface to br0
+  become: yes
+  template:
+    src: br0.j2
+    owner: root
+    group: root
+    mode: 0644
+    dest: "/etc/network/interfaces.d/br0.cfg"
+  when: ansible_br0 is undefined
+- name: Remove configuration of default network interface from interfaces
+  become: yes
+  lineinfile: >
+    dest=/etc/network/interfaces
+    owner=root group=root mode=0644 backup=no
+    regexp="{{ item }}"
+    state=absent
+  with_items:
+    - "^allow-hotplug {{ ansible_default_ipv4.interface }}"
+    - "^iface {{ ansible_default_ipv4.interface }}"
+  when: ansible_br0 is undefined
+
