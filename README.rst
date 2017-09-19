@@ -37,6 +37,8 @@ Roles
   Configure NTP
 :system-accounts:
   Setup commonly required system users and groups
+:virt:
+  Setup libvirt environment, with PKI and br0 configuration. (reboot required)
 
 Playbooks
 ======
@@ -73,6 +75,8 @@ be named as site domain name (in dnsmasq, mostly).
 - ldap\_uri: URI of LDAP server
 - ldap\_base: LDAP base DN to be read
 - nfs.common: system wide NFS targets, list of hash 'source' and 'target'
+- virt.nfsdisk: VM client disk storage (NFSv3)
+- virt.pki.local: VM host PKI file source at local
 
 Sections in inventry
 ======
