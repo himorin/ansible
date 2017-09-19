@@ -57,11 +57,11 @@
     line="{{ item.key }} = {{ item.value }}"
   with_items:
     - key: "key_file"
-      value: "/etc/pki/libvirt/host.key"
+      value: "\"/etc/pki/libvirt/host.key\""
     - key: "cert_file"
-      value: "/etc/pki/libvirt/host.pem"
+      value: "\"/etc/pki/libvirt/host.pem\""
     - key: "ca_file"
-      value: "/etc/pki/CA/cacert.pem"
+      value: "\"/etc/pki/CA/cacert.pem\""
     - key: "tls_no_verify_certificate"
       value: "1"
 - name: Configure libvirtd for PKI II
