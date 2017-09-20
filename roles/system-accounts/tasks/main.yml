@@ -1,53 +1,24 @@
 ---
 - name: System wide groups
   become: yes
-  group: >
-    name={{ item.gname }}
-    gid={{ item.gid }}
-    state=present
-    system=yes
-  with_items:
-    - gname: libvirt-qemu
-      gid: 200
-    - gname: munin
-      gid: 201
-    - gname: postgres
-      gid: 203
-    - gname: kvm
-      gid: 204
-- name: System wide account, libvirt
+  group: 
+    name: "{{ item.gname }}"
+    gid: "{{ item.gid }}"
+    state: present
+    system: yes
+  with_items: "{{ site_config.system_accounts.groups }}"
+- name: System wide account
   become: yes
-  user: >
-    name="libvirt-qemu"
-    uid=200
-    createhome=yes
-    home="/var/lib/libvirt"
-    group="libvirt-qemu"
-    groups=kvm
-    state=present
-    system=yes
-    password=no
-- name: System wide account, munin
-  become: yes
-  user: >
-    name="munin"
-    uid=201
-    createhome=yes
-    home="/var/lib/munin"
-    group="munin"
-    state=present
-    system=yes
-    password=no
-- name: System wide account, postgres
-  become: yes
-  user: >
-    name="postgres"
-    uid=203
-    createhome=yes
-    home="/var/lib/postgres"
-    group="postgres"
-    state=present
-    system=yes
-    password=no
-    shell=/bin/bash
+  user:
+    name: "{{ item.uname }}"
+    uid: "{{ item.uid }}"
+    createhome: yes
+    home: "{{ item.home | default(omit) }}"
+    group: "{{ item.group }}"
+    groups: "{{ item.groups | default(omit) }}"
+    state: present
+    system: yes
+    password: no
+    shell: "{{ item.shell | default(omit) }}"
+  with_items: "{{ site_config.system_accounts.users }}"
 

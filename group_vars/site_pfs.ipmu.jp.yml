@@ -15,6 +15,33 @@ site_config:
         target: "/data1"
       - source: "10.100.200.3:/server/home"
         target: "/home"
+  system_accounts:
+    groups:
+      - gname: "libvirt-qemu"
+        gid: 200
+      - gname: "munin"
+        gid: 201
+      - gname: "mysql"
+        gid: 202
+      - gname: "postgres"
+        gid: 203
+      - gname: "kvm"
+        gid: 204
+    users:
+      - uname: "libvirt-qemu"
+        uid: 200
+        home: "/var/lib/libvirt"
+        group: "libvirt-qemu"
+        groups: "kvm"
+      - uname: "munin"
+        uid: 201
+        home: "/var/lib/munin"
+        group: "munin"
+      - uname: "postgres"
+        uid: 203
+        home: "/var/lib/postgres"
+        group: "postgres"
+        shell: "/bin/bash"
   virt:
     nfsdisk: "10.100.200.3:/virt"
     pki:
