@@ -37,6 +37,10 @@ site_config:
         uid: 201
         home: "/var/lib/munin"
         group: "munin"
+      - uname: "mysql"
+        uid: 202
+        home: "/var/lib/mysql"
+        group: "mysql"
       - uname: "postgres"
         uid: 203
         home: "/var/lib/postgres"
