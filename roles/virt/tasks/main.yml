@@ -92,4 +92,15 @@
     - "^allow-hotplug {{ ansible_default_ipv4.interface }}"
     - "^iface {{ ansible_default_ipv4.interface }}"
   when: ansible_br0 is undefined
+- name: Reboot after network interface modification (takes 1 min)
+  become: yes
+  command: shutdown -r +1
+  when: ansible_br0 is undefined
+- name: Wait for shutdown process starts (SSH down)
+  wait_for: host={{ inventory_hostname }} port=22 state=stopped
+  delegate_to: 127.0.0.1
+  when: ansible_br0 is undefined
+- name: Wait for server up
+  wait_for: host={{ inventory_hostname }} port=22 state=started delay="{% if ansible_br0 is undefined %}120{% else %}1{% endif %}"
+  delegate_to: 127.0.0.1
 
