@@ -8,6 +8,7 @@ ToC
 - `List of definitions`_
 - `Configurations to use`_
 - `Definitions and requirements on modification`_
+- `Support files`_
 
 List of definitions
 ******
@@ -92,4 +93,17 @@ To write roles and playbooks, following points are required to be considered.
 
 - Have version number to be installed in vars but not in task directly
 - Make dependency to other roles as less as possible, and put comment of dependency
+
+Support files
+******
+
+Some support files and tools are added in [misc](/misc/) directory, as follows:
+
+:[Debian preseed](/misc/debian-preseed/):
+  ICS project wide pre-seeded Debian OS installation configuration files and 
+  tools to build custom ISO images. Check details in README.
+  System configurations after installation using built ISO images are assumed 
+  to be done by Ansible, preseed configurations are to install bare OS with 
+  Ansible to run. 
+
 
