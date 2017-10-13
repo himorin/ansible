@@ -1,0 +1,24 @@
+---
+- name: Check rules.v4 exists or not
+  stat: path=/etc/iptables/rules.v4
+  register: task_iptables_rulesv4
+- name: Install iptables-persistent package
+  become: yes
+  apt: 
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - iptables-persistent
+  register: install_iptables_persistent
+- name: Copy iptables templates
+  become: yes
+  template: 
+    src: "iptables_v4.j2"
+    dest: "/etc/iptables/rules.v4"
+    backup: no
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart iptables-persistent
+  when: task_iptables_rulesv4.stat.md5 is not defined
+

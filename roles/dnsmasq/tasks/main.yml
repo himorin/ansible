@@ -35,4 +35,11 @@
     insertafter="^#CONFIG_DIR"
     line="CONFIG_DIR=/etc/dnsmasq.d,*.conf"
   notify: restart dnsmasq
+- name: iptables checksum-fill
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v4"
+    insertafter: "^# ANSIBLE_ROLE_MANGLE_PLACE"
+    line: "-A POSTROUTING -p udp --dport bootpc -j CHECKSUM --checksum-fill"
+  notify: restart iptables-persistent
 
