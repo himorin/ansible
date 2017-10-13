@@ -1,4 +1,7 @@
 ---
+- name: Check rules.v4 exists or not
+  stat: path=/etc/iptables/rules.v4
+  register: task_iptables_rulesv4
 - name: Install iptables-persistent package
   become: yes
   apt: 
@@ -17,5 +20,5 @@
     group: root
     mode: '0644'
   notify: restart iptables-persistent
-  when: install_iptables_persistent.changed == True
+  when: task_iptables_rulesv4.stat.md5 is not defined
 
