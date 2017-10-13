@@ -45,6 +45,23 @@ which affects to two parameters:
 - partman-auto/disk
 - grub-installer/bootdev
 
+Configuration files in repository
+------
+
+- stretch.preseed-ics_jp-ph.cfg (For in Japan, physical hardware installation)
+
+  - Keymap, TZ to Japan
+  - Set "/dev/sda" for installation target
+
+- stretch.preseed-ics-ph.cfg (For physical hardware installation)
+
+  - Set "/dev/sda" for installation target
+
+- stretch.preseed-ics-virt.cfg (For VM guest installation)
+
+  - Set "/dev/vda" for installation target
+
+
 Tools
 ======
 
