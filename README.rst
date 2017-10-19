@@ -35,6 +35,8 @@ Roles
   Mount NFSv3 for targets specified by playbook argument 'nfsv3_target'
 :ntp:
   Configure NTP
+:privca:
+  Configure environment to build private CA (not to build CA)
 :system-accounts:
   Setup commonly required system users and groups
 :virt:
