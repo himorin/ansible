@@ -1,0 +1,43 @@
+---
+- name: Install openssl
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - openssl
+- name: Create directory for CA
+  become: yes
+  file:
+    path: "{{ site_config.virt.pki.local }}"
+    state: directory
+    owner: "{{ ansible_ssh_user }}"
+    mode: 0755
+- name: Copy openssl.conf
+  command: cp /etc/ssl/openssl.cnf "{{ site_config.virt.pki.local }}/openssl.cnf"
+  args:
+    creates: "{{ site_config.virt.pki.local }}/openssl.cnf"
+  register: openssl_cnf_copy
+- name: Abort execution if already configured
+  fail:
+    msg: "{{ site_config.virt.pki.local }}/openssl.cnf already exists"
+  when: openssl_cnf_copy.changed == false
+- name: Configure openssl.cnf
+  ini_file:
+    dest: "{{ site_config.virt.pki.local }}/openssl.cnf"
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - section: " CA_default "
+      option: "dir"
+      value: "."
+- name: Copy scripts
+  template:
+    src: "{{ item }}"
+    dest: "~/{{ item }}"
+    mode: 0755
+  with_items:
+    - build_rootca.sh
+    - create_cert.sh
+
