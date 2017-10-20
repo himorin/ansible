@@ -50,4 +50,5 @@ site_config:
     nfsdisk: "10.100.200.3:/virt"
     pki:
       local: "/virt/pki/"
+      subj: "/C=JP/ST=Chiba/L=Kashiwa/O=PFS"
 

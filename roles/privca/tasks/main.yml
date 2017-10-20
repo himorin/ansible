@@ -40,4 +40,23 @@
   with_items:
     - build_rootca.sh
     - create_cert.sh
+- name: Prepare for CA generation
+  file:
+    path: "{{ site_config.virt.pki.local }}/{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items:
+    - name: certs
+      state: directory
+    - name: crl
+      state: directory
+    - name: newcerts
+      state: directory
+    - name: private
+      state: directory
+    - name: index.txt
+      state: touch
+- name: Prepare for CA generation (serial)
+  shell: echo 00 > "{{ site_config.virt.pki.local }}/serial"
+  args:
+    creates: "{{ site_config.virt.pki.local }}/serial"
 
