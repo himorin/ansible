@@ -35,6 +35,8 @@ Roles
   Mount NFSv3 for targets specified by playbook argument 'nfsv3_target'
 :ntp:
   Configure NTP
+:privca:
+  Configure environment to build private CA (not to build CA)
 :system-accounts:
   Setup commonly required system users and groups
 :virt:
@@ -77,6 +79,7 @@ be named as site domain name (in dnsmasq, mostly).
 - nfs.common: system wide NFS targets, list of hash 'source' and 'target'
 - virt.nfsdisk: VM client disk storage (NFSv3)
 - virt.pki.local: VM host PKI file source at local
+- virt.pki.subj: PKI subjects (C,ST,L,O)
 
 Sections in inventry
 ======
