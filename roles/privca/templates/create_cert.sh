@@ -14,6 +14,7 @@ if [ $E_DIG_IP = "" ]; then
 fi
 
 C_TGTCN="{{ site_config.virt.pki.subj }}/CN=${E_DIG_IP}"
+C_ALTS="[SAN]\nsubjectAltName='DNS:${E_DIG_FQ},DNS:${E_DIG_HN}'"
 
 echo "Target configuration:"
 echo "  IP address: $E_DIG_IP"
@@ -23,8 +24,15 @@ echo "  Hostname  : $E_DIG_HN"
 
 cd {{ site_config.virt.pki.local }}
 
-openssl req -new -newkey rsa:4096 -nodes -days $C_DAYS -sha256 -out newcerts/${C_TARGET}.csr -keyout private/${C_TARGET}.key -subj ${C_TGTCN} -extensions SAN -config <( cat ./openssl.cnf <( printf "[SAN]\nsubjectAltName='DNS:${E_DIG_FQ},DNS:${E_DIG_HN}'")) -reqexts SAN
-openssl ca -config <( cat ./openssl.cnf <( printf "[SAN]\nsubjectAltName='DNS:${E_DIG_FQ},DNS:${E_DIG_HN}'")) -extensions SAN -days $C_DAYS -policy policy_anything -out certs/${C_TARGET}.pem -infiles newcerts/${C_TARGET}.csr
+openssl req -new -newkey rsa:4096 -nodes -days $C_DAYS -sha256 \
+    -out newcerts/${C_TARGET}.csr -keyout private/${C_TARGET}.key \
+    -subj ${C_TGTCN} \
+    -extensions SAN -reqexts SAN \
+    -config <( cat ./openssl.cnf <( printf "$C_ALTS"))
+openssl ca -days $C_DAYS -policy policy_anything \
+    -out certs/${C_TARGET}.pem -infiles newcerts/${C_TARGET}.csr \
+    -extensions SAN \
+    -config <( cat ./openssl.cnf <( printf "$C_ALTS"))
 
 echo "Dump signed cert"
 openssl x509 -noout -text -in certs/${C_TARGET}.pem
