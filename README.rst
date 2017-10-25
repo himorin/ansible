@@ -27,6 +27,8 @@ Roles
   Install of eups, and its required python packages
 :exim4:
   Configuration of exim4 as satellite host
+:iscsi:
+  Install packages, and just execute login (not mount)
 :ldap:
   Configuration of ldap for account
 :munin-node:
