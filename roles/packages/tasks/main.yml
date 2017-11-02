@@ -1,0 +1,7 @@
+---
+- name: system wide common package
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ packages }}"
