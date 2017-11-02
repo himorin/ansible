@@ -1,0 +1,6 @@
+- targets:
+  labels:
+    port: 9117
+    job: apache
+
+

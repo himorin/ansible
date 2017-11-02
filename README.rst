@@ -37,6 +37,8 @@ Roles
   Configure NTP
 :privca:
   Configure environment to build private CA (not to build CA)
+:prometheus:
+  Configure prometheus server with skeltons for targets.
 :rsyslog-client:
   Configure rsyslog to push all syslog lines to site_config.rsyslog.server 
   via udp.
@@ -85,6 +87,11 @@ be named as site domain name (in dnsmasq, mostly).
 - ldap\_uri: URI of LDAP server
 - ldap\_base: LDAP base DN to be read
 - nfs.common: system wide NFS targets, list of hash 'source' and 'target'
+- prometheus.server: Prometheus server hostname (used for metrics)
+- prometheus.external_url: External publish end point URL
+- prometheus.route_prefix: Path prefix for external publish end point
+- prometheus.log_format: Prometheus server log format
+- prometheus.storage_nfs: NFS target for local storage
 - rsyslog.server: rsyslog udp/tcp server to push
 - rsyslog.repush: push target at rsyslog server for after processing
 - virt.nfsdisk: VM client disk storage (NFSv3)
