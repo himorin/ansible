@@ -37,6 +37,14 @@ Roles
   Configure NTP
 :privca:
   Configure environment to build private CA (not to build CA)
+:rsyslog-client:
+  Configure rsyslog to push all syslog lines to site_config.rsyslog.server 
+  via udp.
+:rsyslog-server:
+  Configure rsyslog as accepting lines via udp/tcp.
+  Will not touch local output lines, so comment them out by hand if in need. 
+  If site_config.rsyslog.repush is configured, will put config file to repush 
+  syslog lines to after processing.
 :system-accounts:
   Setup commonly required system users and groups
 :virt:

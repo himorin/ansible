@@ -15,6 +15,9 @@ site_config:
         target: "/data1"
       - source: "10.100.200.3:/server/home"
         target: "/home"
+  rsyslog:
+    server: "rsyslog.pfs.ipmu.jp"
+    repush: "127.0.0.1:10514;json-template"
   system_accounts:
     groups:
       - gname: "libvirt-qemu"
