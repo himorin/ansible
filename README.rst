@@ -85,6 +85,8 @@ be named as site domain name (in dnsmasq, mostly).
 - ldap\_uri: URI of LDAP server
 - ldap\_base: LDAP base DN to be read
 - nfs.common: system wide NFS targets, list of hash 'source' and 'target'
+- rsyslog.server: rsyslog udp/tcp server to push
+- rsyslog.repush: push target at rsyslog server for after processing
 - virt.nfsdisk: VM client disk storage (NFSv3)
 - virt.pki.local: VM host PKI file source at local
 - virt.pki.subj: PKI subjects (C,ST,L,O)
