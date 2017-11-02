@@ -27,6 +27,8 @@ Roles
   Install of eups, and its required python packages
 :exim4:
   Configuration of exim4 as satellite host
+:grafana:
+  Configure grafana server (need additional configuration for auth)
 :ldap:
   Configuration of ldap for account
 :munin-node:
@@ -84,8 +86,11 @@ be named as site domain name (in dnsmasq, mostly).
 - cron\_apt\_hour: hour in a day of cron-apt
 - dnsmasq.site: site name used for dnsmasq
 - exim4\_smarthost: email relay server
+- grafana.url: Grafana server publish end point URL (at grafana server)
 - ldap\_uri: URI of LDAP server
 - ldap\_base: LDAP base DN to be read
+- mail.notice_from: Email notification from address
+- mail.notice_name: Email notification mail name
 - nfs.common: system wide NFS targets, list of hash 'source' and 'target'
 - prometheus.server: Prometheus server hostname (used for metrics)
 - prometheus.external_url: External publish end point URL
