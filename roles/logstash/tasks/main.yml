@@ -1,0 +1,33 @@
+---
+- name: Install required packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - default-jre
+- name: Download logstash
+  get_url:
+    url: "{{ elastic.url.head }}{{ elastic.url.logstash }}-{{ elastic.ver }}.deb"
+    dest: "/tmp/logstash-{{ elastic.ver }}.deb"
+- name: Check current installation
+  command: dpkg-query -W logstash
+  register: dpkg_query_logstash
+  failed_when: dpkg_query_logstash.rc > 1
+  changed_when: dpkg_query_logstash.rc == 1
+- name: Install logstash package
+  become: yes
+  apt:
+    deb: "/tmp/logstash-{{ elastic.ver }}.deb"
+  when: elastic.ver not in dpkg_query_logstash.stdout
+- name: Copy log transfers
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "/etc/logstash/conf.d/{{ item }}"
+    mode: 0644
+    force: no
+  with_items:
+    - syslog.conf
+  notify: restart logstash
+
