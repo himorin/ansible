@@ -17,6 +17,7 @@ site_config:
         target: "/home"
   packages:
     sitewide:
+      - prometheus-node-exporter
       - screen
       - vim-nox
       - vim-addon-manager
