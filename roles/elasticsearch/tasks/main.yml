@@ -26,6 +26,7 @@
     dest: /etc/default/elasticsearch
     regexp: "^DATA_DIR="
     line: 'DATA_DIR=/elasticsearch'
+  notify: restart elasticsearch
 - name: Modify service configurations
   become: yes
   lineinfile:
@@ -34,9 +35,10 @@
     line: "{{ item.line }}"
   with_items:
     - regexp: '^path.data: '
-      line: 'path.data: /elastcisearch'
+      line: 'path.data: /elasticsearch'
     - regexp: '^network.host: '
       line: 'network.host: 0.0.0.0'
     - regexp: '^http.cors.enabled: '
       line: 'http.cors.enabled: true'
+  notify: restart elasticsearch
 
