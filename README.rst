@@ -15,10 +15,6 @@ List of definitions
 Roles
 =====
 
-:common-packages:
-  System wide commonly required package installation.
-  Note, openssh and ansible are required to be installed by preseeded 
-  installation media.
 :cron-apt:
   Periodic package update using cron-apt
 :dnsmasq:
@@ -35,6 +31,11 @@ Roles
   Mount NFSv3 for targets specified by playbook argument 'nfsv3_target'
 :ntp:
   Configure NTP
+:packages:
+  Install packages specified by playbook argument 'packages'.
+  List of packages are listed in 'packages' in site config.
+  Note, openssh and ansible are required to be installed by preseeded 
+  installation media.
 :privca:
   Configure environment to build private CA (not to build CA)
 :system-accounts:
@@ -77,6 +78,7 @@ be named as site domain name (in dnsmasq, mostly).
 - ldap\_uri: URI of LDAP server
 - ldap\_base: LDAP base DN to be read
 - nfs.common: system wide NFS targets, list of hash 'source' and 'target'
+- packages.sitewide: List of packages to be installed over site wide
 - virt.nfsdisk: VM client disk storage (NFSv3)
 - virt.pki.local: VM host PKI file source at local
 - virt.pki.subj: PKI subjects (C,ST,L,O)
