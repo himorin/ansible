@@ -24,6 +24,6 @@
     regexp="^server"
     insertafter="^#server"
     line="server {{ item }}"
-  with_items: "{{ site_config.ntp }}"
+  with_items: "{{ site_config.ntp.local }}"
   notify: restart ntp
 
