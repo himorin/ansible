@@ -24,6 +24,15 @@ site_config:
         target: "/data1"
       - source: "10.100.200.3:/server/home"
         target: "/home"
+  packages:
+    sitewide:
+      - prometheus-node-exporter
+      - screen
+      - vim-nox
+      - vim-addon-manager
+      - vim-scripts
+      - tcsh
+      - zsh
   prometheus:
     server: "prometheus"
     external_url: "https://pfs.ipmu.jp/prometheus/"

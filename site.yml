@@ -4,11 +4,12 @@
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
     - system-accounts
-    - common-packages
+    - { role: packages, packages: "{{ site_config.packages.sitewide }}" }
     - cron-apt
     - ntp
     - munin-node
     - exim4
-    - ldap
-    - { role: nfs, nfsv3_target: "{{ site_config.nfs.common }}" }
+
+#    - ldap
+#    - { role: nfs, nfsv3_target: "{{ site_config.nfs.common }}" }
 

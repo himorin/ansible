@@ -15,10 +15,6 @@ List of definitions
 Roles
 =====
 
-:common-packages:
-  System wide commonly required package installation.
-  Note, openssh and ansible are required to be installed by preseeded 
-  installation media.
 :cron-apt:
   Periodic package update using cron-apt
 :dnsmasq:
@@ -37,6 +33,11 @@ Roles
   Mount NFSv3 for targets specified by playbook argument 'nfsv3_target'
 :ntp:
   Configure NTP
+:packages:
+  Install packages specified by playbook argument 'packages'.
+  List of packages are listed in 'packages' in site config.
+  Note, openssh and ansible are required to be installed by preseeded 
+  installation media.
 :privca:
   Configure environment to build private CA (not to build CA)
 :prometheus:
@@ -92,6 +93,7 @@ be named as site domain name (in dnsmasq, mostly).
 - mail.notice_from: Email notification from address
 - mail.notice_name: Email notification mail name
 - nfs.common: system wide NFS targets, list of hash 'source' and 'target'
+- packages.sitewide: List of packages to be installed over site wide
 - prometheus.server: Prometheus server hostname (used for metrics)
 - prometheus.external_url: External publish end point URL
 - prometheus.route_prefix: Path prefix for external publish end point
