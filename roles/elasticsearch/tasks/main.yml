@@ -1,0 +1,44 @@
+---
+- name: Install required packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - default-jre
+- name: Download Elasticsearch
+  get_url:
+    url: "{{ elastic.url.head }}{{ elastic.url.elasticsearch }}-{{ elastic.ver }}.deb"
+    dest: "/tmp/elasticsearch-{{ elastic.ver }}.deb"
+- name: Check current installation
+  command: dpkg-query -W elasticsearch
+  register: dpkg_query_elasticsearch
+  failed_when: dpkg_query_elasticsearch.rc > 1
+  changed_when: dpkg_query_elasticsearch.rc == 1
+- name: Install elasticsearch package
+  become: yes
+  apt:
+    deb: "/tmp/elasticsearch-{{ elastic.ver }}.deb"
+  when: elastic.ver not in dpkg_query_elasticsearch.stdout
+- name: Modify service parameter
+  become: yes
+  lineinfile:
+    dest: /etc/default/elasticsearch
+    regexp: "^DATA_DIR="
+    line: 'DATA_DIR=/elasticsearch'
+  notify: restart elasticsearch
+- name: Modify service configurations
+  become: yes
+  lineinfile:
+    dest: /etc/elasticsearch/elasticsearch.yml
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - regexp: '^path.data: '
+      line: 'path.data: /elasticsearch'
+    - regexp: '^network.host: '
+      line: 'network.host: 0.0.0.0'
+    - regexp: '^http.cors.enabled: '
+      line: 'http.cors.enabled: true'
+  notify: restart elasticsearch
+

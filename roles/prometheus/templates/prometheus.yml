@@ -1,0 +1,63 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  scrape_timeout:      10s
+  external_labels:
+    monitor: "{{ ansible_dns.domain }}"
+
+rule_files:
+
+scrape_configs:
+  - job_name: prometheus
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    metrics_path: "{{ site_config.prometheus.route_prefix }}/metrics"
+    static_configs:
+      - targets:
+        - "{{ site_config.prometheus.server }}"
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+      - source_labels: [__address__]
+        target_label: __address__
+        regex: (.+)
+        replacement: ${1}:9090
+
+  - job_name: targets
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/scrape_configs/targets_*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+      - source_labels: [__address__, port]
+        target_label: __address__
+        separator: ':'
+
+  - job_name: targetssl
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/scrape_configs/targetssl_*.yml
+    scheme: https
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+      - source_labels: [__address__, port]
+        target_label: __address__
+        separator: ':'
+
+  - job_name: snmp
+    metrics_path: /snmp
+    file_sd_configs:
+      - files:
+        - /etc/prometheus/scrape_configs/snmp_*.yml
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - source_labels: [module]
+        target_label: __param_module
+      - source_labels: [snmphost]
+        target_label: __address__
+

@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: nfs, nfsv3_target: [ { source: "{{ site_config.elastic.storage_nfs }}", target: "/elasticsearch" } ] }
+

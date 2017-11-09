@@ -1,0 +1,30 @@
+---
+- name: rsyslog package
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rsyslog
+- name: Enable imudp and imtcp
+  become: yes
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    line: "{{ item }}"
+  notify: restart rsyslog
+  with_items:
+    - "module(load=\"imudp\")"
+    - "input(type=\"imudp\" port=\"514\")"
+    - "module(load=\"imtcp\")"
+    - "input(type=\"imtcp\" port=\"514\")"
+- name: Copy syslog line handler configuration
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "/etc/rsyslog.d/{{ item }}"
+    mode: 0644
+  notify: restart rsyslog
+  with_items:
+    - 60-output.conf
+  when: site_config.rsyslog.repush is defined
+
