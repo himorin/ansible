@@ -3,11 +3,11 @@
 usage()
 {
     (
-       echo "usage: $0: [-r root-directory]\n"
-       echo "    -r root - create and use this root directory."
-       echo "    --with-python=PATH - use this python executable for our system."
-       echo
-       echo "    If no root directory is specified, use $ICS_ROOT\n" 
+        echo "usage: $0: [-r root-directory]\n"
+        echo "    -r root - create and use this root directory."
+        echo "    --with-python=PATH - use this python executable for our system."
+        echo
+        echo "    If no root directory is specified, use $ICS_ROOT\n" 
     ) >&2
     exit 1
 }
@@ -23,21 +23,21 @@ EUPS_OPTIONS="--with-python=$PYTHON_PATH"
 
 while getopts :h-:r: arg; do
     case $arg in
-       r) ICS_ROOT="$OPTARG"
-           ;; 
-       -) if test "with-python" = ${OPTARG:0:11}; then
-              EUPS_OPTIONS="--$OPTARG"
+        r) ICS_ROOT="$OPTARG"
+            ;; 
+        -) if test "with-python" = ${OPTARG:0:11}; then
+               EUPS_OPTIONS="--$OPTARG"
                echo "EUPS_OPTIONS: $EUPS_OPTIONS"
-          else
+           else
                echo "unknown -arg: $OPTARG"
                exit 2
-          fi
+           fi
            ;;
-       ?) echo "unknown argument: $OPTARG"
-          usage
-          ;;
-       h) usage
-          ;;
+        ?) echo "unknown argument: $OPTARG"
+           usage
+           ;;
+        h) usage
+           ;;
     esac
 done
 
@@ -49,8 +49,8 @@ sleep 3
 requiredPrograms="make"
 for p in $requiredPrograms; do
     if ! type $p >/dev/null 2>&1; then 
-       echo "FATAL: we need some version of $p"
-       exit 2
+        echo "FATAL: we need some version of $p"
+        exit 2
     fi
 done
 
@@ -114,7 +114,8 @@ if test -n "$EUPS_VERSION"; then
     echo "######## installing eups (version=$EUPS_VERSION) to $EUPS_INSTALL_DIR ...."
     git clone -b $EUPS_VERSION https://github.com/RobertLuptonTheGood/eups.git eups 
 
-    (cd eups 
+    (
+        cd eups 
         ./configure --with-eups=$EUPS_PATH --prefix=$EUPS_INSTALL_DIR $EUPS_OPTIONS
         make install
     )
