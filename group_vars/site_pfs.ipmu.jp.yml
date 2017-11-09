@@ -38,7 +38,7 @@ site_config:
     external_url: "https://pfs.ipmu.jp/prometheus/"
     route_prefix: "/prometheus"
     log_format: "logger:syslog?appname=prometheus&local=7"
-    storage_nfs: "10.100.200.3:/server/services/prometheus_real"
+    storage_nfs: "10.100.200.3:/server/services/prometheus"
   rsyslog:
     server: "rsyslog.pfs.ipmu.jp"
     repush: "10.100.200.14:10514;json-template"
