@@ -115,7 +115,7 @@ if test -n "$EUPS_VERSION"; then
     git clone -b $EUPS_VERSION https://github.com/RobertLuptonTheGood/eups.git eups 
 
     (cd eups 
-        ./configure --with-eups=$EUPS_PATH --prefix=$EUPS_INSTALL_DIR --with-python=`which python`
+        ./configure --with-eups=$EUPS_PATH --prefix=$EUPS_INSTALL_DIR $EUPS_OPTIONS
         make install
     )
     if test $? -ne 0; then 
