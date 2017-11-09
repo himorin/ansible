@@ -15,6 +15,6 @@
     owner=root group=root mode=0644 backup=no
     regexp="^cidr_allow"
     insertafter="^#server"
-    line="cidr_allow {{ site_config.munin_cidr }}"
+    line="cidr_allow {{ site_config.munin.cidr }}"
   notify: restart munin-node
 

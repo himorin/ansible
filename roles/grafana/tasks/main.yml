@@ -52,7 +52,7 @@
       value: "true"
     - section: "smtp"
       option: "host"
-      value: "{{ site_config.exim4_smarthost }}:25"
+      value: "{{ site_config.mail.smarthost }}:25"
     - section: "smtp"
       option: "from_address"
       value: "{{ site_config.mail.notice_from }}"

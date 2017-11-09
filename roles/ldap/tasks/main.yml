@@ -18,10 +18,10 @@
   with_items: 
     - regexp: '^uri'
       insertafter: '^#uri'
-      line: "uri {{ site_config.ldap_uri }}"
+      line: "uri {{ site_config.ldap.uri }}"
     - regexp: '^base'
       insertafter: '^#base'
-      line: "base {{ site_config.ldap_base }}"
+      line: "base {{ site_config.ldap.base }}"
   notify: restart nslcd
 - name: nsswitch configuration
   become: yes
