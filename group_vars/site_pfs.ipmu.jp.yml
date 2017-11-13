@@ -1,10 +1,5 @@
 ---
 site_config:
-  ntp: 
-    upstream: "157.82.226.81"
-    local: ntp.pfs.ipmu.jp
-  munin:
-    cidr: "10.100.200.0/24"
   cron_apt:
     hour: "4"
   dnsmasq:
@@ -12,21 +7,26 @@ site_config:
   elastic:
     server: "elasticsearch"
     storage_nfs: "10.100.200.3:/server/services/elasticsearch"
-  mail:
-    notice_from: "pfs@pfs.ipmu.jp"
-    notice_name: "PFS IPMU System"
-    smarthost: "10.100.200.2"
   grafana:
     url: "https://pfs.ipmu.jp:3000/grafana/"
   ldap:
     uri: "ldap://10.100.200.2/"
     base: "dc=shell,dc=pfs,dc=ipmu,dc=jp"
+  mail:
+    notice_from: "pfs@pfs.ipmu.jp"
+    notice_name: "PFS IPMU System"
+    smarthost: "10.100.200.2"
+  munin:
+    cidr: "10.100.200.0/24"
   nfs:
     common:
       - source: "10.100.200.4:/data1"
         target: "/data1"
       - source: "10.100.200.3:/server/home"
         target: "/home"
+  ntp: 
+    upstream: "157.82.226.81"
+    local: ntp.pfs.ipmu.jp
   packages:
     sitewide:
       - prometheus-node-exporter
