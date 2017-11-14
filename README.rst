@@ -15,6 +15,10 @@ List of definitions
 Roles
 =====
 
+Roles defined in this collection are listed below. 
+Refer `detailed document <docs/roles.rst>`_ for details including 
+configuration parameters and results. 
+
 :cron-apt:
   Periodic package update using cron-apt
 :dnsmasq:
