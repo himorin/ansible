@@ -1,0 +1,109 @@
+---
+site_config:
+  ntp: 
+    upstream: "157.82.226.81"
+    local: ntp.pfs.ipmu.jp
+  munin_cidr: "10.100.200.0/24"
+  cron_apt_hour: "4"
+  dnsmasq:
+    site: "ipmu"
+  elastic:
+    server: "elasticsearch"
+    storage_nfs: "10.100.200.3:/server/services/elasticsearch"
+  exim4_smarthost: "10.100.200.2"
+  mail:
+    notice_from: "pfs@pfs.ipmu.jp"
+    notice_name: "PFS IPMU System"
+  grafana:
+    url: "https://pfs.ipmu.jp:3000/grafana/"
+  ldap_uri: "ldap://10.100.200.2/"
+  ldap_base: "dc=shell,dc=pfs,dc=ipmu,dc=jp"
+  nfs:
+    common:
+      - source: "10.100.200.4:/data1"
+        target: "/data1"
+      - source: "10.100.200.3:/server/home"
+        target: "/home"
+  packages:
+    sitewide:
+      - prometheus-node-exporter
+      - screen
+      - vim-nox
+      - vim-addon-manager
+      - vim-scripts
+      - tcsh
+      - zsh
+  prometheus:
+    server: "prometheus"
+    external_url: "https://pfs.ipmu.jp/prometheus/"
+    route_prefix: "/prometheus"
+    log_format: "logger:syslog?appname=prometheus&local=7"
+    storage_nfs: "10.100.200.3:/server/services/prometheus"
+  rsyslog:
+    server: "rsyslog.pfs.ipmu.jp"
+    repush: "10.100.200.14:10514;json-template"
+  system_accounts:
+    groups:
+      - gname: "libvirt-qemu"
+        gid: 200
+      - gname: "munin"
+        gid: 201
+      - gname: "mysql"
+        gid: 202
+      - gname: "postgres"
+        gid: 203
+      - gname: "kvm"
+        gid: 204
+      - gname: "prometheus"
+        gid: 205
+      - gname: "grafana"
+        gid: 206
+      - gname: "elasticsearch"
+        gid: 207
+      - gname: "logstash"
+        gid: 208
+    users:
+      - uname: "libvirt-qemu"
+        uid: 200
+        home: "/var/lib/libvirt"
+        group: "libvirt-qemu"
+        groups: "kvm"
+      - uname: "munin"
+        uid: 201
+        home: "/var/lib/munin"
+        group: "munin"
+      - uname: "mysql"
+        uid: 202
+        home: "/var/lib/mysql"
+        group: "mysql"
+      - uname: "postgres"
+        uid: 203
+        home: "/var/lib/postgres"
+        group: "postgres"
+        shell: "/bin/bash"
+      - uname: "prometheus"
+        uid: 204
+        group: "prometheus"
+        home: "/var/lib/prometheus"
+        shell: "/bin/false"
+      - uname: "grafana"
+        uid: 205
+        group: "grafana"
+        home: "/usr/share/grafana"
+        shell: "/bin/false"
+      - uname: "elasticsearch"
+        uid: 206
+        group: "elasticsearch"
+        home: "/home/elasticsearch"
+        shell: "/bin/false"
+      - uname: "logstash"
+        uid: 207
+        group: "logstash"
+        home: "/usr/share/logstash"
+        shell: "/usr/sbin/nologin"
+  virt:
+    nfsdisk: "10.100.200.3:/virt"
+    pki:
+      local: "/virt/pki/"
+      subj: "/C=JP/ST=Chiba/L=Kashiwa/O=PFS"
+
