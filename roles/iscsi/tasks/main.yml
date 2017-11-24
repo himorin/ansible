@@ -14,10 +14,4 @@
     dest: /etc/iscsi/iscsid.conf
     regexp: "^node.startup ="
     line: "node.startup = automatic"
-- name: Exec connection
-  command: "{{ item }}"
-  become: yes
-  with_items:
-    - "iscsiadm -m discovery"
-    - "iscsiadm -m node --login"
 
