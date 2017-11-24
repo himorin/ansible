@@ -33,17 +33,21 @@
     update: yes
     force: yes
     version: "{{ eups.version }}"
+  register: task_git_clone
 - name: Configure EUPS install
   command: ./configure --with-eups=/data/ics/{{ ansible_hostname }}/products --prefix=/data/ics/{{ ansible_hostname }}/products/eups/{{ eups.version }} chdir=/data/ics/{{ ansible_hostname }}/devel/eups/
+  when: task_git_clone.changed
 - name: Build EUPS
   make:
     chdir: "/data/ics/{{ ansible_hostname }}/devel/eups/"
     target: install
+  when: task_git_clone.changed
 - name: Symlink EUPS default directory
   file:
     src: "/data/ics/{{ ansible_hostname }}/products/eups/{{ eups.version }}"
     dest: "/data/ics/{{ ansible_hostname }}/products/eups/default"
     state: link
+  when: task_git_clone.changed
 - name: Symlink EUPS setups at home
   file:
     src: "/data/ics/{{ ansible_hostname }}/products/eups/default/bin/setups.sh"
@@ -61,4 +65,4 @@
       value: "/data/ics/{{ ansible_hostname }}/"
     - name: "ICS_DEVEL_ROOT"
       value: "/data/ics/{{ ansible_hostname }}/devel/"
-    
+
