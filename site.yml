@@ -6,10 +6,20 @@
     - system-accounts
     - { role: packages, packages: "{{ site_config.packages.sitewide }}" }
     - cron-apt
-    - ntp
-    - munin-node
-    - exim4
+    - { role: ntp, when: "server_ntp is undefined" }
+    - { role: rsyslog-client, when: "server_rsyslog is undefined" }
+    - { role: exim4, when: "server_smarthost is undefined" }
 
-#    - ldap
-#    - { role: nfs, nfsv3_target: "{{ site_config.nfs.common }}" }
+- hosts: server
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - { role: ntp-server, when: "server_ntp is defined" }
+    - { role: rsyslog-server, when: "server_rsyslog is defined" }
+
+- hosts: virt-host
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - virt
 
