@@ -69,7 +69,7 @@ Configurations to use
 
 Before using this set of playbooks, system administrator at each site needs to 
 configure variables (`Site specific configuration`_) and inventories 
-(`Sections in inventry`_) following this section. These definitions are used 
+(refer `Inventory document <docs/inventory.rst>`_) following this section. These definitions are used 
 to change configurations for multiple playbooks shared among multiple sites, 
 and are required to be configured per site. 
 
@@ -105,12 +105,6 @@ be named as site domain name (in dnsmasq, mostly).
 - virt.pki.local: VM host PKI file source at local
 - virt.pki.subj: PKI subjects (C,ST,L,O)
 
-Sections in inventry
-======
-
-Following sections are used.
-
-- (TBD)
 
 Definitions and requirements on modification
 ******
