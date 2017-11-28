@@ -20,3 +20,7 @@ dla3-vm
 rsyslog         server_rsyslog=True
 mgmt-dhcp       server_ntp=True
 
+[actor]
+lf00-ics
+
+
