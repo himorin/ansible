@@ -70,7 +70,8 @@ This role will configure munin-node client.
 nfs
 ---
 
-This role will add mount definition for NFS. 
+This role will add mount definition for NFS, and designed to be called by 
+other role(s). 
 Target (IP address and export point) and mount point are passed to this role 
 at calling as variables. 
 
@@ -82,6 +83,92 @@ at calling as variables.
 - Remarks
 
   - As for now only nfsv3 is supported.
+  - For per site mount points used in role(s) , it is encouraged to be defined 
+    as a list in 'site_config.nfs'. 
+
+ntp
+---
+
+This role will confiugre NTP client. 
+
+- Required configuration items
+
+  - ntp.local (no default value)
+
+- No dependencies
+- Remarks
+
+  - This role will remove all pool definitions from ntp.
+
+packages
+------
+
+This role will install packages, and designed to be called by other role(s). 
+List of packages to be installed are passed to this role at calling as 
+variables. 
+
+- Required configuration items
+
+  - 'packages': list of packages
+
+- No dependencies
+- Remarks
+
+  - 'openssh' and 'ansible' are required to be installed by preseeded 
+    installation media.
+  - For a list changed per site, it is encouraged to be defined as a list in 
+    'site_config.packages'. 
+
+rsyslog-client
+------
+
+This role will configure rsyslog as client to push all syslog lines via imudp 
+to the rsyslog server. 
+
+- Required configuration items
+
+  - rsyslog.server (no default value)
+
+- No dependencies
+- Remarks
+
+  - This role will not configure to push if incoming imudp is enabled.
+
+system-accounts
+------
+
+This role will setup system users and group. 
+
+- Required configuration items
+
+  - system_accounts.groups
+  - system_accounts.users
+
+- No dependencies
+- Remarks
+
+  - This role will create all groups first, to enable users be in specific 
+    groups.
+
+virt
+----
+
+This role will configure libvirt environment, with PKI and br0. 
+
+- Required configuration items
+
+  - virt.nfsdisk (no default value)
+  - virt.pki.local (no default value)
+
+- Dependencies
+
+  - privca (also need to run script and certificates created)
+
+- Remarks
+
+  - This role will modify the default network interface into bridge (br0) 
+    with static IP address configuration. 
+  - This role will reboot target host for network configuration (br0) 
 
 Roles for service configuration
 ======
@@ -138,6 +225,59 @@ This roll will install and configure grafana server.
     grafana.ini for database, session, seciruty and auth by hand - after 
     configuration of other services like database.
 
+privca
+------
+
+This role will configure environment to build private CA and install some 
+scripts for certs generation. 
+
+- Required configuration items
+
+  - virt.pki.local (no default value)
+  - virt.pki.subj (no default value)
+
+- No dependencies
+- Remarks
+
+  - This role will not run script to build root CA nor certificates. Run 
+    scripts installed into home directory. 
+
+prometheus
+------
+
+This role will install and configure prometheus server with skelton to target 
+hosts. 
+Skelton files for list of targets are installed into 
+'/etc/prometheus/scrape_configs' and loaded from files configured by this role. 
+
+- Required configuration items
+
+  - prometheus.external_url (no default value)
+  - prometheus.route_prefix (no default value)
+  - prometheus.log_format (no default value)
+  - prometheus.storage_nfs (no default value)
+
+- No dependencies
+- Remarks
+
+  - Some skelton files for list of target hosts are installed, but need to be 
+    edited after running role.
+
+rsyslog-server
+------
+
+This role will configure rsyslog server to accept syslog push via udp/tcp, 
+and to proxy lines after processing pushed syslog lines if 
+'site_config.rsyslog.repush' is configured. 
+
+- No required configuration items
+- No dependencies
+- Remarks
+
+  - Will not touch local output lines, so comment them out by hand if in need. 
+  - Will not install template for proxy if 'site_config.rsyslog.repush' is not 
+    defined. 
+
 Roles for PFS configuration
 ======
 
@@ -154,47 +294,5 @@ script at your home directory after logged in to bash shell.
 - Remarks
 
   - No package is installed after running this role.
-
-
-  
-  
-  
-TBW
-===
-  
-  
-ntp
----
-
-  Configure NTP
-packages
-  Install packages specified by playbook argument 'packages'.
-  List of packages are listed in 'packages' in site config.
-  Note, openssh and ansible are required to be installed by preseeded 
-  installation media.
-privca
-  Configure environment to build private CA (not to build CA)
-prometheus
-  Configure prometheus server with skeltons for targets.
-rsyslog-client
-  Configure rsyslog to push all syslog lines to site_config.rsyslog.server 
-  via udp.
-rsyslog-server
-  Configure rsyslog as accepting lines via udp/tcp.
-  Will not touch local output lines, so comment them out by hand if in need. 
-  If site_config.rsyslog.repush is configured, will put config file to repush 
-  syslog lines to after processing.
-system-accounts
-  Setup commonly required system users and groups
-virt
-  Setup libvirt environment, with PKI and br0 configuration. (reboot required)
-
-
-skelton
-======
-
-- Required configuration items
-- Dependencies
-- Remarks
 
 
