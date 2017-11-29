@@ -4,6 +4,7 @@
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
     - system-accounts
+    - iptables
     - { role: packages, packages: "{{ site_config.packages.sitewide }}" }
     - cron-apt
     - { role: ntp, when: "server_ntp is undefined" }
