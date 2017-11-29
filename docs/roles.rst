@@ -9,46 +9,53 @@ For each role,
 - Dependencies
 - Remarks
 
-are listed.
-
-Configuration after execution
-------
-
-Required configuration items
-------
-
-Dependencies
-------
-
-Remarks
-------
-
+are listed. Required configuration with '(no default value)' notes required 
+ones, which leads fail if not defined. 
 
 cron-apt
 ======
+
+(no dependency)
 
 Configuration after execution
 ------
 
 This role will install and configure cron-apt (periodic system package update 
-cron job) into the system (Ubuntu/Debian). 
+cron job) into the system (Ubuntu/Debian), to run at hour specified in 
+site configuration. 
 
 Required configuration items
 ------
 
-- 
-
-Dependencies
-------
+- cron_apt.hour (no default value)
 
 Remarks
 ------
 
+- This role will configure cron-apt to upgrade package automatically everyday.
 
 dnsmasq
 ======
 
-  'dnsmasq' service install and configuration (using ics_dnsmasq repo)
+Configuration after execution
+------
+
+This role will install dnsmasq and configure using ics_dnsmasq repository. 
+
+Required configuration items
+------
+
+- dnsmasq.site (no default value)
+
+Dependencies
+------
+
+- iptables (role)
+
+Remarks
+------
+
+- This role will not configure target host to be statically assigned IP address. 
 
 eups
 ====
@@ -90,5 +97,22 @@ exim4
   Setup commonly required system users and groups
 :virt:
   Setup libvirt environment, with PKI and br0 configuration. (reboot required)
+
+
+skelton
+======
+
+Configuration after execution
+------
+
+Required configuration items
+------
+
+Dependencies
+------
+
+Remarks
+------
+
 
 
