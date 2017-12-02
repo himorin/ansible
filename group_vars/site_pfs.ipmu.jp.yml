@@ -26,6 +26,7 @@ site_config:
         target: "/home"
   packages:
     sitewide:
+      - aptitude
       - prometheus-node-exporter
       - screen
       - vim-nox
