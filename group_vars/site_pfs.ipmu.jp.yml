@@ -34,6 +34,21 @@ site_config:
       - vim-scripts
       - tcsh
       - zsh
+    host_pfsarch:
+      - apache2
+      - at
+      - bc
+      - certbot
+      - dnsutils
+      - fail2ban
+      - gawk
+      - nfs-kernel-server
+      - open-iscsi
+      - parted
+      - patch
+      - python-certbot-apache
+      - rsync
+      - w3m
     utils_astro:
       - libcfitsio-bin
       - libcfitsio-dev
