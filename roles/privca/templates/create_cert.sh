@@ -14,7 +14,7 @@ E_DIG_FQ=${E_DIG_FQ:0:-1}
 E_DIG_HN=${E_DIG_FQ%%.*}
 
 C_TGTCN="{{ site_config.virt.pki.subj }}/CN=${E_DIG_IP}"
-C_ALTS="[SAN]\nsubjectAltName='DNS:${E_DIG_FQ},DNS:${E_DIG_HN}'"
+C_ALTS="[SAN]\nsubjectAltName='DNS:${E_DIG_IP},DNS:${E_DIG_FQ},DNS:${E_DIG_HN}'"
 C_TARGET=$E_DIG_IP
 
 echo "Target configuration:"
