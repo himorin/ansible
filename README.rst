@@ -23,6 +23,8 @@ Roles
   Install of eups, and its required python packages
 :exim4:
   Configuration of exim4 as satellite host
+:gitlfs:
+  Configure git-lfs from packagecloud and install
 :grafana:
   Configure grafana server (need additional configuration for auth)
 :ldap:
