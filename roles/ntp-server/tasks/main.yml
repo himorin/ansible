@@ -1,0 +1,25 @@
+---
+- name: Prometheus package
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - openntpd
+- name: Remove servers lines
+  become: yes
+  lineinfile:
+    dest: /etc/openntpd/ntpd.conf
+    regexp: "^servers"
+    state: absent
+  notify: restart openntpd
+- name: Add internal NTP server
+  become: yes
+  lineinfile:
+    dest: /etc/openntpd/ntpd.conf
+    line: "{{ item }}"
+  with_items:
+    - "server {{ site_config.ntp.upstream }}"
+    - "listen on *"
+  notify: restart openntpd
+

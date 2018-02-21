@@ -1,11 +1,12 @@
 ---
-- name: Install openssl
+- name: Install openssl and dnsutils (dig)
   become: yes
   apt:
     name: "{{ item }}"
     state: present
   with_items:
     - openssl
+    - dnsutils
 - name: Create directory for CA
   become: yes
   file:
@@ -17,11 +18,6 @@
   command: cp /etc/ssl/openssl.cnf "{{ site_config.virt.pki.local }}/openssl.cnf"
   args:
     creates: "{{ site_config.virt.pki.local }}/openssl.cnf"
-  register: openssl_cnf_copy
-- name: Abort execution if already configured
-  fail:
-    msg: "{{ site_config.virt.pki.local }}/openssl.cnf already exists"
-  when: openssl_cnf_copy.changed == false
 - name: Configure openssl.cnf
   ini_file:
     dest: "{{ site_config.virt.pki.local }}/openssl.cnf"
@@ -55,8 +51,12 @@
       state: directory
     - name: index.txt
       state: touch
+- name: Check serial exists or not
+  stat: path="{{ site_config.virt.pki.local }}/serial"
+  register: task_privca_serial
 - name: Prepare for CA generation (serial)
   shell: echo 00 > "{{ site_config.virt.pki.local }}/serial"
   args:
     creates: "{{ site_config.virt.pki.local }}/serial"
+  when: task_privca_serial.stat.md5 is not defined
 

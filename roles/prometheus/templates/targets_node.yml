@@ -1,0 +1,6 @@
+- targets:
+  labels:
+    service: VM
+    port: 9100
+    job: node
+

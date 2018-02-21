@@ -1,0 +1,41 @@
+---
+- name: Configure fail2ban.conf (main)
+  become: yes
+  ini_file:
+    dest: /etc/fail2ban/fail2ban.conf
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - section: "Definition"
+      option: "logtarget"
+      value: "SYSLOG"
+  notify: restart fail2ban
+- name: Configure jail.conf (main)
+  become: yes
+  ini_file:
+    dest: /etc/fail2ban/jail.conf
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - section: "DEFAULT"
+      option: "bantime"
+      value: "72000"
+    - section: "DEFAULT"
+      option: "destemail"
+      value: "{{ site_config.mail.notice_from }}"
+    - section: "DEFAULT"
+      option: "sender"
+      value: "{{ site_config.mail.notice_from }}"
+  notify: restart fail2ban
+- name: Enable targets in jail.conf
+  become: yes
+  ini_file:
+    dest: /etc/fail2ban/jail.conf
+    section: "{{ item }}"
+    option: "enabled"
+    value: "true"
+  with_items: "{{ jail_enable }}"
+  notify: restart fail2ban
+

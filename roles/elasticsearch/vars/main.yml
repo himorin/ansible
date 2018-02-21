@@ -1,0 +1,8 @@
+---
+elastic:
+  ver: "5.6.3"
+  url:
+    head: "https://artifacts.elastic.co/downloads/"
+    elasticsearch: "elasticsearch/elasticsearch"
+    logstash: "logstash/logstash"
+

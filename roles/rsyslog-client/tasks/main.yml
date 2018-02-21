@@ -1,0 +1,20 @@
+---
+- name: rsyslog package
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rsyslog
+- name: Check imudp is disabled (not rsyslog server mode)
+  shell: grep ^module /etc/rsyslog.conf
+  register: task_rsyslog_checkmodule
+  check_mode: no
+- name: Add rsyslog server
+  become: yes
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    line: "*.* @{{site_config.rsyslog.server}}"
+  notify: restart rsyslog
+  when: site_config.rsyslog.server is defined and 'imudp' not in task_rsyslog_checkmodule.stdout
+

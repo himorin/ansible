@@ -1,0 +1,52 @@
+---
+- name: Prometheus package
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - prometheus
+- name: Modify service parameter for multiline
+  become: yes
+  lineinfile:
+    dest: /etc/default/prometheus
+    regexp: '^ARGS="[^\\]*$'
+    line: 'ARGS=" \\\n"'
+    backrefs: 'yes'
+- name: Add lines to service parameter
+  become: yes
+  lineinfile:
+    dest: /etc/default/prometheus
+    line: '  {{ item }} \'
+    insertafter: '^ARGS="'
+  with_items:
+    - "-web.external-url='{{ site_config.prometheus.external_url }}'"
+    - "-web.route-prefix='{{ site_config.prometheus.route_prefix }}'"
+    - "-log.format='{{ site_config.prometheus.log_format }}'"
+    - "-storage.local.path='/prometheus'"
+- name: Create directory for file_sd
+  become: yes
+  file:
+    path: /etc/prometheus/scrape_configs
+    state: directory
+    mode: 0755
+- name: Copy configuration
+  become: yes
+  template:
+    src: prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+    mode: 0644
+  notify: restart prometheus
+- name: Copy target skeltons
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "/etc/prometheus/scrape_configs/{{ item }}"
+    mode: 0644
+    force: no
+  with_items:
+    - targets_node.yml
+    - targets_grafana.yml
+    - targets_apache.yml
+    - targetssl_nginx.yml
+

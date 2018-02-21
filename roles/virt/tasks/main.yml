@@ -70,7 +70,7 @@
     dest=/etc/default/libvirtd
     owner=root group=root mode=0644 backup=no
     regexp="^libvirtd_opts="
-    line="libvirtd_opts=\"-d -l\""
+    line="libvirtd_opts=\"-l\""
   notify: restart libvirtd
 - name: Configure default network interface to br0
   become: yes

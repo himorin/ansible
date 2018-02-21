@@ -1,0 +1,69 @@
+---
+- name: Add https for apt
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - debian-archive-keyring
+- name: Add grafana apt repository
+  become: yes
+  lineinfile:
+    dest: /etc/apt/sources.list
+    line: "deb https://packagecloud.io/grafana/stable/debian/ {{ ansible_distribution_release }} main"
+- name: Download packagecloud GPG key
+  get_url:
+    url: "https://packagecloud.io/grafana/stable/gpgkey"
+    dest: "/tmp/packagecloud.gpgkey"
+- name: Add packagecloud GPG key
+  become: yes
+  shell: apt-key add /tmp/packagecloud.gpgkey
+- name: Grafana package
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - grafana
+- name: Configure grafana.ini (NEED HAND EDIT FOR database, session, security, auth)
+  become: yes
+  ini_file:
+    dest: /etc/grafana/grafana.ini
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - section: "server"
+      option: "domain"
+      value: "{{ ansible_dns.domain }}"
+    - section: "server"
+      option: "root_url"
+      value: "{{ site_config.grafana.url }}"
+    - section: "users"
+      option: "allow_sign_up"
+      value: "false"
+    - section: "auth.anonymous"
+      option: "enabled"
+      value: "true"
+    - section: "smtp"
+      option: "enabled"
+      value: "true"
+    - section: "smtp"
+      option: "host"
+      value: "{{ site_config.mail.smarthost }}:25"
+    - section: "smtp"
+      option: "from_address"
+      value: "{{ site_config.mail.notice_from }}"
+    - section: "smtp"
+      option: "from_name"
+      value: "{{ site_config.mail.notice_name }} Grafana"
+    - section: "log"
+      option: "mode"
+      value: "syslog"
+    - section: "log"
+      option: "level"
+      value: "warn"
+  notify: restart grafana
+
