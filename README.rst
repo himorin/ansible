@@ -77,7 +77,8 @@ Configurations to use
 ******
 
 Before using this set of playbooks, system administrator at each site needs to 
-configure variables (`Site specific configuration`_) and inventories 
+configure variables (refer 
+`Site specific configuration document <docs/site_config.rst>`_) and inventories 
 (refer `Inventory document <docs/inventory.rst>`_) following this section. These definitions are used 
 to change configurations for multiple playbooks shared among multiple sites, 
 and are required to be configured per site. 
