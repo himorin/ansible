@@ -24,6 +24,8 @@ Roles
   Install of eups, and its required python packages
 :exim4:
   Configuration of exim4 as satellite host
+:fail2ban:
+  Install and configure fail2ban package (require option 'jail_enable')
 :gitlfs:
   Configure git-lfs from packagecloud and install
 :grafana:
