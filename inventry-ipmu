@@ -1,5 +1,26 @@
 [virt-host]
+rca1-vm
+rca2-vm
 rca3-vm
+dlb1-vm
+dlb2-vm
+dlb3-vm
+dlb4-vm
+dlb5-vm
+dlb6-vm
+dlb7-vm
+dlc1-vm
 dlc2-vm
+dlc3-vm
+dla1-vm
+dla2-vm
+dla3-vm
+
+[server]
+rsyslog         server_rsyslog=True
+mgmt-dhcp       server_ntp=True
+
+[actor]
+lf00-ics
 
 
