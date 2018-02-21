@@ -20,7 +20,7 @@
     - regexp: '^dc_readhost'
       line: "dc_readhost='{{ ansible_dns.domain }}'"
     - regexp: '^dc_smarthost'
-      line: "dc_smarthost='{{ site_config.exim4_smarthost }}'"
+      line: "dc_smarthost='{{ site_config.mail.smarthost }}'"
     - regexp: '^dc_hide_mailname'
       line: "dc_hide_mailname='true'"
   notify: restart exim4
