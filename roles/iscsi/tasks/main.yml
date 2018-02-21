@@ -1,0 +1,17 @@
+---
+- name: Install iscsiadm
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - open-iscsi
+    - multipath-tools
+    - multipath-tools-boot
+- name: Configure iscsiadm startup
+  become: yes
+  lineinfile:
+    dest: /etc/iscsi/iscsid.conf
+    regexp: "^node.startup ="
+    line: "node.startup = automatic"
+

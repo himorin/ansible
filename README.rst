@@ -34,6 +34,8 @@ configuration parameters and results.
   Configure git-lfs from packagecloud and install
 :grafana:
   Configure grafana server (need additional configuration for auth)
+:iscsi:
+  Install packages, and just execute login (not mount)
 :ldap:
   Configuration of ldap for account
 :munin-node:
