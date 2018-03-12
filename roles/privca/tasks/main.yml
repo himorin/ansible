@@ -59,4 +59,12 @@
   args:
     creates: "{{ site_config.virt.pki.local }}/serial"
   when: task_privca_serial.stat.md5 is not defined
+- name: Check crlnumber exists or not
+  stat: path="{{ site_config.virt.pki.local }}/crlnumber"
+  register: task_privca_crlnumber
+- name: Prepare for CA CRL generation (crlnumber)
+  shell: echo 00 > "{{ site_config.virt.pki.local }}/crlnumber"
+  args:
+    creates: "{{ site_config.virt.pki.local }}/crlnumber"
+  when: task_privca_crlnumber.stat.md5 is not defined
 
