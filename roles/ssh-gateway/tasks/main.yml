@@ -1,0 +1,24 @@
+---
+- name: Configure openssh-server
+  become: yes
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^{{ item.key }} "
+    line: "{{ item.key }} {{ item.value }}"
+  with_items:
+    - key: PermitRootLogin
+      value: "no"
+    - key: PasswordAuthentication
+      value: "no"
+    - key: PubkeyAuthentication
+      value: "yes"
+  notify: restart openssh-server
+- name: iptables open port 22
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v4"
+    insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
+    line: "-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT"
+  notify: restart iptables-persistent
+
+

@@ -1,0 +1,16 @@
+---
+- name: restart openssh-server
+  systemd:
+    name: ssh
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+- name: restart iptables-persistent
+  systemd:
+    name: netfilter-persistent
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+

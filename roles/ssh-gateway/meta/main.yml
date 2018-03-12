@@ -1,0 +1,5 @@
+---
+dependencies: 
+  - iptables
+  - { role: packages, packages: [ "openssh-server" ] }
+
