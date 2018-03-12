@@ -23,4 +23,15 @@ mgmt-dhcp       server_ntp=True
 [actor]
 lf00-ics
 
+[landfill]
+lf00
+lf01
+lf02
+lf03
+lf04
+lf05
+lf06
+lf07
+lf08
+lf09
 
