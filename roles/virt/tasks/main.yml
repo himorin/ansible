@@ -1,20 +1,4 @@
 ---
-- name: Install nfs client
-  become: yes
-  apt: >
-    name={{ item }}
-    state=present
-  with_items:
-    - nfs-common
-- name: Install virt environment
-  become: yes
-  apt: >
-    name={{ item }}
-    state=present
-  with_items:
-    - "libvirt-daemon"
-    - "virt-top"
-    - "virt-goodies"
 - name: Create directory
   become: yes
   file:
