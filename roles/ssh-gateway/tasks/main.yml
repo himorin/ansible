@@ -1,11 +1,4 @@
 ---
-- name: Install openssh-server
-  become: yes
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - openssh-server
 - name: Configure openssh-server
   become: yes
   lineinfile:
