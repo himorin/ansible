@@ -1,0 +1,20 @@
+---
+- name: Add hw-raid apt key
+  become: yes
+  apt_key:
+    url: https://hwraid.le-vert.net/debian/hwraid.le-vert.net.gpg.key
+    state: present
+- name: Add hw-raid repository
+  become: yes
+  apt_repository:
+    repo: "deb http://hwraid.le-vert.net/debian {{ ansible_distribution_release }} main"
+- name: Install for sas2ircu
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+      - sas2ircu
+      - sas2ircu-status
+    state: present
+  when: hwraid_target.sas2 is undefined
+
