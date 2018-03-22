@@ -2,21 +2,25 @@
 site_config:
   ntp: 
     upstream: "ntp.sum.subaru.nao.ac.jp"
-    local: "ntp.pfs.sum.subaru.nao.ac.jp"
+    local: "ntp-ics.pfs.sum.subaru.nao.ac.jp"
   cron_apt_hour: "11"
   dnsmasq:
     site: "subaru"
+  exim4_smarthost: "smarthost-ics.pfs.sum.subaru.nao.ac.jp"
   mail:
-    notice_from: "pfs@pfs.ipmu.jp"
+    notice_from: "pfs@pfs.sum.subaru.nao.ac.jp"
     notice_name: "PFS ICS Production"
   packages:
     sitewide:
+      - prometheus-node-exporter
       - screen
       - vim-nox
       - vim-addon-manager
       - vim-scripts
       - tcsh
       - zsh
+  rsyslog:
+    server: "rsyslog-ics.pfs.sum.subaru.nao.ac.jp"
   system_accounts:
     groups:
       - gname: "libvirt-qemu"
@@ -39,7 +43,7 @@ site_config:
         group: "postgres"
         shell: "/bin/bash"
   virt:
-    nfsdisk: "nfs-ics:/virt"
+    nfsdisk: "nfsv-ics:/virt"
     pki:
       local: "/virt/pki/"
       subj: "/C=US/ST=HI/L=Hilo/O=PFS"
