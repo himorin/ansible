@@ -1,0 +1,9 @@
+---
+dependencies:
+  - role: packages
+    packages:
+      - python3-apt
+      - python3-pip
+      - python3-tk
+      - git
+
