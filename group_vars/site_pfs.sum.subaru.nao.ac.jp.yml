@@ -12,7 +12,8 @@ site_config:
     notice_name: "PFS ICS Production"
   packages:
     sitewide:
-      - prometheus-node-exporter
+      - package: prometheus-node-exporter
+        enable_service: prometheus-node-exporter
       - screen
       - vim-nox
       - vim-addon-manager

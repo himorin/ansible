@@ -2,6 +2,14 @@
 - name: system wide common package
   become: yes
   apt:
-    name: "{{ item }}"
+    name: "{% if item.package is defined %}{{ item.package}}{% else %}{{ item }}{% endif %}"
     state: present
+  with_items: "{{ packages }}"
+- name: Enable service
+  become: yes
+  systemd:
+    name: "{{ item.enable_service }}"
+    enabled: yes
+    state: started
+  when: item.enable_service is defined
   with_items: "{{ packages }}"
