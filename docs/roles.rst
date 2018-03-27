@@ -109,13 +109,16 @@ variables.
 
 - Required configuration items
 
-  - 'packages': list of packages
+  - 'packages': list of packages, options can be passed as dict in the list.
+    If item in the list is a simple variable, just pass specified variable as 
+    a package name, or use value as dict. The dict can have 'package' (name 
+    of package to be installed) and 'enable_service' (name of service to be 
+    enabled via systemd).
 
 - No dependencies
 - Remarks
 
-  - 'openssh' and 'ansible' are required to be installed by preseeded 
-    installation media.
+  - 'openssh' is required to be installed by preseeded installation media.
   - For a list changed per site, it is encouraged to be defined as a list in 
     'site_config.packages'. 
 
