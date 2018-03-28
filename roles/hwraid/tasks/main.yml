@@ -16,5 +16,5 @@
       - sas2ircu
       - sas2ircu-status
     state: present
-  when: hwraid_target.sas2 is undefined
+  when: hwraid_target_sas2 is defined
 
