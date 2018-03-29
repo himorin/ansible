@@ -30,7 +30,8 @@ site_config:
   packages:
     sitewide:
       - aptitude
-      - prometheus-node-exporter
+      - package: prometheus-node-exporter
+        enable_service: prometheus-node-exporter
       - screen
       - vim-nox
       - vim-addon-manager
