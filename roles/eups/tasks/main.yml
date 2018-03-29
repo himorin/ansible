@@ -1,18 +1,9 @@
 ---
-- name: Install pip packages
-  become: yes
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - python-apt
-    - python-pip
-    - python-tk
-    - git
-- name: Install required packages
+- name: Install required pip3 packages
   become: yes
   pip:
     name: "{{ item }}"
+    executable: pip3
   with_items:
     - astropy
     - matplotlib
@@ -53,6 +44,19 @@
     src: "/data/ics/{{ ansible_hostname }}/products/eups/default/bin/setups.sh"
     dest: "~/setups.sh"
     state: link
+- name: Add ~/bin/ directory
+  file:
+    path: ~/bin/
+    state: directory
+    mode: 0755
+- name: Symlink python as python3 at home
+  file:
+    src: /usr/bin/python3
+    dest: ~/bin/python
+    owner: pfs
+    group: pfs
+    state: link
+    mode: 0755
 - name: Add export to .bashrc
   lineinfile:
     dest: "~/.bashrc"
@@ -65,4 +69,6 @@
       value: "/data/ics/{{ ansible_hostname }}/"
     - name: "ICS_DEVEL_ROOT"
       value: "/data/ics/{{ ansible_hostname }}/devel/"
+    - name: "PATH"
+      value: "~/bin/:${PATH}"
 
