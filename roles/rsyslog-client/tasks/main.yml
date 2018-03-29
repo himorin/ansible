@@ -1,15 +1,9 @@
 ---
-- name: rsyslog package
-  become: yes
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - rsyslog
 - name: Check imudp is disabled (not rsyslog server mode)
   shell: grep ^module /etc/rsyslog.conf
   register: task_rsyslog_checkmodule
   check_mode: no
+  changed_when: False
 - name: Add rsyslog server
   become: yes
   lineinfile:
