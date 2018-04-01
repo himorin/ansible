@@ -17,4 +17,15 @@
       - sas2ircu-status
     state: present
   when: hwraid_target_sas2 is defined
+- name: Install for Dell PERC (MegaRAID SAS)
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+      - megaraid-status
+      - megactl
+      - megaclisas-status
+      - megacli
+    state: present
+  when: hwraid_target_megasas is defined
 
