@@ -33,6 +33,10 @@ site_config:
         gid: 203
       - gname: "kvm"
         gid: 204
+      - gname: "prometheus"
+        gid: 205
+      - gname: "grafana"
+        gid: 206
     users:
       - uname: "libvirt-qemu"
         uid: 200
@@ -44,6 +48,16 @@ site_config:
         home: "/var/lib/postgres"
         group: "postgres"
         shell: "/bin/bash"
+      - uname: "prometheus"
+        uid: 204
+        group: "prometheus"
+        home: "/var/lib/prometheus"
+        shell: "/bin/false"
+      - uname: "grafana"
+        uid: 205
+        group: "grafana"
+        home: "/usr/share/grafana"
+        shell: "/bin/false"
   virt:
     nfsdisk: "nfsv-ics:/virt"
     pki:
