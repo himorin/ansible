@@ -3,13 +3,14 @@ site_config:
   ntp: 
     upstream: "ntp.sum.subaru.nao.ac.jp"
     local: "ntp-ics.pfs.sum.subaru.nao.ac.jp"
-  cron_apt_hour: "11"
+  cron_apt:
+    hour: "11"
   dnsmasq:
     site: "subaru"
-  exim4_smarthost: "smarthost-ics.pfs.sum.subaru.nao.ac.jp"
   mail:
     notice_from: "pfs@pfs.sum.subaru.nao.ac.jp"
     notice_name: "PFS ICS Production"
+    smarthost: "smarthost-ics.pfs.sum.subaru.nao.ac.jp"
   packages:
     sitewide:
       - package: prometheus-node-exporter
