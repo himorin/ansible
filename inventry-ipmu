@@ -35,3 +35,6 @@ lf07
 lf08
 lf09
 
+[hwraid]
+dlb1-vm         hwraid_target_sas2=true
+

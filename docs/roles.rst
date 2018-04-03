@@ -173,6 +173,25 @@ This role will configure libvirt environment, with PKI and br0.
     with static IP address configuration. 
   - This role will reboot target host for network configuration (br0) 
 
+hwraid
+------
+
+This role will configure and install hardware RAID related package.
+
+- No required configuration items
+- Dependencies
+
+  - packages role to setup apt-transport-https
+  - Packages are taken from hwraid.le-vert.net, and will confiugre apt-source
+
+- Remarks
+
+  - Target host need to have per host parameter
+
+    - If 'hwraid_target_sas2' is defined to host, LSI FusionMTP SAS2 installed
+    - If 'hwraid_target_megasas' is defined to host, LSI MegaRAID SAS 
+      (Dell PERC) installed
+
 Roles for service configuration
 ======
 

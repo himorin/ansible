@@ -30,3 +30,9 @@
   roles:
     - eups
 
+- hosts: hwraid
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - hwraid
+
