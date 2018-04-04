@@ -17,6 +17,11 @@
   roles:
     - { role: ntp-server, when: "server_ntp is defined" }
     - { role: rsyslog-server, when: "server_rsyslog is defined" }
+- hosts: gateway
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - ssh-gateway
 
 - hosts: virt-host
   vars_files:
