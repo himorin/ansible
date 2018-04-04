@@ -33,4 +33,7 @@ all:
           server_rsyslog: true
         gw-ics:
           server_smarthost: true
+    gateway:
+      hosts:
+        gw-ics
 
