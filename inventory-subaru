@@ -36,4 +36,7 @@ all:
     gateway:
       hosts:
         gw-ics
+    actor:
+      hosts:
+        mhs-ics
 
