@@ -9,6 +9,7 @@
     - matplotlib
     - scipy
     - twisted
+    - future
 - name: Create target directory
   become: yes
   file:
