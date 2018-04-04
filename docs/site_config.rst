@@ -74,6 +74,7 @@ List of services and their items.
   with `source` (source of server) and `target` (mount point). 
 
   - `common`: System wide mount points
+  - `v3export_access`: NFSv3 server export access condition
 
 - `ntp`: NTP service configuration
 

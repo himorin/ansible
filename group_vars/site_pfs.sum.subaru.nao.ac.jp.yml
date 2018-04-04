@@ -8,6 +8,8 @@ site_config:
     notice_from: "pfs@pfs.sum.subaru.nao.ac.jp"
     notice_name: "PFS ICS Production"
     smarthost: "smarthost-ics.pfs.sum.subaru.nao.ac.jp"
+  nfs:
+    v3export_access: "133.40.164.0/23(rw,sync,no_subtree_check,no_root_squash)"
   ntp: 
     local: "ntp-ics.pfs.sum.subaru.nao.ac.jp"
     upstream: "ntp.sum.subaru.nao.ac.jp"

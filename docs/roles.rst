@@ -86,6 +86,23 @@ at calling as variables.
   - For per site mount points used in role(s) , it is encouraged to be defined 
     as a list in 'site_config.nfs'. 
 
+nfs-server
+------
+
+This role will configure NFSv3 export. Target directories at NFSv3 server local 
+are passed to this role at calling as variables 'nfsv3_export'.
+
+- Required configuration items
+
+  - 'nfs.v3export_access': NFSv3 export configuration (address block and 
+    condition to be put into '/etc/exports')
+
+- Deneds on 'packages' role
+- Remarsk
+
+  - This role will configure all target directories with the same NFSv3 export 
+    configuration. 
+
 ntp
 ---
 
