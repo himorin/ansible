@@ -2,4 +2,5 @@
 dependencies: 
   - iptables
   - { role: packages, packages: [ "openssh-server" ] }
+  - fail2ban
 
