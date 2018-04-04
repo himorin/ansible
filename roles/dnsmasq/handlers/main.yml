@@ -8,7 +8,7 @@
   become: yes
 - name: restart iptables-persistent
   systemd:
-    name: netfilter-persistent
+    name: netfilter-persistent.service
     state: restarted
     daemon_reload: yes
     enabled: yes
