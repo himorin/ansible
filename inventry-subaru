@@ -1,12 +1,16 @@
-[virt-host]
-rca1-vm
-rfa1-vm
-
-[iscsi]
-rga1-vm
-
-[server]
-mgmt-ics        server_ntp=true
-logger-ics      server_rsyslog=true
-gw-ics          server_smarthost=true
+---
+all:
+  children:
+    virt-host:
+      rca1-vm:
+      rfa1-vm:
+    iscsi:
+      rga1-vm:
+    server:
+      mgmt-ics:
+        server_ntp: true
+      logger-ics:
+        server_rsyslog: true
+      gw-ics:
+        server_smarthost: true
 
