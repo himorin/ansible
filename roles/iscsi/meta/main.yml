@@ -1,0 +1,9 @@
+---
+dependencies: 
+  - role: packages
+    packages:
+      - open-iscsi
+      - multipath-tools
+      - multipath-tools-boot
+      - parted
+
