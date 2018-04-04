@@ -15,7 +15,7 @@ all:
     dellhosts:
       children:
         fc-nfs:
-        virt-nfs:
+        virt-withnfs:
       vars:
         hwraid_target_megasas: true
     virt-host:
