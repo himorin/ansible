@@ -24,6 +24,7 @@ site_config:
         target: "/data1"
       - source: "10.100.200.3:/server/home"
         target: "/home"
+    v3export_access: "10.100.200.0/24(rw,sync,no_subtree_check,no_root_squash)"
   ntp: 
     upstream: "157.82.226.81"
     local: ntp.pfs.ipmu.jp
