@@ -10,12 +10,17 @@ all:
     virt-withnfs:
       rca1-vm:
       rfa1-vm:
+    dellhosts:
+      children:
+        fc-nfs:
+        virt-nfs:
+      vars:
+        hwraid_target_megasas: true
     virt-host:
       fc-nfs:
       virt-withnfs:
-    dellhosts:
-      fc-nfs:
-      virt-nfs:
+    hwraid:
+      dellhosts:
     server:
       mgmt-ics:
         server_ntp: true

@@ -35,4 +35,10 @@
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
     - hwraid
+- hosts: fc-nfs
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - iscsi
+    - nfs-server
 
