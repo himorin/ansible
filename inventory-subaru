@@ -19,10 +19,12 @@ all:
       vars:
         hwraid_target_megasas: true
     virt-host:
-      fc-nfs:
-      virt-withnfs:
+      children:
+        fc-nfs:
+        virt-withnfs:
     hwraid:
-      dellhosts:
+      children:
+        dellhosts:
     server:
       hosts:
         mgmt-ics:
