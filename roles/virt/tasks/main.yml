@@ -17,6 +17,7 @@
     fstype: "nfs"
     opts: "nfsvers=3,bg,hard,rw"
   become: yes
+  when: virt_image_nomount is undefined
 - name: Copy PKI
   become: yes
   copy:

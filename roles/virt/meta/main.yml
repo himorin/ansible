@@ -1,11 +1,9 @@
 ---
 dependencies: 
-  - { role: packages, packages: [ "nfs-common" ] }
   - role: packages
     packages: 
+      - "nfs-common"
       - "libvirt-daemon-system"
       - "virt-top"
       - "python3-libvirt"
-
-#  - { role: packages, packages: [ "libvirt-daemon-system", "virt-top", "python3-libvirt" ] }
 
