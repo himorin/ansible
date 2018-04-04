@@ -2,14 +2,16 @@
 all:
   children:
     fc-nfs:
-      rga1-vm:
-        nfsv3_export:
-          - "/virt"
-          - "/backup"
-        virt_image_nomount: true
+      hosts:
+        rga1-vm:
+          nfsv3_export:
+            - "/virt"
+            - "/backup"
+          virt_image_nomount: true
     virt-withnfs:
-      rca1-vm:
-      rfa1-vm:
+      hosts:
+        rca1-vm:
+        rfa1-vm:
     dellhosts:
       children:
         fc-nfs:
@@ -22,10 +24,11 @@ all:
     hwraid:
       dellhosts:
     server:
-      mgmt-ics:
-        server_ntp: true
-      logger-ics:
-        server_rsyslog: true
-      gw-ics:
-        server_smarthost: true
+      hosts:
+        mgmt-ics:
+          server_ntp: true
+        logger-ics:
+          server_rsyslog: true
+        gw-ics:
+          server_smarthost: true
 
