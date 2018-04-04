@@ -67,8 +67,8 @@ This role will configure munin-node client.
 
   - Will not configure plugins more than default ones.
 
-nfs
----
+nfs-client
+------
 
 This role will add mount definition for NFS, and designed to be called by 
 other role(s). 

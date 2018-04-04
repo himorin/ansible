@@ -40,7 +40,7 @@ configuration parameters and results.
   Configuration of ldap for account
 :munin-node:
   Configuration of munin-node
-:nfs:
+:nfs-client:
   Mount NFSv3 for targets specified by playbook argument 'nfsv3_target'
 :ntp:
   Configure NTP
