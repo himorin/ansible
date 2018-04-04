@@ -5,6 +5,5 @@ dependencies:
   - role: fail2ban
     jail_enable: 
       - sshd
-      - apache-auth
 
 
