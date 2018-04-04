@@ -1,11 +1,21 @@
 ---
 all:
   children:
-    virt-host:
+    fc-nfs:
+      rga1-vm:
+        nfsv3_export:
+          - "/virt"
+          - "/backup"
+        virt_image_nomount: true
+    virt-withnfs:
       rca1-vm:
       rfa1-vm:
-    iscsi:
-      rga1-vm:
+    virt-host:
+      fc-nfs:
+      virt-withnfs:
+    dellhosts:
+      fc-nfs:
+      virt-nfs:
     server:
       mgmt-ics:
         server_ntp: true
