@@ -1,0 +1,8 @@
+---
+- name: restart nfs-server
+  systemd:
+    name: nfs-server.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
