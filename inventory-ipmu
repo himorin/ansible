@@ -15,6 +15,7 @@ dlc3-vm
 dla1-vm
 dla2-vm
 dla3-vm
+m3605-1a
 
 [server]
 rsyslog         server_rsyslog=True
@@ -37,4 +38,5 @@ lf09
 
 [hwraid]
 dlb1-vm         hwraid_target_sas2=true
+m3605-1a        hwraid_target_megasas=true
 
