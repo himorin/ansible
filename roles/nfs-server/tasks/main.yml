@@ -8,4 +8,12 @@
     line: "{{ item }} {{ site_config.nfs.v3export_access }}"
   with_items: "{{ nfsv3_export }}"
   notify: restart nfs-server
+- name: Enable service
+  become: yes
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - rpc-statd
 
