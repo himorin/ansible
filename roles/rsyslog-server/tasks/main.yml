@@ -19,9 +19,9 @@
     - line: "input(type=\"imudp\" port=\"514\" ruleset=\"extinput\")"
       regexp: "^input.*imudp"
     - line: "module(load=\"imtcp\")"
-      regexp: "^module.*imtdp"
+      regexp: "^module.*imtcp"
     - line: "input(type=\"imtcp\" port=\"514\" ruleset=\"extinput\")"
-      regexp: "^input.*imtdp"
+      regexp: "^input.*imtcp"
 - name: Copy syslog line handler configuration for repush to logstash
   become: yes
   template:
