@@ -10,14 +10,19 @@
   become: yes
   lineinfile:
     dest: /etc/rsyslog.conf
-    line: "{{ item }}"
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
   notify: restart rsyslog
   with_items:
-    - "module(load=\"imudp\")"
-    - "input(type=\"imudp\" port=\"514\")"
-    - "module(load=\"imtcp\")"
-    - "input(type=\"imtcp\" port=\"514\")"
-- name: Copy syslog line handler configuration
+    - line: "module(load=\"imudp\")"
+      regexp: "^module.*imudp"
+    - line: "input(type=\"imudp\" port=\"514\" ruleset=\"extinput\")"
+      regexp: "^input.*imudp"
+    - line: "module(load=\"imtcp\")"
+      regexp: "^module.*imtcp"
+    - line: "input(type=\"imtcp\" port=\"514\" ruleset=\"extinput\")"
+      regexp: "^input.*imtcp"
+- name: Copy syslog line handler configuration for repush to logstash
   become: yes
   template:
     src: "{{ item }}"
@@ -27,4 +32,14 @@
   with_items:
     - 60-output.conf
   when: site_config.rsyslog.repush is defined
+- name: Copy syslog line handler configuration via omfile
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "/etc/rsyslog.d/{{ item }}"
+    mode: 0644
+  notify: restart rsyslog
+  with_items:
+    - 60-omfile.conf
+  when: site_config.rsyslog.omfile is defined
 
