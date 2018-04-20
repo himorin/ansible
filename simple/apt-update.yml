@@ -1,0 +1,31 @@
+---
+#
+# Install package updates on webservers
+#
+
+- name: apt-get update test
+  hosts: all
+  remote_user: pfs
+  become: true
+  serial: 1 # one host at a time
+  any_errors_fatal: true
+  max_fail_percentage: 0
+
+
+  tasks: # tasks are done in order
+
+    # do an "apt-get update", to ensure latest package lists
+    - name: apt-get update
+      apt:
+        update-cache: yes
+      changed_when: 0
+      become: yes
+      become_method: sudo
+      notify: "show os"
+
+    # do an "apt-get dist-upgrade", to ensure latest package lists
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist
+      become: yes
+      become_method: sudo

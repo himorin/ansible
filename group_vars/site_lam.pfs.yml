@@ -1,0 +1,22 @@
+---
+site_config:
+  system_accounts:
+    groups:
+        - gname: "pfs"
+          gid: 1000
+    groups:
+        - gname: "pfs-data"
+          gid: 1001
+    users:
+        - uname: "pfs"
+          uid: 1000
+          home: "/home/pfs"
+          group: "pfs"
+        - uname: "pfs-data"
+          uid: 1001
+          home: "/home/pfs-data"
+          group: "pfs-data"
+          groups: "pfs"
+
+
+
