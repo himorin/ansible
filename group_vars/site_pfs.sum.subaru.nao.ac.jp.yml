@@ -4,6 +4,9 @@ site_config:
     hour: "11"
   dnsmasq:
     site: "subaru"
+  ldap:
+    uri: "ldap://ldap.subaru.nao.ac.jp/"
+    base: "dc=subaru,dc=nao,dc=ac,dc=jp"
   mail:
     notice_from: "pfs@pfs.sum.subaru.nao.ac.jp"
     notice_name: "PFS ICS Production"
