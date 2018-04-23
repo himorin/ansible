@@ -24,6 +24,7 @@ site_config:
       - tcsh
       - zsh
   rsyslog:
+    omfile: "/rsyslog/"
     server: "rsyslog-ics.pfs.sum.subaru.nao.ac.jp"
   system_accounts:
     groups:

@@ -31,6 +31,9 @@ all:
           server_ntp: true
         logger-ics:
           server_rsyslog: true
+          nfsv3_target:
+            - source: nfsb-ics:/backup/rsyslog
+              target: /rsyslog/
         gw-ics:
           server_smarthost: true
     gateway:
