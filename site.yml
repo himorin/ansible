@@ -15,6 +15,7 @@
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
+    - { role: nfs-client, when: "nfsv3_target is defined" }
     - { role: ntp-server, when: "server_ntp is defined" }
     - { role: rsyslog-server, when: "server_rsyslog is defined" }
 - hosts: gateway
