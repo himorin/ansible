@@ -11,6 +11,11 @@
     - { role: rsyslog-client, when: "server_rsyslog is undefined" }
     - { role: exim4, when: "server_smarthost is undefined" }
 
+- hosts: ldap
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - ldap
 - hosts: server
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"

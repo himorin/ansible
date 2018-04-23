@@ -25,6 +25,10 @@ all:
     hwraid:
       children:
         dellhosts:
+    ldap:
+      hosts:
+        gw-ics:
+        shell-ics:
     server:
       hosts:
         mgmt-ics:
