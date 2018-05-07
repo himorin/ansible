@@ -68,6 +68,8 @@ configuration parameters and results.
   external network (iptables).
 :system-accounts:
   Setup commonly required system users and groups
+:virt-common:
+  Setup libvirt common environment, with packages, NFS mount, PKI.
 :virt-server:
   Setup libvirt server environment, and br0 configuration. (reboot required)
 
