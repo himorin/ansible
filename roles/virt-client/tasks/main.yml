@@ -1,0 +1,8 @@
+---
+- name: Checkout ics_dnsmasq repository
+  git:
+    repo: "https://github.com/Subaru-PFS/pfs_infra_ipmu.git"
+    dest: "~/pfs_infra_ipmu"
+    update: yes
+    force: yes
+
