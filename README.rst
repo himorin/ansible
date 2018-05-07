@@ -68,8 +68,8 @@ configuration parameters and results.
   external network (iptables).
 :system-accounts:
   Setup commonly required system users and groups
-:virt:
-  Setup libvirt environment, with PKI and br0 configuration. (reboot required)
+:virt-server:
+  Setup libvirt server environment, and br0 configuration. (reboot required)
 
 Playbooks
 ======

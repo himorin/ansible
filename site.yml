@@ -33,7 +33,7 @@
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
-    - virt
+    - virt-server
 
 - hosts: actor
   vars_files:
