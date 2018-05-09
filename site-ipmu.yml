@@ -33,3 +33,10 @@
         - source: "rpb2-vm:/nfstest"
           target: "/nfstest"
 
+- hosts: pfsarch
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - { role: packages, packages: "{{ site_config.packages.host_pfsarch }}" }
+    - { role: fail2ban, jail_enable: [ sshd, apache-auth ] }
+

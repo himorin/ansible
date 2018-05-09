@@ -40,6 +40,11 @@
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
     - eups
+- hosts: privca
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - privca
 
 - hosts: hwraid
   vars_files:
