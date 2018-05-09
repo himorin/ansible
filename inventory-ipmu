@@ -68,4 +68,36 @@ all:
           hwraid_target_megasas: True
         rpb2-vm:
           hwraid_target_megasas: True
+    nfstest:
+      hosts:
+        nfs00:
+        nfs01:
+        nfs02:
+        nfs03:
+        nfs04:
+        nfs05:
+        nfs06:
+        nfs07:
+        nfs08:
+        nfs09:
+        nfs10:
+        nfs11:
+        nfs12:
+        nfs13:
+        nfs14:
+        nfs15:
+        nfs16:
+        nfs17:
+        nfs18:
+        nfs19:
+        nfs20:
+        nfs21:
+        nfs22:
+        nfs23:
+        nfs24:
+        nfs25:
+        nfs26:
+        nfs27:
+        nfs28:
+        nfs29:
 

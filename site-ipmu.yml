@@ -1,0 +1,35 @@
+---
+- hosts: normalwork
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - { role: packages, packages: "{{ site_config.packages.utils_astro }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_basic }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_dev }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_latex }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_media }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_mgmt }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_normalwork }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_python2 }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_python3 }}" }
+    - ldap
+    - { role: nfs-client, nfsv3_target: "{{ site_config.nfs.common }}" }
+
+- hosts: melco
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - { role: packages, packages: "{{ site_config.packages.utils_basic }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_dev }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_normalwork }}" }
+    - { role: packages, packages: "{{ site_config.packages.utils_python3 }}" }
+
+- hosts: nfstest
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - role: nfs-client
+      nfsv3_target: 
+        - source: "rpb2-vm:/nfstest"
+          target: "/nfstest"
+
