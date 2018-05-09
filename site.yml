@@ -52,4 +52,9 @@
   roles:
     - iscsi
     - nfs-server
+- hosts: landfill
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - boot-aptupdate
 

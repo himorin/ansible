@@ -1,0 +1,9 @@
+---
+- name: configure apt-get to @boot
+  become: yes
+  cron:
+    special_time: reboot
+    job: "apt-get update"
+    cron_file: "/etc/crontab"
+    user: root
+
