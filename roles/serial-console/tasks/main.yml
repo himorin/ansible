@@ -1,0 +1,13 @@
+---
+- name: Add ttyS0 to kernel console
+  become: yes
+  lineinfile:
+    dest: /etc/default/grub
+    regexp: "^DATA_DIR="
+    line: 'GRUB_CMDLINE_LINUX="console=tty0 console=ttyS0"'
+  register: task_grub_serial
+- name: Configure EUPS install
+  become: yes
+  command: update-grub2
+  when: task_grub_serial.changed
+
