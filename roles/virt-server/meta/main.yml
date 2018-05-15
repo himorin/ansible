@@ -1,0 +1,8 @@
+---
+dependencies: 
+  - role: virt-common
+  - role: packages
+    packages: 
+      - "libvirt-daemon-system"
+      - "virt-top"
+

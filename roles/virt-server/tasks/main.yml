@@ -1,24 +1,5 @@
 ---
-- name: Create directory
-  become: yes
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: 0755
-  with_items:
-    - "/etc/pki/"
-    - "/etc/pki/libvirt/"
-    - "/etc/pki/CA/"
-- name: Mount virt disk image storage
-  mount:
-    name: /virt
-    state: mounted
-    src: "{{ site_config.virt.nfsdisk }}"
-    fstype: "nfs"
-    opts: "nfsvers=3,bg,hard,rw"
-  become: yes
-  when: virt_image_nomount is undefined
-- name: Copy PKI
+- name: Copy libvirt host keys of private PKI
   become: yes
   copy:
     src: "{{ item.src }}"
@@ -31,8 +12,6 @@
       dest: "/etc/pki/libvirt/host.pem"
     - src: "{{ site_config.virt.pki.local }}/private/{{ ansible_default_ipv4.address }}.key"
       dest: "/etc/pki/libvirt/host.key"
-    - src: "{{ site_config.virt.pki.local }}/cacert.pem"
-      dest: "/etc/pki/CA/cacert.pem"
 - name: Configure libvirtd for PKI
   become: yes
   lineinfile: >
@@ -49,6 +28,7 @@
       value: "\"/etc/pki/CA/cacert.pem\""
     - key: "tls_no_verify_certificate"
       value: "1"
+  notify: restart libvirtd
 - name: Configure libvirtd for PKI II
   become: yes
   lineinfile: >
