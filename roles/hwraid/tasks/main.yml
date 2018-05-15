@@ -28,4 +28,12 @@
       - megacli
     state: present
   when: hwraid_target_megasas is defined
+- name: Install for HP P410
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+      - hpacucli
+    state: present
+  when: hwraid_target_hp_p410 is defined
 
