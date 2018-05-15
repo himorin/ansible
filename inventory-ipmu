@@ -13,6 +13,7 @@ all:
         dlb5-vm:
         dlb6-vm:
         dlb7-vm:
+        dlb8-vm:
         dlc1-vm:
         dlc2-vm:
         dlc3-vm:
@@ -20,6 +21,7 @@ all:
         dla2-vm:
         dla3-vm:
         m3605-1a:
+        rfa2-vm:
     nfssrv:
       hosts:
         lf02:
@@ -61,13 +63,21 @@ all:
         lf08-ics:
         lf09-ics:
     hwraid:
+      children:
+        dlb:
+          hosts:
+            dlb1-vm:
+            dlb8-vm:
+          vars:
+            hwraid_target_hp_p410: True
       hosts:
-        dlb1-vm:
-          hwraid_target_sas2: True
         m3605-1a:
           hwraid_target_megasas: True
         rpb2-vm:
           hwraid_target_megasas: True
+        rfa2-vm:
+          hwraid_target_megasas: True
+          hwraid_target_sas2: True
     nfstest:
       hosts:
         nfs00:
