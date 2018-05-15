@@ -3,7 +3,7 @@
   become: yes
   lineinfile:
     dest: /etc/default/grub
-    regexp: "^DATA_DIR="
+    regexp: "^GRUB_CMDLINE_LINUX="
     line: 'GRUB_CMDLINE_LINUX="console=tty0 console=ttyS0"'
   register: task_grub_serial
 - name: Configure EUPS install
