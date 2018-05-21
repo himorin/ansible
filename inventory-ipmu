@@ -24,14 +24,16 @@ all:
         rfa2-vm:
     nfssrv:
       hosts:
-        lf02:
-          nfsv3_export:
-            - "/tmp"
-            - "/home"
         sd2:
           nfsv3_export:
             - "/simdata"
-            - "/virt-sim"
+        pc2:
+          nfsv3_export:
+            - "/data1"
+        pd2:
+          nfsv3_export:
+            - "/virt"
+            - "/server"
     landfill:
       hosts:
         lf00:

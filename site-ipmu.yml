@@ -24,14 +24,12 @@
     - { role: packages, packages: "{{ site_config.packages.utils_normalwork }}" }
     - { role: packages, packages: "{{ site_config.packages.utils_python3 }}" }
 
-- hosts: nfstest
+- hosts: nfssrv
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
-    - role: nfs-client
-      nfsv3_target: 
-        - source: "rpb2-vm:/nfstest"
-          target: "/nfstest"
+    - nfs-server
+    - ldap
 
 - hosts: pfsarch
   vars_files:
