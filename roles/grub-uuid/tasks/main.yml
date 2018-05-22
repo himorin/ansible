@@ -1,0 +1,20 @@
+---
+- name: Add a line of UUID into grub
+  become: yes
+  vars:
+    root_mount_query: "ansible_mounts[?device=='{{ ansible_cmdline.root }}'].uuid"
+    target_mounts:
+      ansible_mounts: "{{ ansible_mounts }}"
+    target_uuid_arr: "{{ target_mounts | json_query(root_mount_query) }}"
+    target_uuid: "{{ target_uuid_arr[0] }}"
+  lineinfile:
+    dest: /etc/default/grub
+    regexp: "^GRUB_DEVICE_UUID="
+    line: "GRUB_DEVICE_UUID=\"{{ target_uuid }}\""
+  when: "'UUID=' not in ansible_cmdline.root"
+  register: task_add_uuid
+- name: Run update-grub2
+  become: yes
+  shell: update-grub2
+  when: task_add_uuid.changed
+
