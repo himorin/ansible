@@ -40,4 +40,13 @@
     insertafter: "^#{{ item.label }}"
   with_items: "{{ site_config.postgres.postgres_conf }}"
   notify: restart postgresql
+- name: Check database cluster
+  become: yes
+  stat: path="{{ site_config.postgres.data_directory }}/postgresql.conf"
+  register: task_postgresql_dbc
+- name: Create database cluster if no
+  become: yes
+  shell: "sudo -u postgres /usr/lib/postgresql/{{ task_psql_vars.results[0].item.psql_ver }}/bin/initdb {{ site_config.postgres.data_directory }}"
+  when: task_postgresql_dbc.stat.md5 is not defined
+  notify: restart postgresql
 
