@@ -1,0 +1,43 @@
+---
+- name: Get postgresql server version
+  shell: psql -V
+  register: task_psql_version
+  changed_when: False
+- name: Get PostgreSQL version
+  vars:
+    task_psql_version_out_div: "{{ task_psql_version.stdout_lines[0].split(' ') }}"
+    task_psql_version_full_div: "{{ task_psql_version_out_div[2].split('.') }}"
+    task_psql_version_dir: "{{ task_psql_version_full_div[0] }}.{{ task_psql_version_full_div[1] }}"
+  debug: var=item
+  with_items:
+    - psql_ver: "{{ task_psql_version_dir }}"
+  register: task_psql_vars
+- name: Enable external connection
+  become: yes
+  lineinfile:
+    dest: "/etc/postgresql/{{ task_psql_vars.results[0].item.psql_ver }}/main/pg_hba.conf"
+    line: "host all all {{ site_config.postgres.connect_from }} md5"
+  notify: restart postgresql
+- name: Configure server (minimum)
+  become: yes
+  lineinfile:
+    dest: "/etc/postgresql/{{ task_psql_vars.results[0].item.psql_ver }}/main/postgresql.conf"
+    line: "{{ item.label }} = '{{ item.value }}'"
+    regexp: "^{{ item.label }} "
+    insertafter: "^#{{ item.label }}"
+  with_items:
+    - label: "data_directory"
+      value: "{{ site_config.postgres.data_directory }}"
+    - label: "listen_addresses"
+      value: "*"
+  notify: restart postgresql
+- name: Configure server (others)
+  become: yes
+  lineinfile:
+    dest: "/etc/postgresql/{{ task_psql_vars.results[0].item.psql_ver }}/main/postgresql.conf"
+    line: "{{ item.label }} = '{{ item.value }}'"
+    regexp: "^{{ item.label }} "
+    insertafter: "^#{{ item.label }}"
+  with_items: "{{ site_config.postgres.postgres_conf }}"
+  notify: restart postgresql
+
