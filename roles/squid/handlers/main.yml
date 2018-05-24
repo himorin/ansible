@@ -1,0 +1,9 @@
+---
+- name: restart squid
+  systemd:
+    name: squid.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+

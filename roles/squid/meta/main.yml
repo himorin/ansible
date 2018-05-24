@@ -1,0 +1,11 @@
+---
+dependencies: 
+  - role: packages
+    packages: 
+      - squid
+  - role: nfs-client
+    nfsv3_target: 
+      - source: "{{ site_config.squid.cache_dir_nfs }}"
+        target: "{{ site_config.squid.cache_dir }}"
+    when: "site_config.squid.cache_dir_nfs is defined"
+
