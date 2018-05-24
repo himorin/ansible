@@ -317,6 +317,23 @@ and to proxy lines after processing pushed syslog lines if
   - Will not install template for proxy if 'site_config.rsyslog.repush' is not 
     defined. 
 
+squid
+-----
+
+This role will configure squid proxy server. 
+
+- Required configuration items
+
+  - squid.cache_mem (no default value)
+  - squid.maximum_object_size_in_memory (no default value)
+  - squid.maximum_object_size (no default value)
+  - squid.cache_dir (no default value)
+  - squid.cache_dir_mb (no default value)
+  - squid.syslog (no default value)
+ 
+- No dependencies
+- No remarks
+
 Roles for PFS configuration
 ======
 

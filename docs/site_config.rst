@@ -100,6 +100,18 @@ List of services and their items.
   - `repush`: If rsyslog server is required to push to another service, put 
     line here.
 
+- `squid`: squid service configuration
+
+  - `cache_mem`: size of cache on memory, need white space like "1 GB"
+  - `maximum_object_size_in_memory`: size of maximum object cached on memory, 
+    need white space like "2 MB"
+  - `maximum_object_size`: size of maximum object in cached, 
+    need white space like "20 MB"
+  - `cache_dir`: target directory for hash directory of cache
+  - `cache_dir_mb`: numberic value to be stored in cache directory in MB
+  - `cache_dir_nfs`: if cache directory is on remote NFS, specify NFS target
+  - `syslog`: syslog facility and level, like "local1.info"
+
 - `system\_accounts`: List of system accounts
 
   - `groups`: List of dict for system groups to be set. Dict need to have 

@@ -63,6 +63,8 @@ configuration parameters and results.
   Will not touch local output lines, so comment them out by hand if in need. 
   If site_config.rsyslog.repush is configured, will put config file to repush 
   syslog lines to after processing.
+:squid:
+  Configure squid server.
 :ssh-gateway:
   Configure a host as ssh gateway server, with accepting connections from 
   external network (iptables).
