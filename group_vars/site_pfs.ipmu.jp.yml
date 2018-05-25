@@ -21,6 +21,7 @@ site_config:
   nat_route:
     prefix: 'PF: '
     loglevel: 'info'
+    local: 'ens3'
   nfs:
     common:
       - source: "10.100.200.4:/data1"

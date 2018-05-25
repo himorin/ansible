@@ -7,7 +7,9 @@
 - name: Configure iptables
   become: yes
   vars:
-    mask: "{{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.netmask }}"
+    iface_name: "ansible_{{ site_config.nat_route.local }}"
+    iface_data: "{{ hostvars[ inventory_hostname ][ iface_name ] }}"
+    mask: "{{ iface_data.ipv4.address }}/{{ iface_data.ipv4.netmask }}"
   lineinfile:
     dest: "/etc/iptables/rules.v4"
     line: "{{ item.line }}"
