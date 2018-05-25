@@ -264,6 +264,24 @@ This roll will install and configure grafana server.
     grafana.ini for database, session, seciruty and auth by hand - after 
     configuration of other services like database.
 
+nat-route
+------
+
+This role will configure NAT routing from local network to external, with 
+logging packet flow to syslog.
+
+- Required configuration items
+
+  - nat_route.prefix
+  - nat_route.loglevel
+  - nat_route.local
+
+- No external dependencies
+- Remarks
+
+  - This role will not configure syslog output. 
+    All logs will go kernel facility with configured loglevel.
+
 privca
 ------
 

@@ -40,6 +40,8 @@ configuration parameters and results.
   Configuration of ldap for account
 :munin-node:
   Configuration of munin-node
+:nat-route:
+  Configure NAT routing
 :nfs-client:
   Mount NFSv3 for targets specified by playbook argument 'nfsv3_target'
 :nfs-server:

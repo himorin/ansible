@@ -70,6 +70,12 @@ List of services and their items.
 
   - `cidr`: CIDR of connection to be allowed
 
+- `nat_route`: NAT routing configuration
+
+  - `loglevel`: Loglevel (like info, debug) to log NAT routed packet to syslog
+  - `local`: Specify local network interface
+  - `prefix`: Prefix to be attached to syslog line
+
 - `nfs`: NFS mount point lists, each item in this shall have a list of dict 
   with `source` (source of server) and `target` (mount point). 
 
