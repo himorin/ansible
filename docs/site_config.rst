@@ -92,6 +92,18 @@ List of services and their items.
 
   - `sitewide`: Site-wide list of packages
 
+- `postfix`: Postfix service configuration
+
+  - `tls`: Group for TLS related configurations
+
+    - `use`: 'True' or 'False', flag to use TLS or not. If 'True', need other 
+      items configured.
+    - `cert_file`: Certificate file to be loaded for TLS.
+    - `key_file`: Private key file to be loaded for TLS.
+    - `CAfile`: CA chain file to be loaded for TLS.
+  - `myhostname`: 'hostname' of email server
+  - `localnet`: Address block to be accepted as local network for smarthost.
+
 - `prometheus`: Prometheus service configuration
 
   - `server`: Prometheus server name

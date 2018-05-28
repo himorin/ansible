@@ -282,6 +282,23 @@ logging packet flow to syslog.
   - This role will not configure syslog output. 
     All logs will go kernel facility with configured loglevel.
 
+postfix
+------
+
+This role will configure postfix mail server as smarthost to external.
+
+- Required configuration items
+
+  - postfix.tls.use
+  - postfix.myhostname
+  - postfix.localnet
+
+- No external dependencies
+- Remarks
+
+  - Configuration will accept external email delivery to the server.
+    Need to be rejected by iptables or something.
+
 privca
 ------
 

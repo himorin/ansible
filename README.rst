@@ -53,6 +53,8 @@ configuration parameters and results.
   List of packages are listed in 'packages' in site config.
   Note, openssh and ansible are required to be installed by preseeded 
   installation media.
+:postfix:
+  Configure postfix mail server
 :privca:
   Configure environment to build private CA (not to build CA)
 :prometheus:
