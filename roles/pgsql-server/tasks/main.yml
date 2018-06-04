@@ -7,7 +7,7 @@
   vars:
     task_psql_version_out_div: "{{ task_psql_version.stdout_lines[0].split(' ') }}"
     task_psql_version_full_div: "{{ task_psql_version_out_div[2].split('.') }}"
-    task_psql_version_dir: "{{ task_psql_version_full_div[0] }}.{{ task_psql_version_full_div[1] }}"
+    task_psql_version_dir: "{{ task_psql_version_full_div[0] }}{% if task_psql_version_full_div[0] | int < 10 %}.{{ task_psql_version_full_div[1] }}{% endif %}"
   debug: var=item
   with_items:
     - psql_ver: "{{ task_psql_version_dir }}"
