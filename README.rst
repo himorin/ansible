@@ -10,6 +10,9 @@ ToC
 - `Definitions and requirements on modification`_
 - `Support files`_
 
+Also refer `quick instruction of ansible <docs/instruction.rst>`_ in 
+`detailed documents <docs/>`_ directory. 
+
 List of definitions
 ******
 
