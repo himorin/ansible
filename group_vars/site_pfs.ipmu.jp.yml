@@ -256,6 +256,8 @@ site_config:
         gid: 207
       - gname: "logstash"
         gid: 208
+      - gname: "influxdb"
+        gid: 209
     users:
       - uname: "libvirt-qemu"
         uid: 200
@@ -295,6 +297,11 @@ site_config:
         group: "logstash"
         home: "/usr/share/logstash"
         shell: "/usr/sbin/nologin"
+      - uname: "influxdb"
+        uid: 208
+        group: "influxdb"
+        home: "/var/lib/influxdb"
+        shell: "/bin/false"
   virt:
     nfsdisk: "10.100.200.3:/virt"
     pki:
