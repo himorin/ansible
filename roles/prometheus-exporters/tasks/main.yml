@@ -1,0 +1,19 @@
+---
+- name: Add kernel module for ipmi exporter
+  become: yes
+  lineinfile:
+    dest: /etc/modules
+    line: "{{ item }}"
+  with_items:
+    - ipmi_si
+    - ipmi_devintf
+  when: prometheus_exporters_ipmi is defined
+- name: Load kernel module for ipmi exporter
+  become: yes
+  shell: modprobe {{ item }}
+  with_items:
+    - ipmi_si
+    - ipmi_devintf
+  when: prometheus_exporters_ipmi is defined
+  changed_when: False
+

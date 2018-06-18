@@ -1,0 +1,10 @@
+---
+dependencies:
+  - role: packagecloud
+    packagecloud: 
+      target_id: LovooOS/prometheus-exporters
+  - role: packages
+    packages:
+      - ipmi-exporter
+    when: prometheus_exporters_ipmi is defined
+
