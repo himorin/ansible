@@ -54,7 +54,8 @@
     dest: "~/snmp_exporter/{{ item }}"
     mode: 0644
   with_items:
-    - snmp.yml
+    - snmp_orig.yml
+    - snmp_ushaups.yml
   when: prometheus_exporters_snmp_file.stat.md5 is defined
 - name: Add @reboot cron job for snmp exporter
   cron:

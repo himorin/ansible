@@ -1,0 +1,44 @@
+ushaups:
+  walk:
+  - 1.3.6.1.4.1.2468.1.2.1.1
+  metrics:
+  - name: upsAdvBatteryCapacity
+    oid: 1.3.6.1.4.1.2468.1.2.1.1.2.4
+    type: gauge
+    help: The remaining battery capacity expressed in percent of full capacity. - 1.3.6.1.4.1.2468.1.2.1.1.2.4
+  - name: upsHighPrecBatteryTemperature
+    oid: 1.3.6.1.4.1.2468.1.2.1.1.2.7
+    type: gauge
+    help: The current internal UPS temperature expressed in tenths of degrees Celsius. - 1.3.6.1.4.1.2468.1.2.1.1.2.7
+  - name: upsHighPrecBatteryVoltage
+    oid: 1.3.6.1.4.1.2468.1.2.1.1.2.5
+    type: gauge
+    help: The actual battery bus voltage expressed as tenths of Volts. - 1.3.6.1.4.1.2468.1.2.1.1.2.5
+  - name: upsHighPrecInputLineVoltage
+    oid: 1.3.6.1.4.1.2468.1.2.1.1.3.3.1.3.1
+    type: gauge
+    help: The current utility line voltage in tenths of VAC. - 1.3.6.1.4.1.2468.1.2.1.1.3.3.1.3.1
+  - name: upsHighPrecInputMaxLineVoltage
+    oid: 1.3.6.1.4.1.2468.1.2.1.1.3.3.1.6.1
+    type: gauge
+    help: The maximum utility line voltage in tenths of VAC over the previous 1 minute
+      period. - 1.3.6.1.4.1.2468.1.2.1.1.3.3.1.6.1
+  - name: upsHighPrecInputMinLineVoltage
+    oid: 1.3.6.1.4.1.2468.1.2.1.1.3.3.1.7.1
+    type: gauge
+    help: The minimum utility line voltage in tenths of VAC over the previous 1 minute
+      period. - 1.3.6.1.4.1.2468.1.2.1.1.3.3.1.7.1
+  - name: upsHighPrecInputFrequency
+    oid: 1.3.6.1.4.1.2468.1.2.1.1.3.3.1.2.1
+    type: gauge
+    help: The current input frequency to the UPS system in tenths of Hz. - 1.3.6.1.4.1.2468.1.2.1.1.3.3.1.2.1
+  - name: upsHighPrecOutputVoltage
+    oid: 1.3.6.1.4.1.2468.1.2.1.1.4.4.1.2.1
+    type: gauge
+    help: The output voltage of the UPS system in tenths of VAC. - 1.3.6.1.4.1.2468.1.2.1.1.4.4.1.2.1
+  - name: upsHighPrecOutputLoad
+    oid: 1.3.6.1.4.1.2468.1.2.1.1.4.4.1.5.1
+    type: gauge
+    help: The current UPS load expressed in tenths of percent of rated capacity. -
+      1.3.6.1.4.1.2468.1.2.1.1.4.4.1.5.1
+
