@@ -1,4 +1,11 @@
 ---
+- name: restart ipmi-exporter
+  systemd:
+    name: ipmi-exporter.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
 - name: restart prometheus-mysqld-exporter
   systemd:
     name: prometheus-mysqld-exporter.service
