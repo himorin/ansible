@@ -73,7 +73,7 @@
   with_items:
     - key: "DATA_SOURCE_NAME"
       value: "DATA_SOURCE_NAME=\"{{ prometheus_exporters_mysql_account }}@({{ site_config.prometheus_exporter.mysql.host }})/mysql\""
-  when: prometheus_exporters_mysql is defined
+  when: prometheus_exporters_mysql is defined and prometheus_exporters_mysql_account != ""
   notify: restart prometheus-mysqld-exporter
 
 - name: Add database connection for pgsql exporter
@@ -87,6 +87,7 @@
       value: "postgresql://{{ prometheus_exporters_pgsql_account }}@{{ site_config.prometheus_exporter.pgsql.host }}/postgres"
     - key: "ARGS"
       value: "\\\n"
+  when: prometheus_exporters_pgsql is defined and prometheus_exporters_pgsql_account != ""
   notify: restart prometheus-postgres-exporter
 - name: Add service configuration for pgsql exporter
   become: yes
@@ -108,5 +109,34 @@
     - prometheus-postgres-exporter-queries.yaml
   when: prometheus_exporters_pgsql is defined
   notify: restart prometheus-postgres-exporter
+
+- name: Check elasticsearch_exporter binary
+  stat: path="{{ env_gopath }}/bin/elasticsearch_exporter"
+  when: prometheus_exporters_es is defined
+  delegate_to: 127.0.0.1
+  register: prometheus_exporters_es_file
+- name: Copy binary to target
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0755
+  with_items:
+    - src: "{{ env_gopath }}/bin/elasticsearch_exporter"
+      dest: "~/elasticsearch_exporter"
+  when: prometheus_exporters_es_file.stat.md5 is defined
+- name: Copy invoke script for elasticsearch exporter
+  template:
+    src: "{{ item }}"
+    dest: "~/{{ item }}"
+    mode: 0755
+  with_items:
+    - elasticsearch_exporter.sh
+  when: prometheus_exporters_es_file.stat.md5 is defined
+- name: Add @reboot cron job for elasticsearch exporter
+  cron:
+    special_time: reboot
+    job: "~/elasticsearch_exporter.sh"
+    name: es_exporter_on_boot
+  when: prometheus_exporters_es_file.stat.md5 is defined
 
 

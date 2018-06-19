@@ -238,6 +238,8 @@ site_config:
       host: "db2:3306"
     pgsql:
       host: "db2:5432"
+    es:
+      host: "elasticsearch"
   rsyslog:
     server: "rsyslog.pfs.ipmu.jp"
     repush: "10.100.200.14:10514;json-template"
