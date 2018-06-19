@@ -22,6 +22,8 @@ all:
         dla3-vm:
         m3605-1a:
         rfa2-vm:
+      vars:
+        prometheus_exporters_ipmi: True
     nfssrv:
       hosts:
         sd2:
