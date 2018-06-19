@@ -67,9 +67,44 @@
     dest: /etc/default/prometheus-mysqld-exporter
     regexp: "^{{ item.key }}"
     line: "{{ item.value }}"
+    mode: '0600'
   with_items:
     - key: "DATA_SOURCE_NAME"
       value: "DATA_SOURCE_NAME=\"{{ prometheus_exporters_mysql_account }}@({{ site_config.prometheus_exporter.mysql.host }})/mysql\""
   when: prometheus_exporters_mysql is defined
   notify: restart prometheus-mysqld-exporter
+
+- name: Add database connection for pgsql exporter
+  become: yes
+  lineinfile:
+    dest: /etc/default/prometheus-postgres-exporter
+    regexp: "^{{ item.key }}"
+    line: "{{ item.key }}='{{ item.value }}'"
+  with_items:
+    - key: "DATA_SOURCE_NAME"
+      value: "postgresql://{{ prometheus_exporters_pgsql_account }}@{{ site_config.prometheus_exporter.pgsql.host }}/postgres"
+    - key: "ARGS"
+      value: "\\\n"
+  notify: restart prometheus-postgres-exporter
+- name: Add service configuration for pgsql exporter
+  become: yes
+  lineinfile:
+    dest: /etc/default/prometheus-postgres-exporter
+    line: "{{ item }}"
+    insertafter: "^ARGS='"
+  with_items:
+    - "--extend.query-path=\"/etc/default/prometheus-postgres-exporter-queries.yaml\" \\"
+  when: prometheus_exporters_pgsql is defined
+  notify: restart prometheus-postgres-exporter
+- name: Add pgsql query definition yaml
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "/etc/default/{{ item }}"
+    mode: 0644
+  with_items:
+    - prometheus-postgres-exporter-queries.yaml
+  when: prometheus_exporters_pgsql is defined
+  notify: restart prometheus-postgres-exporter
+
 

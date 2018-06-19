@@ -6,4 +6,11 @@
     daemon_reload: yes
     enabled: yes
   become: yes
+- name: restart prometheus-postgres-exporter
+  systemd:
+    name: prometheus-postgres-exporter.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
 

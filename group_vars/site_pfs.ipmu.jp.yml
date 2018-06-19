@@ -236,6 +236,8 @@ site_config:
   prometheus_exporter:
     mysql:
       host: "db2:3306"
+    pgsql:
+      host: "db2:5432"
   rsyslog:
     server: "rsyslog.pfs.ipmu.jp"
     repush: "10.100.200.14:10514;json-template"

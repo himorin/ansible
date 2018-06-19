@@ -74,7 +74,10 @@
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   vars_prompt:
     - name: "prometheus_exporters_mysql_account"
-      prompt: "Enter account information for mysql in \"<account>:<password>\" format (need 'select' and 'replication client' priv on *.*"
+      prompt: "Enter account information for mysql in \"<account>:<password>\" format\n  need 'select' and 'replication client' priv on *.*\n  just type enter when you don't configure"
+      private: yes
+    - name: "prometheus_exporters_pgsql_account"
+      prompt: "Enter account information for mysql in \"<account>:<password>\" format\n  need connection priv on postgres\n  just type enter when you don't configure"
       private: yes
   roles:
     - prometheus-exporters
