@@ -69,3 +69,14 @@
     - boot-aptupdate
     - serial-console
 
+- hosts: prometheus-exporters
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  vars_prompt:
+    - name: "prometheus_exporters_mysql_account"
+      prompt: "Enter account information for mysql in \"<account>:<password>\" format (need 'select' and 'replication client' priv on *.*"
+      private: yes
+  roles:
+    - prometheus-exporters
+
+

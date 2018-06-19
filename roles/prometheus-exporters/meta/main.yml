@@ -8,4 +8,8 @@ dependencies:
     packages:
       - ipmi-exporter
     when: prometheus_exporters_ipmi is defined
+  - role: packages
+    packages:
+      - prometheus-mysqld-exporter
+    when: prometheus_exporters_mysql is defined
 

@@ -1,5 +1,6 @@
 ---
 ansible_ssh_user: pfs
+env_gopath: "{{ lookup('env', 'GOPATH') }}"
 site_config:
   ntp: 
     - "ntp"
@@ -7,5 +8,4 @@ site_config:
     hour: "4"
   nfs:
     common:
-
 
