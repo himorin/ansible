@@ -7,7 +7,7 @@
 - name: Configure iptables
   become: yes
   vars:
-    iface_name: "ansible_{{ site_config.nat_route.local }}"
+    iface_name: "ansible_{{ nat_route.local }}"
     iface_data: "{{ hostvars[ inventory_hostname ][ iface_name ] }}"
     mask: "{{ iface_data.ipv4.address }}/{{ iface_data.ipv4.netmask }}"
   lineinfile:
@@ -15,7 +15,7 @@
     line: "{{ item.line }}"
     insertafter: "^# ANSIBLE_ROLE_{{ item.pos }}_PLACE"
   with_items:
-    - line: "-A POSTROUTING -s {{ mask }} -j LOG --log-prefix \"{{ site_config.nat_route.prefix | default('PF: ') }}\" --log-level={{ site_config.nat_route.loglevel | default('info') }} --log-tcp-sequence"
+    - line: "-A POSTROUTING -s {{ mask }} -j LOG --log-prefix \"{{ nat_route.prefix | default('PF: ') }}\" --log-level={{ nat_route.loglevel | default('info') }} --log-tcp-sequence"
       pos: "NAT"
     - line: "-A POSTROUTING -s {{ mask }} -j MASQUERADE"
       pos: "NAT"

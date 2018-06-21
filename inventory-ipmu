@@ -57,11 +57,10 @@ all:
           hosts:
             pc2:
           vars:
-            site_config:
-              nat_route:
-                prefix: "PF "
-                loglevel: "info"
-                local: "ens3"
+            nat_route:
+              prefix: "PF "
+              loglevel: "info"
+              local: "ens3"
             local_uuids:
               - target: "/data1"
                 fstype: "jfs"
