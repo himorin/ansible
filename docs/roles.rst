@@ -352,6 +352,23 @@ and to proxy lines after processing pushed syslog lines if
   - Will not install template for proxy if 'site_config.rsyslog.repush' is not 
     defined. 
 
+samba-server
+------
+
+This role will configure samba server for smb file sharing.
+
+- Required configuration items
+
+  - samba.address
+  - samba.export.name
+  - samba.export.comment
+  - samba.export.path
+  - samba.printer_group
+  - samba.workgroup
+
+- No dependencies
+- No remarks
+
 squid
 -----
 

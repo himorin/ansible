@@ -248,6 +248,14 @@ site_config:
   rsyslog:
     server: "rsyslog.pfs.ipmu.jp"
     repush: "10.100.200.14:10514;json-template"
+  samba:
+    workgroup: "PFS"
+    address: "10.100.200.0/23 192.168.0.0/16"
+    printer_group: "root, @alls"
+    export:
+      name: "data1"
+      comment: "Data Storage 1"
+      path: "/data1"
   squid:
     cache_mem: "1 GB"
     maximum_object_size_in_memory: "2 MB"

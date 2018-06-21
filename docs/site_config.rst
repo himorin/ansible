@@ -118,6 +118,17 @@ List of services and their items.
   - `repush`: If rsyslog server is required to push to another service, put 
     line here.
 
+- `samba`: Samba server configuration
+
+  - `workgroup`: workgroup name of export
+  - `address`: network addresses (address ranges) to be accessible
+  - `printer_group`: group to be accessible to printer
+  - `export`: one additional export definition is possible
+
+    - `name`: name of export
+    - `comment`: comment shown for export
+    - `path`: local path to be exported
+
 - `squid`: squid service configuration
 
   - `cache_mem`: size of cache on memory, need white space like "1 GB"
