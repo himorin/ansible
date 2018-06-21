@@ -52,6 +52,7 @@ all:
           server_rsyslog: True
         mgmt-dhcp:
           server_ntp: True
+        influxdb:
         prometheus:
     actor:
       hosts:
