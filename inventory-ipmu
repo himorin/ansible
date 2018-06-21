@@ -22,6 +22,28 @@ all:
         dla3-vm:
         m3605-1a:
         rfa2-vm:
+    server:
+      hosts:
+        rsyslog:
+          server_rsyslog: True
+        mgmt-dhcp:
+          server_ntp: True
+      children:
+        pfscalc:
+          hosts:
+            pc2:
+          vars:
+            nat_route:
+              prefix: "PF "
+              loglevel: "info"
+              local: "ens3"
+            local_uuids:
+              - target: "/data1"
+                fstype: "jfs"
+                source: "2acbdcc6-a6d8-412b-8583-4e8f8b4c7605"
+            local_fs:
+              - xfsprogs
+              - jfsutils
     nfssrv:
       hosts:
         sd2:
@@ -46,28 +68,6 @@ all:
         lf07:
         lf08:
         lf09:
-    server:
-      hosts:
-        rsyslog:
-          server_rsyslog: True
-        mgmt-dhcp:
-          server_ntp: True
-      children:
-        pfscalc:
-          hosts:
-            pc2:
-          vars:
-            nat_route:
-              prefix: "PF "
-              loglevel: "info"
-              local: "ens3"
-            local_uuids:
-              - target: "/data1"
-                fstype: "jfs"
-                source: "2acbdcc6-a6d8-412b-8583-4e8f8b4c7605"
-            local_fs:
-              - xfsprogs
-              - jfsutils
     actor:
       hosts:
         lf00-ics:
