@@ -38,6 +38,8 @@ configuration parameters and results.
   Install packages, and just execute login (not mount)
 :ldap:
   Configuration of ldap for account
+:mount:
+  Mount local attached storage using UUID
 :munin-node:
   Configuration of munin-node
 :nat-route:

@@ -62,6 +62,13 @@ all:
                 prefix: "PF "
                 loglevel: "info"
                 local: "ens3"
+            local_uuids:
+              - target: "/data1"
+                fstype: "jfs"
+                source: "2acbdcc6-a6d8-412b-8583-4e8f8b4c7605"
+            local_fs:
+              - xfsprogs
+              - jfsutils
     actor:
       hosts:
         lf00-ics:

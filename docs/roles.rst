@@ -53,6 +53,19 @@ This role will configure ldap client for system and account authentication.
 
   - No filtering by group for now. All in ldap.base will be loaded into system.
 
+mount
+-----
+
+This role will add lines to fstab to mount local attached storage.
+
+- Required configuration items
+
+  - local_uuids (array of .target, .fstype, .source)
+  - local_fs (array of additionally required packages)
+
+- No dependencies
+- No remarks
+
 munin-node
 ------
 

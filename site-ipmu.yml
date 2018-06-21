@@ -42,6 +42,7 @@
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
+    - mount
     - nat-route
     - samba-server
 

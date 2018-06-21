@@ -1,0 +1,11 @@
+---
+- name: Mount UUIDs
+  become: yes
+  mount:
+    name: "{{ item.target }}"
+    state: mounted
+    src: "UUID={{ item.source }}"
+    fstype: "{{ item.fstype }}"
+    passno: 2
+  with_items: "{{ local_uuids }}"
+
