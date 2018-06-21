@@ -9,6 +9,8 @@ site_config:
     storage_nfs: "10.100.200.3:/server/services/elasticsearch"
   grafana:
     url: "https://pfs.ipmu.jp:3000/grafana/"
+  influxdb:
+    storage_nfs: "10.100.200.3:/server/services/influxdb"
   ldap:
     uri: "ldap://ldap.pfs.ipmu.jp/"
     base: "dc=shell,dc=pfs,dc=ipmu,dc=jp"

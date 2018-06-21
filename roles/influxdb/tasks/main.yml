@@ -1,0 +1,28 @@
+---
+- name: Configure influxdb
+  become: yes
+  ini_file:
+    dest: /etc/influxdb/influxdb.conf
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - section: "meta"
+      option: "dir"
+      value: "/influxdb/meta"
+    - section: "data"
+      option: "dir"
+      value: "/influxdb/data"
+    - section: "data"
+      option: "wal-dir"
+      value: "/influxdb/wal"
+    - section: "data"
+      option: "query-log-enabled"
+      value: "false"
+    - section: "http"
+      option: "log-enabled"
+      value: "false"
+    - section: "logging"
+      option: "level"
+      value: "warn"
+
