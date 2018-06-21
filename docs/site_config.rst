@@ -55,6 +55,10 @@ List of services and their items.
 
   - `url`: URL exposed to external via reverse proxy
 
+- `influxdb`: InfluxDB configuration
+
+  - `storage_nfs`: NFS mount point of storage for influxdb server
+
 - `ldap`: LDAP server information
 
   - `uri`: URI of LDAP server

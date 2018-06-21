@@ -34,6 +34,8 @@ configuration parameters and results.
   Configure git-lfs from packagecloud and install
 :grafana:
   Configure grafana server (need additional configuration for auth)
+:influxdb:
+  Configure influxdb using existing data directory via NFS.
 :iscsi:
   Install packages, and just execute login (not mount)
 :ldap:

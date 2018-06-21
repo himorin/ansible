@@ -285,6 +285,22 @@ This roll will install and configure grafana server.
     grafana.ini for database, session, seciruty and auth by hand - after 
     configuration of other services like database.
 
+influxdb
+------
+
+This role will configure influxdb using data directory via NFS.
+
+- Required configuration
+
+  - site_config.influxdb.storage_nfs
+
+- No dependencies
+- Remarks
+
+  - No retention policy initialization command. Need to initiate RP/CQ by 
+    using influx client.
+
+
 nat-route
 ------
 
