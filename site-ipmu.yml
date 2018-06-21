@@ -46,3 +46,9 @@
     - nat-route
     - samba-server
 
+- hosts: pfsdisk
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - mount
+
