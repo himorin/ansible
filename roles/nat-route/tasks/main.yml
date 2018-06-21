@@ -15,9 +15,9 @@
     line: "{{ item.line }}"
     insertafter: "^# ANSIBLE_ROLE_{{ item.pos }}_PLACE"
   with_items:
-    - line: "-A POSTROUTING -s {{ mask }} -j LOG --log-prefix \"{{ nat_route.prefix | default('PF: ') }}\" --log-level={{ nat_route.loglevel | default('info') }} --log-tcp-sequence"
-      pos: "NAT"
     - line: "-A POSTROUTING -s {{ mask }} -j MASQUERADE"
+      pos: "NAT"
+    - line: "-A POSTROUTING -j LOG --log-prefix \"{{ nat_route.prefix | default('PF: ') }}\" --log-level {{ nat_route.loglevel | default('info') }} --log-tcp-sequence"
       pos: "NAT"
     - line: "-A FORWARD -s {{ mask }} -j ACCEPT"
       pos: "FILTER"
