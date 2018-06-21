@@ -38,3 +38,9 @@
     - { role: packages, packages: "{{ site_config.packages.host_pfsarch }}" }
     - { role: fail2ban, jail_enable: [ sshd, apache-auth ] }
 
+- hosts: pfscalc
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - nat-route
+

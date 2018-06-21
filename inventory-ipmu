@@ -52,6 +52,16 @@ all:
           server_rsyslog: True
         mgmt-dhcp:
           server_ntp: True
+      children:
+        pfscalc:
+          hosts:
+            pc2:
+          vars:
+            site_config:
+              nat_route:
+                prefix: "PF "
+                loglevel: "info"
+                local: "ens3"
     actor:
       hosts:
         lf00-ics:
