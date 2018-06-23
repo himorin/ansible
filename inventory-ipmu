@@ -26,13 +26,12 @@ all:
       hosts:
         rsyslog:
           server_rsyslog: True
-        mgmt-dhcp:
-          server_ntp: True
       children:
         pfscalc:
           hosts:
             pc2:
           vars:
+            server_ntp: True
             nat_route:
               prefix: "PF "
               loglevel: "info"
