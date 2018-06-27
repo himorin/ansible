@@ -94,6 +94,7 @@ all:
             dlb8-vm:
           vars:
             hwraid_target_hp_p410: True
+            hwraid_target_hp: True
       hosts:
         m3605-1a:
           hwraid_target_megasas: True

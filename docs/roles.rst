@@ -229,6 +229,8 @@ This role will configure and install hardware RAID related package.
     - If 'hwraid_target_sas2' is defined to host, LSI FusionMTP SAS2 installed
     - If 'hwraid_target_megasas' is defined to host, LSI MegaRAID SAS 
       (Dell PERC) installed
+    - If `hwraid_target_hp` is defined to host, HP provided repository are 
+      configured and administration package installed
 
 Roles for service configuration
 ======
