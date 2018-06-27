@@ -1,5 +1,7 @@
 ---
 site_config:
+  apache:
+    sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_httpdconfig.git"
   cron_apt:
     hour: "4"
   dnsmasq:
@@ -7,6 +9,8 @@ site_config:
   elastic:
     server: "elasticsearch"
     storage_nfs: "10.100.200.3:/server/services/elasticsearch"
+  git:
+    key_file: "~/.ssh/id_rsa"
   grafana:
     url: "https://pfs.ipmu.jp:3000/grafana/"
   influxdb:

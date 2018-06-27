@@ -233,6 +233,35 @@ This role will configure and install hardware RAID related package.
 Roles for service configuration
 ======
 
+apache
+------
+
+This role will install and configure apache web server using specified 
+git repository as `site-enabled` configuration.
+Configuration items are mostly to enable module for specific target, or not. 
+Add line(s) to hosts in inventory if needed. 
+
+- Required configuration items
+
+  - site_config.apache.sites_git (git repository)
+  - apache.site_branch (branch name to be used)
+
+- Configuration item (If True, add line to inventory)
+
+  - apache.mod_ldap (enable ldap module or not)
+  - apache.mod_dav (enable DAV module or not)
+  - apache.mod_cgi (enable cgi module or not)
+  - apache.mod_php (enable php module or not, requires `mod_php_ver` also)
+  - apache.mod_php_ver (target version of php module)
+  - apache.mod_python (enable python module or not)
+
+- Dependencies
+
+  - site_config.git.key_file and configurations, if ssh access is required for 
+    git repository
+
+- No remarks
+
 dnsmasq
 ------
 
@@ -247,6 +276,8 @@ service.
 - Dependencies
 
   - iptables (role)
+  - site_config.git.key_file and configurations, if ssh access is required for 
+    git repository
 
 - Remarks
 

@@ -67,6 +67,13 @@ all:
         lf07:
         lf08:
         lf09:
+        landfill:
+          apache:
+            site_branch: landfill
+            mod_cgi: True
+            mod_ldap: True
+            mod_php: True
+            mod_php_ver: "7.0"
     actor:
       hosts:
         lf00-ics:

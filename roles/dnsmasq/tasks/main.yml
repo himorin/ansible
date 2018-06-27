@@ -18,8 +18,11 @@
   git:
     repo: "https://github.com/Subaru-PFS/ics_dnsmasq.git"
     dest: "/etc/dnsmasq.d/"
+    accept_hostkey: yes
+    key_file: "{{ site_config.git.key_file }}"
     update: yes
     force: yes
+  notify: restart dnsmasq
 - name: Make symlink to dnsmasq-site
   become: yes
   file:

@@ -38,6 +38,10 @@ services listed below.
 
 List of services and their items.
 
+- `apache`: `site-config` configuration files for apache httpd
+
+  - `sites_git`: target git repository
+
 - `cron\_apt`: cron\_apt package configuration (periodic system package update)
 
   - `hour`: Target hour to run update
@@ -50,6 +54,11 @@ List of services and their items.
 
   - `server`: Target server name to push from client
   - `storage_nfs`: NFS mount point of storage for Elasticsearch server
+
+- `git`: git server access configuration
+
+  - `key_file`: if specified, use private key of specified file name at TARGET
+    host (not local), also need to add key to ssh agent at LOCAL
 
 - `grafana`: Grafana service configuration
 

@@ -20,6 +20,8 @@ Roles defined in this collection are listed below.
 Refer `detailed document <docs/roles.rst>`_ for details including 
 configuration parameters and results. 
 
+:apache:
+  Configure apache web server using site config on git repository
 :cron-apt:
   Periodic package update using cron-apt
 :dnsmasq:
