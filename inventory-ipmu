@@ -43,6 +43,38 @@ all:
             local_fs:
               - xfsprogs
               - jfsutils
+        lfsrv:
+          hosts:
+            landfill:
+              apache:
+                site_branch: landfill
+                mod_cgi: True
+                mod_ldap: True
+                mod_php: True
+                mod_php_ver: "7.0"
+              nfs_mount:
+                - source: "pfsdisk:/server/home"
+                  target: "/home"
+                - source: "pfsdisk:/server"
+                  target: "/server"
+                - source: "pfscalc:/data1"
+                  target: "/data1"
+              host_packages:
+                - libarchive-zip-perl
+                - libclass-isa-perl
+                - libconfig-simple-perl
+                - libdata-ical-perl
+                - libdatetime-format-iso8601-perl
+                - libdbd-mysql-perl
+                - libemail-mime-perl
+                - libemail-reply-perl
+                - libemail-sender-perl
+                - libfile-slurp-perl
+                - libnet-ldap-perl
+                - libtemplate-perl
+                - libtext-markdown-perl
+                - libtext-multimarkdown-perl
+                - make
     nfssrv:
       hosts:
         sd2:
@@ -67,13 +99,6 @@ all:
         lf07:
         lf08:
         lf09:
-        landfill:
-          apache:
-            site_branch: landfill
-            mod_cgi: True
-            mod_ldap: True
-            mod_php: True
-            mod_php_ver: "7.0"
     actor:
       hosts:
         lf00-ics:

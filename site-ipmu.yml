@@ -52,3 +52,10 @@
   roles:
     - mount
 
+- hosts: lfsrv
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - { role: nfs-client, nfsv3_target: "{{ nfs_mount }}" }
+    - apache
+

@@ -10,6 +10,7 @@
     - { role: ntp, when: "server_ntp is undefined" }
     - { role: rsyslog-client, when: "server_rsyslog is undefined" }
     - { role: exim4, when: "server_smarthost is undefined" }
+    - { role: packages, packages: "{{ host_packages }}" }
 
 - hosts: ldap
   vars_files:
