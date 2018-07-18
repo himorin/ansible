@@ -116,7 +116,17 @@ all:
         dlb:
           hosts:
             dlb1-vm:
+            dlb2-vm:
+            dlb3-vm:
+            dlb4-vm:
+            dlb5-vm:
+            dlb6-vm:
+            dlb7-vm:
             dlb8-vm:
+            dlc1-vm:
+            dlc2-vm:
+            dlc3-vm:
+            dlc4-vm:
           vars:
             hwraid_target_hp_p410: True
             hwraid_target_hp: True
