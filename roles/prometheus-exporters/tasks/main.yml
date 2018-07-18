@@ -140,4 +140,26 @@
     name: es_exporter_on_boot
   when: prometheus_exporters_es_file.stat.md5 is defined
 
+- name: Check hpraid_exporter binary
+  stat: path="{{ env_gopath }}/bin/hpraid_exporter"
+  delegate_to: 127.0.0.1
+  register: hpraid_exporters_es_file
+  when: hwraid_target_hp is defined
+- name: Copy binary to target
+  become: yes
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0755
+  with_items:
+    - src: "{{ env_gopath }}/bin/hpraid_exporter"
+      dest: "/usr/sbin/hpraid_exporter"
+  when: hpraid_exporters_es_file.stat.md5 is defined
+- name: Add @reboot cron job for elasticsearch exporter
+  become: yes
+  cron:
+    special_time: reboot
+    job: "/usr/sbin/hpraid_exporter -cmd /usr/sbin/hpacucli > /dev/null 2>1&"
+    name: hpraid_exporter_on_boot
+  when: hpraid_exporters_es_file.stat.md5 is defined
 
