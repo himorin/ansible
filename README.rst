@@ -34,6 +34,8 @@ configuration parameters and results.
   Configure git-lfs from packagecloud and install
 :grafana:
   Configure grafana server (need additional configuration for auth)
+:grub-uuid:
+  Add a line of GRUB_DEVICE_UUID to /etc/default/grub
 :iscsi:
   Install packages, and just execute login (not mount)
 :ldap:

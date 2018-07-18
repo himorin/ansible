@@ -38,6 +38,17 @@ site configuration.
 
   - This role will configure cron-apt to upgrade package automatically everyday.
 
+grub-uuid
+------
+
+This role will configure grub (/etc/default/grub) to use UUID 
+(set GRUB_DEVICE_UUID line) and run update-grub2. If system boots already 
+with UUID, do nothing. 
+
+- no required configuration item
+- no dependency
+- no remarks
+
 ldap
 ----
 
