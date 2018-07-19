@@ -77,7 +77,7 @@
       prompt: "Enter account information for mysql in \"<account>:<password>\" format\n  need 'select' and 'replication client' priv on *.*\n  just type enter when you don't configure"
       private: yes
     - name: "prometheus_exporters_pgsql_account"
-      prompt: "Enter account information for mysql in \"<account>:<password>\" format\n  need connection priv on postgres\n  just type enter when you don't configure"
+      prompt: "Enter account information for pgsql in \"<account>:<password>\" format\n  need connection priv on postgres\n  just type enter when you don't configure"
       private: yes
   roles:
     - prometheus-exporters
