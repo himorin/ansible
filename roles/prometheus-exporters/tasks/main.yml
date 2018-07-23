@@ -155,7 +155,7 @@
     - src: "{{ env_gopath }}/bin/hpraid_exporter"
       dest: "/usr/sbin/hpraid_exporter"
   when: hpraid_exporters_es_file.stat.md5 is defined
-- name: Add @reboot cron job for elasticsearch exporter
+- name: Add @reboot cron job for hpraid exporter
   become: yes
   cron:
     special_time: reboot
