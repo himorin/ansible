@@ -141,4 +141,5 @@ all:
       hosts:
         prometheus-snmp:
           prometheus_exporters_es: True
+          prometheus_exporters_snmp: True
 

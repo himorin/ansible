@@ -19,50 +19,43 @@
   changed_when: False
   notify: restart ipmi-exporter
 
-- name: Check snmp_exporter binary
-  stat: path="{{ env_gopath }}/bin/snmp_exporter"
+- name: Include exporter tasks as snmp_exporter
+  include: exporter.yml
+  vars:
+    exporter:
+      name: snmp_exporter
+      opt_args:
+        - "--config.file=\"/usr/share/snmp_exporter/snmp.yml\""
   when: prometheus_exporters_snmp is defined
-  delegate_to: 127.0.0.1
-  register: prometheus_exporters_snmp_file
+  notify: restart snmp-exporter
 - name: Create directory for snmp exporter binary
+  become: yes
   file:
-    path: "~/snmp_exporter/"
+    path: "/usr/share/snmp_exporter/"
     state: directory
-    owner: "{{ ansible_ssh_user }}"
+    owner: root
     mode: 0755
-  when: prometheus_exporters_snmp_file.stat.md5 is defined
-- name: Copy binary to target
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: 0755
-  with_items:
-    - src: "{{ env_gopath }}/bin/snmp_exporter"
-      dest: "~/snmp_exporter/snmp_exporter"
-  when: prometheus_exporters_snmp_file.stat.md5 is defined
-- name: Copy invoke script for snmp exporter
-  template:
-    src: "{{ item }}"
-    dest: "~/{{ item }}"
-    mode: 0755
-  with_items:
-    - snmp_exporter.sh
-  when: prometheus_exporters_snmp_file.stat.md5 is defined
+  when: prometheus_exporters_snmp is defined
+  notify: restart snmp-exporter
 - name: Copy snmp definition for snmp exporter
+  become: yes
   template:
     src: "{{ item }}"
-    dest: "~/snmp_exporter/{{ item }}"
+    dest: "/usr/share/snmp_exporter/{{ item }}"
     mode: 0644
   with_items:
     - snmp_orig.yml
     - snmp_ushaups.yml
-  when: prometheus_exporters_snmp_file.stat.md5 is defined
-- name: Add @reboot cron job for snmp exporter
-  cron:
-    special_time: reboot
-    job: "~/snmp_exporter.sh"
-    name: snmp_exporter_on_boot
-  when: prometheus_exporters_snmp_file.stat.md5 is defined
+  when: prometheus_exporters_snmp is defined
+  notify: restart snmp-exporter
+  register: snmp_exporter_definition
+- name: Copy openssl.conf
+  become: yes
+  shell: cat /usr/share/snmp_exporter/snmp_*.yml > /usr/share/snmp_exporter/snmp.yml
+  args:
+    creates: /usr/share/snmp_exporter/snmp.yml
+  when: snmp_exporter_definition.changed
+  notify: restart snmp-exporter
 
 - name: Add database connection for mysql exporter
   become: yes
