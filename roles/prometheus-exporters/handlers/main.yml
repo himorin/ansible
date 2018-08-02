@@ -20,6 +20,13 @@
     daemon_reload: yes
     enabled: yes
   become: yes
+- name: restart elasticsearch-exporter
+  systemd:
+    name: elasticsearch_exporter.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
 - name: restart hpraid-exporter
   systemd:
     name: hpraid_exporter.service

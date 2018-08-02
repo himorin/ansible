@@ -138,4 +138,7 @@ all:
     prometheus-exporters:
       children:
         virt-host:
+      hosts:
+        prometheus-snmp:
+          prometheus_exporters_es: True
 
