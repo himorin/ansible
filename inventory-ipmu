@@ -1,27 +1,47 @@
 ---
 all:
   children:
+    hp-dl:
+      children:
+        hp-dlb:
+          children:
+            dlbs-nonvm:
+              hosts:
+                dlb1-vm:
+                dlb6-vm:
+            dlbs-vm:
+              hosts:
+                dlb2-vm:
+                dlb3-vm:
+                dlb4-vm:
+                dlb5-vm:
+                dlb7-vm:
+                dlb8-vm:
+        hp-dlc:
+          children:
+            dlcs-nonvm:
+              hosts:
+                dlc1-vm:
+            dlcs-vm:
+              hosts:
+                dlc2-vm:
+                dlc3-vm:
+                dlc4-vm:
     virt-host:
+      children:
+        dlbs-vm:
+        dlcs-vm:
       hosts:
         rca1-vm:
         rca2-vm:
         rca3-vm:
-        dlb1-vm:
-        dlb2-vm:
-        dlb3-vm:
-        dlb4-vm:
-        dlb5-vm:
-        dlb6-vm:
-        dlb7-vm:
-        dlb8-vm:
-        dlc1-vm:
-        dlc2-vm:
-        dlc3-vm:
         dla1-vm:
         dla2-vm:
         dla3-vm:
         m3605-1a:
         rfa2-vm:
+      vars:
+        prometheus_exporters_ipmi: True
     nfssrv:
       hosts:
         sd2:
@@ -68,12 +88,14 @@ all:
         lf09-ics:
     hwraid:
       children:
-        dlb:
-          hosts:
-            dlb1-vm:
-            dlb8-vm:
+        hp-dlb:
           vars:
             hwraid_target_hp_p410: True
+            hwraid_target_hp: True
+        hp-dlc:
+          vars:
+            hwraid_target_hp_p410: True
+            hwraid_target_hp: True
       hosts:
         m3605-1a:
           hwraid_target_megasas: True
@@ -114,4 +136,13 @@ all:
         nfs27:
         nfs28:
         nfs29:
+    prometheus-exporters:
+      children:
+        virt-host:
+      hosts:
+        prometheus-snmp:
+          prometheus_exporters_es: True
+          prometheus_exporters_snmp: True
+        jirapipe-77:
+          prometheus_exporters_jira: True        
 

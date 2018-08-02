@@ -1,0 +1,52 @@
+---
+- name: restart ipmi-exporter
+  systemd:
+    name: ipmi-exporter.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+- name: restart prometheus-mysqld-exporter
+  systemd:
+    name: prometheus-mysqld-exporter.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+- name: restart prometheus-postgres-exporter
+  systemd:
+    name: prometheus-postgres-exporter.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+- name: restart snmp-exporter
+  systemd:
+    name: snmp_exporter.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+- name: restart elasticsearch-exporter
+  systemd:
+    name: elasticsearch_exporter.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+- name: restart hpraid-exporter
+  systemd:
+    name: hpraid_exporter.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+- name: restart prometheus-exporter-sanitizer
+  systemd:
+    name: prometheus_exporter_sanitizer.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+
+

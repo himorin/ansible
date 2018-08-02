@@ -231,6 +231,15 @@ site_config:
     route_prefix: "/prometheus"
     log_format: "logger:syslog?appname=prometheus&local=7"
     storage_nfs: "10.100.200.3:/server/services/prometheus"
+  prometheus_exporter:
+    mysql:
+      host: "db2:3306"
+    pgsql:
+      host: "db2:5432"
+    es:
+      host: "elasticsearch"
+    jira:
+      host: "localhost"
   rsyslog:
     server: "rsyslog.pfs.ipmu.jp"
     repush: "10.100.200.14:10514;json-template"

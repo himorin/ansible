@@ -1,0 +1,138 @@
+---
+- name: Add kernel module for ipmi exporter
+  become: yes
+  lineinfile:
+    dest: /etc/modules
+    line: "{{ item }}"
+  with_items:
+    - ipmi_si
+    - ipmi_devintf
+  when: prometheus_exporters_ipmi is defined
+  notify: restart ipmi-exporter
+- name: Load kernel module for ipmi exporter
+  become: yes
+  shell: modprobe {{ item }}
+  with_items:
+    - ipmi_si
+    - ipmi_devintf
+  when: prometheus_exporters_ipmi is defined
+  changed_when: False
+  notify: restart ipmi-exporter
+
+- name: Include exporter tasks as snmp_exporter
+  include: exporter.yml
+  vars:
+    exporter:
+      name: snmp_exporter
+      opt_args:
+        - "--config.file=\"/usr/share/snmp_exporter/snmp.yml\""
+  when: prometheus_exporters_snmp is defined
+  notify: restart snmp-exporter
+- name: Create directory for snmp exporter binary
+  become: yes
+  file:
+    path: "/usr/share/snmp_exporter/"
+    state: directory
+    owner: root
+    mode: 0755
+  when: prometheus_exporters_snmp is defined
+  notify: restart snmp-exporter
+- name: Copy snmp definition for snmp exporter
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "/usr/share/snmp_exporter/{{ item }}"
+    mode: 0644
+  with_items:
+    - snmp_orig.yml
+    - snmp_ushaups.yml
+  when: prometheus_exporters_snmp is defined
+  notify: restart snmp-exporter
+  register: snmp_exporter_definition
+- name: Copy openssl.conf
+  become: yes
+  shell: cat /usr/share/snmp_exporter/snmp_*.yml > /usr/share/snmp_exporter/snmp.yml
+  args:
+    creates: /usr/share/snmp_exporter/snmp.yml
+  when: snmp_exporter_definition.changed
+  notify: restart snmp-exporter
+
+- name: Add database connection for mysql exporter
+  become: yes
+  lineinfile:
+    dest: /etc/default/prometheus-mysqld-exporter
+    regexp: "^{{ item.key }}"
+    line: "{{ item.value }}"
+    mode: '0600'
+  with_items:
+    - key: "DATA_SOURCE_NAME"
+      value: "DATA_SOURCE_NAME=\"{{ prometheus_exporters_mysql_account }}@({{ site_config.prometheus_exporter.mysql.host }})/mysql\""
+  when: prometheus_exporters_mysql is defined and prometheus_exporters_mysql_account != ""
+  notify: restart prometheus-mysqld-exporter
+
+- name: Add database connection for pgsql exporter
+  become: yes
+  lineinfile:
+    dest: /etc/default/prometheus-postgres-exporter
+    regexp: "^{{ item.key }}"
+    line: "{{ item.key }}='{{ item.value }}'"
+  with_items:
+    - key: "DATA_SOURCE_NAME"
+      value: "postgresql://{{ prometheus_exporters_pgsql_account }}@{{ site_config.prometheus_exporter.pgsql.host }}/postgres"
+    - key: "ARGS"
+      value: "\\\n"
+  when: prometheus_exporters_pgsql is defined and prometheus_exporters_pgsql_account != ""
+  notify: restart prometheus-postgres-exporter
+- name: Add service configuration for pgsql exporter
+  become: yes
+  lineinfile:
+    dest: /etc/default/prometheus-postgres-exporter
+    line: "{{ item }}"
+    insertafter: "^ARGS='"
+  with_items:
+    - "--extend.query-path=\"/etc/default/prometheus-postgres-exporter-queries.yaml\" \\"
+  when: prometheus_exporters_pgsql is defined
+  notify: restart prometheus-postgres-exporter
+- name: Add pgsql query definition yaml
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "/etc/default/{{ item }}"
+    mode: 0644
+  with_items:
+    - prometheus-postgres-exporter-queries.yaml
+  when: prometheus_exporters_pgsql is defined
+  notify: restart prometheus-postgres-exporter
+
+- name: Include exporter tasks as elasticsearch_exporter
+  include: exporter.yml
+  vars:
+    exporter:
+      name: elasticsearch_exporter
+      opt_args:
+        - "--es.uri=http://{{ site_config.prometheus_exporter.es.host }}:9200"
+        - "--es.all=true"
+        - "--es.indices=true"
+  when: prometheus_exporters_es is defined
+  notify: restart elasticsearch-exporter
+
+- name: Include exporter tasks as hpraid_exporter
+  include: exporter.yml
+  vars:
+    exporter:
+      name: hpraid_exporter
+      opt_args:
+        - "-cmd /usr/sbin/hpacucli"
+  when: hwraid_target_hp is defined
+  notify: restart hpraid-exporter
+
+- name: Include exporter tasks as prometheus_exporter_sanitizer for jira
+  include: exporter.yml
+  vars:
+    exporter:
+      name: prometheus_exporter_sanitizer
+      opt_args:
+        - "-origin http://{{ site_config.prometheus_exporter.jira.host }}:8081/jira/plugins/servlet/prometheus/metrics"
+  when: prometheus_exporters_jira is defined
+  notify: restart prometheus-exporter-sanitizer
+

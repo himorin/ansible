@@ -1,11 +1,19 @@
 ---
-- name: system wide common package
+- name: Add backports
+  become: yes
+  apt_repository:
+    repo: "deb http://deb.debian.org/debian {{ ansible_lsb.codename }}-backports main contrib non-free"
+    state: present
+    update_cache: yes
+  when: packages_setup_backport is defined
+
+- name: Install packages via apt
   become: yes
   apt:
     name: "{% if item.package is defined %}{{ item.package}}{% else %}{{ item }}{% endif %}"
     state: present
   with_items: "{{ packages }}"
-- name: Enable service
+- name: Enable service via systemd
   become: yes
   systemd:
     name: "{{ item.enable_service }}"
@@ -13,3 +21,4 @@
     state: started
   when: item.enable_service is defined
   with_items: "{{ packages }}"
+

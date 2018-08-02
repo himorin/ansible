@@ -1,0 +1,21 @@
+---
+dependencies:
+  - role: packagecloud
+    packagecloud: 
+      target_id: LovooOS/prometheus-exporters
+    when: prometheus_exporters_ipmi is defined
+  - role: packages
+    packages:
+      - ipmi-exporter
+    when: prometheus_exporters_ipmi is defined
+  - role: packages
+    packages:
+      - prometheus-mysqld-exporter
+    when: prometheus_exporters_mysql is defined
+  - role: packages
+    packages:
+      - prometheus-postgres-exporter
+    when: prometheus_exporters_pgsql is defined
+    vars:
+      - packages_setup_backport: True
+

@@ -51,6 +51,8 @@ configuration parameters and results.
   Configure NFSv3 exports for targets specified by playbook argument 'nfsv3_export'
 :ntp:
   Configure NTP
+:packagecloud:
+  Configure apt-line for packagecloud
 :packages:
   Install packages specified by playbook argument 'packages'.
   List of packages are listed in 'packages' in site config.
@@ -60,6 +62,9 @@ configuration parameters and results.
   Configure environment to build private CA (not to build CA)
 :prometheus:
   Configure prometheus server with skeltons for targets.
+:prometheus-exporters:
+  Install and configure exporters for prometheus, per host vars define which 
+  module to be installed on whith target. 
 :rsyslog-client:
   Configure rsyslog to push all syslog lines to site_config.rsyslog.server 
   via udp.
