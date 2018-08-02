@@ -149,12 +149,4 @@
         - "-cmd /usr/sbin/hpacucli"
   when: hwraid_target_hp is defined
   notify: restart hpraid-exporter
-- name: Disable @reboot cron job for exporter
-  become: yes
-  cron:
-    special_time: reboot
-    job: "/usr/sbin/hpraid_exporter -cmd /usr/sbin/hpacucli > /dev/null 2>1&"
-    name: hpraid_exporter_on_boot
-    state: absent
-  when: hwraid_target_hp is defined
 
