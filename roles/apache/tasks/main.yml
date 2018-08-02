@@ -84,13 +84,13 @@
     mode: 0755
 - name: Checkout apache site config
   git:
-    repo: "{{ site_config.apache.sites_git }}"
+    repo: "{{ site_config.httpd.sites_git }}"
     dest: "/etc/apache2/sites-enabled/"
     accept_hostkey: yes
     key_file: "{{ site_config.git.key_file }}"
     update: yes
     force: yes
-    version: "{{ apache.site_branch }}"
+    version: "{{ httpd.site_branch }}"
   notify: restart apache2
 - name: Limit site-config to be loaded
   become: yes

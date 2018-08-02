@@ -1,7 +1,5 @@
 ---
 site_config:
-  apache:
-    sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_httpdconfig.git"
   cron_apt:
     hour: "4"
   dnsmasq:
@@ -13,6 +11,8 @@ site_config:
     key_file: "~/.ssh/id_rsa"
   grafana:
     url: "https://pfs.ipmu.jp:3000/grafana/"
+  httpd:
+    sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_httpdconfig.git"
   influxdb:
     storage_nfs: "10.100.200.3:/server/services/influxdb"
   ldap:

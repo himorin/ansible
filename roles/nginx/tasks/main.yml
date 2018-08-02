@@ -1,0 +1,36 @@
+---
+- name: Remove default
+  become: yes
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+- name: Make site config directory owned by ansible user
+  become: yes
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_ssh_user }}"
+    mode: 0755
+  with_items:
+    - /etc/nginx/sites-enabled
+    - /etc/nginx/metrics-lua
+- name: Checkout httpd site config
+  git:
+    repo: "{{ site_config.httpd.sites_git }}"
+    dest: /etc/nginx/sites-enabled/
+    accept_hostkey: yes
+    key_file: "{{ site_config.git.key_file }}"
+    update: yes
+    force: yes
+    version: "{{ httpd.site_branch }}"
+  notify: restart nginx
+- name: Checkout prometheus lua script
+  git:
+    repo: https://github.com/knyar/nginx-lua-prometheus.git
+    dest: /etc/nginx/metrics-lua
+    accept_hostkey: yes
+    key_file: "{{ site_config.git.key_file }}"
+    update: yes
+    force: yes
+  notify: restart nginx
+
