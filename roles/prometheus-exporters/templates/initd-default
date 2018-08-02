@@ -1,0 +1,3 @@
+# command line argument for {{ exporter.name }}
+ARGS="{{ exporter.opt_args | join(" ") }}"
+
