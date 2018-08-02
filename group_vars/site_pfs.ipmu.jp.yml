@@ -240,6 +240,8 @@ site_config:
       host: "db2:5432"
     es:
       host: "elasticsearch"
+    jira:
+      host: "localhost"
   rsyslog:
     server: "rsyslog.pfs.ipmu.jp"
     repush: "10.100.200.14:10514;json-template"

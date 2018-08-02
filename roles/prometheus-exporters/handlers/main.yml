@@ -41,4 +41,12 @@
     daemon_reload: yes
     enabled: yes
   become: yes
+- name: restart prometheus-exporter-sanitizer
+  systemd:
+    name: prometheus_exporter_sanitizer.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+
 

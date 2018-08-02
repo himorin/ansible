@@ -126,3 +126,13 @@
   when: hwraid_target_hp is defined
   notify: restart hpraid-exporter
 
+- name: Include exporter tasks as prometheus_exporter_sanitizer for jira
+  include: exporter.yml
+  vars:
+    exporter:
+      name: prometheus_exporter_sanitizer
+      opt_args:
+        - "-origin http://{{ site_config.prometheus_exporter.jira.host }}:8081/jira/plugins/servlet/prometheus/metrics"
+  when: prometheus_exporters_jira is defined
+  notify: restart prometheus-exporter-sanitizer
+
