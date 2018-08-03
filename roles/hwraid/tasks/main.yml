@@ -36,4 +36,31 @@
       - hpacucli
     state: present
   when: hwraid_target_hp_p410 is defined
+- name: Add HP gpg key
+  become: yes
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  with_items:
+    - https://downloads.linux.hpe.com/SDR/hpPublicKey1024.pub
+    - https://downloads.linux.hpe.com/SDR/hpPublicKey2048.pub
+    - https://downloads.linux.hpe.com/SDR/hpPublicKey2048_key1.pub
+    - https://downloads.linux.hpe.com/SDR/hpePublicKey2048_key1.pub
+  when: hwraid_target_hp is defined
+- name: Add HP repository
+  become: yes
+  apt_repository:
+    repo: "deb http://downloads.linux.hpe.com/SDR/repo/mcp {{ ansible_distribution_release }}/current non-free"
+  when: hwraid_target_hp is defined
+- name: Install for HP
+  become: yes
+  apt:
+    update_cache: yes
+    name:
+      - hponcfg
+      - ssacli
+      - ssaducli
+      - ssa
+    state: present
+  when: hwraid_target_hp is defined
 

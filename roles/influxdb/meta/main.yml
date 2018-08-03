@@ -1,0 +1,11 @@
+---
+dependencies: 
+  - role: packages
+    packages:
+      - influxdb
+      - influxdb-client
+  - role: nfs-client
+    nfsv3_target: 
+      - source: "{{ site_config.influxdb.storage_nfs }}"
+        target: "/influxdb/"
+

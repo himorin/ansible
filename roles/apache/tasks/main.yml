@@ -1,0 +1,105 @@
+---
+- name: Enable apache module prefork (for cgi, php)
+  become: yes
+  apache2_module:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items:
+    - name: mpm_event
+      state: absent
+    - name: mpm_prefork
+      state: present
+  notify: restart apache2
+  when: apache.mod_php is defined or apache.mod_cgi is defined
+- name: Enable apache modules
+  become: yes
+  apache2_module:
+    name: "{{ item }}"
+  with_items:
+    - authnz_ldap
+    - expires
+    - headers
+    - info
+    - proxy
+    - proxy_http
+    - proxy_wstunnel
+    - rewrite
+    - socache_shmcb
+    - ssl
+    - vhost_alias
+  notify: restart apache2
+- name: Enable apache modules for ldap
+  become: yes
+  apache2_module:
+    name: "{{ item }}"
+  with_items:
+    - authnz_ldap
+    - ldap
+  notify: restart apache2
+  when: apache.mod_ldap is defined
+- name: Enable apache modules for dav
+  become: yes
+  apache2_module:
+    name: "{{ item }}"
+  with_items:
+    - dav
+    - dav_fs
+  notify: restart apache2
+  when: apache.mod_dav is defined
+- name: Enable apache modules for cgi
+  become: yes
+  apache2_module:
+    name: "{{ item }}"
+  with_items:
+    - cgi
+  notify: restart apache2
+  when: apache.mod_cgi is defined
+- name: Enable apache modules for php
+  become: yes
+  apache2_module:
+    name: "{{ item }}"
+  with_items:
+    - "php{{ apache.mod_php_ver }}"
+  notify: restart apache2
+  when: apache.mod_php is defined
+- name: Enable apache modules for python
+  become: yes
+  apache2_module:
+    name: "{{ item }}"
+  with_items:
+    - python
+  notify: restart apache2
+  when: apache.mod_python is defined
+- name: Remove 000-default.conf
+  become: yes
+  file:
+    path: "/etc/apache2/sites-enabled/000-default.conf"
+    state: absent
+- name: Make apache site config directory owned by ansible user
+  become: yes
+  file:
+    path: "/etc/apache2/sites-enabled/"
+    state: directory
+    owner: "{{ ansible_ssh_user }}"
+    mode: 0755
+- name: Checkout apache site config
+  git:
+    repo: "{{ site_config.httpd.sites_git }}"
+    dest: "/etc/apache2/sites-enabled/"
+    accept_hostkey: yes
+    key_file: "{{ site_config.git.key_file }}"
+    update: yes
+    force: yes
+    version: "{{ httpd.site_branch }}"
+  notify: restart apache2
+- name: Limit site-config to be loaded
+  become: yes
+  lineinfile:
+    dest: /etc/apache2/apache2.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.value }}"
+  notify: restart apache2
+  with_items:
+    - regexp: "^IncludeOptional sites-enabled/"
+      value: "IncludeOptional sites-enabled/http*"
+

@@ -7,8 +7,14 @@ site_config:
   elastic:
     server: "elasticsearch"
     storage_nfs: "10.100.200.3:/server/services/elasticsearch"
+  git:
+    key_file: "~/.ssh/id_rsa"
   grafana:
     url: "https://pfs.ipmu.jp:3000/grafana/"
+  httpd:
+    sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_httpdconfig.git"
+  influxdb:
+    storage_nfs: "10.100.200.3:/server/services/influxdb"
   ldap:
     uri: "ldap://ldap.pfs.ipmu.jp/"
     base: "dc=shell,dc=pfs,dc=ipmu,dc=jp"
@@ -225,6 +231,14 @@ site_config:
       - python3-urllib3
       - python3-wadllib
       - python3-wheel
+  postfix:
+    tls: 
+      use: False
+      cert_file: ""
+      key_file: ""
+      CAfile: ""
+    myhostname: "pfs.ipmu.jp"
+    localnet: "10.100.200.0/23"
   prometheus:
     server: "prometheus"
     external_url: "https://pfs.ipmu.jp/prometheus/"
@@ -243,6 +257,22 @@ site_config:
   rsyslog:
     server: "rsyslog.pfs.ipmu.jp"
     repush: "10.100.200.14:10514;json-template"
+  samba:
+    workgroup: "PFS"
+    address: "10.100.200.0/23 192.168.0.0/16"
+    printer_group: "root, @alls"
+    export:
+      name: "data1"
+      comment: "Data Storage 1"
+      path: "/data1"
+  squid:
+    cache_mem: "1 GB"
+    maximum_object_size_in_memory: "2 MB"
+    maximum_object_size: "20 MB"
+    cache_dir: "/squid"
+    cache_dir_mb: 20000
+    cache_dir_nfs: "10.100.200.3:/server/services/squid/"
+    syslog: "local1.info"
   system_accounts:
     groups:
       - gname: "libvirt-qemu"

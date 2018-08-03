@@ -68,6 +68,7 @@
   roles:
     - boot-aptupdate
     - serial-console
+    - { role: packages, packages: "{{ host_packages }}" }
 
 - hosts: prometheus-exporters
   vars_files:

@@ -6,6 +6,10 @@ For each role,
 
 - Configuration after execution of role
 - Required configuration items (both site configuration and passed on call)
+
+  - site wide means defined in like group_vars under `site_config`
+  - host local means defined in inventory files
+
 - Dependencies
 - Remarks
 
@@ -29,7 +33,7 @@ This role will install and configure cron-apt (periodic system package update
 cron job) into the system (Ubuntu/Debian), to run at hour specified in 
 site configuration. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - cron_apt.hour (no default value)
 
@@ -54,7 +58,7 @@ ldap
 
 This role will configure ldap client for system and account authentication. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - ldap.base (no default value)
   - ldap.uri (no default value)
@@ -64,12 +68,25 @@ This role will configure ldap client for system and account authentication.
 
   - No filtering by group for now. All in ldap.base will be loaded into system.
 
+mount
+-----
+
+This role will add lines to fstab to mount local attached storage.
+
+- Required configuration items (host local)
+
+  - local_uuids (array of .target, .fstype, .source)
+  - local_fs (array of additionally required packages)
+
+- No dependencies
+- No remarks
+
 munin-node
 ------
 
 This role will configure munin-node client. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - munin.cidr (no default value)
 
@@ -86,7 +103,7 @@ other role(s).
 Target (IP address and export point) and mount point are passed to this role 
 at calling as variables. 
 
-- Required configuration items
+- Required configuration items (host local)
 
   - 'nfsv3_target': list of dict (with 'source' and 'target') need to be passed.
 
@@ -103,10 +120,14 @@ nfs-server
 This role will configure NFSv3 export. Target directories at NFSv3 server local 
 are passed to this role at calling as variables 'nfsv3_export'.
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - 'nfs.v3export_access': NFSv3 export configuration (address block and 
     condition to be put into '/etc/exports')
+
+- Required configuration items (host local)
+
+  - nfsv3_export: directory to export
 
 - Deneds on 'packages' role
 - Remarsk
@@ -119,7 +140,7 @@ ntp
 
 This role will confiugre NTP client. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - ntp.local (no default value)
 
@@ -149,7 +170,7 @@ This role will install packages, and designed to be called by other role(s).
 List of packages to be installed are passed to this role at calling as 
 variables. 
 
-- Required configuration items
+- Required configuration items (host local)
 
   - 'packages': list of packages, options can be passed as dict in the list.
     If item in the list is a simple variable, just pass specified variable as 
@@ -170,7 +191,7 @@ rsyslog-client
 This role will configure rsyslog as client to push all syslog lines via imudp 
 to the rsyslog server. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - rsyslog.server (no default value)
 
@@ -184,7 +205,7 @@ system-accounts
 
 This role will setup system users and group. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - system_accounts.groups
   - system_accounts.users
@@ -200,7 +221,7 @@ virt
 
 This role will configure libvirt environment, with PKI and br0. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - virt.nfsdisk (no default value)
   - virt.pki.local (no default value)
@@ -233,9 +254,40 @@ This role will configure and install hardware RAID related package.
     - If 'hwraid_target_sas2' is defined to host, LSI FusionMTP SAS2 installed
     - If 'hwraid_target_megasas' is defined to host, LSI MegaRAID SAS 
       (Dell PERC) installed
+    - If `hwraid_target_hp` is defined to host, HP provided repository are 
+      configured and administration package installed
 
 Roles for service configuration
 ======
+
+apache
+------
+
+This role will install and configure apache web server using specified 
+git repository as `site-enabled` configuration.
+Configuration items are mostly to enable module for specific target, or not. 
+Add line(s) to hosts in inventory if needed. 
+
+- Required configuration items
+
+  - site_config.apache.sites_git (git repository)
+  - apache.site_branch (branch name to be used)
+
+- Configuration item (If True, add line to inventory)
+
+  - apache.mod_ldap (enable ldap module or not)
+  - apache.mod_dav (enable DAV module or not)
+  - apache.mod_cgi (enable cgi module or not)
+  - apache.mod_php (enable php module or not, requires `mod_php_ver` also)
+  - apache.mod_php_ver (target version of php module)
+  - apache.mod_python (enable python module or not)
+
+- Dependencies
+
+  - site_config.git.key_file and configurations, if ssh access is required for 
+    git repository
+
+- No remarks
 
 dnsmasq
 ------
@@ -244,13 +296,15 @@ This role will install dnsmasq and configure using ics_dnsmasq repository.
 Refer ics_dnsmasq repository for detailed configuration scheme of DNS/DHCP 
 service. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - dnsmasq.site (no default value)
 
 - Dependencies
 
   - iptables (role)
+  - site_config.git.key_file and configurations, if ssh access is required for 
+    git repository
 
 - Remarks
 
@@ -263,7 +317,7 @@ exim4
 This role will install and configure exim4 in satellite mode, with smarthost 
 specified in site configuration. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - mail.smarthost (no default value)
 
@@ -275,7 +329,7 @@ grafana
 
 This roll will install and configure grafana server. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - grafana.url (no default value)
 
@@ -289,13 +343,65 @@ This roll will install and configure grafana server.
     grafana.ini for database, session, seciruty and auth by hand - after 
     configuration of other services like database.
 
+influxdb
+------
+
+This role will configure influxdb using data directory via NFS.
+
+- Required configuration
+
+  - site_config.influxdb.storage_nfs
+
+- No dependencies
+- Remarks
+
+  - No retention policy initialization command. Need to initiate RP/CQ by 
+    using influx client.
+
+
+nat-route
+------
+
+This role will configure NAT routing from local network to external, with 
+logging packet flow to syslog.
+
+- Required configuration items (host local)
+
+  - `nat_route.loglevel`: Loglevel (like info, debug) to log NAT routed 
+    packet to syslog
+  - `nat_route.local`: Specify local network interface
+  - `nat_route.prefix`: Prefix to be attached to syslog line
+
+- No external dependencies
+- Remarks
+
+  - This role will not configure syslog output. 
+    All logs will go kernel facility with configured loglevel.
+
+postfix
+------
+
+This role will configure postfix mail server as smarthost to external.
+
+- Required configuration items (site wide)
+
+  - postfix.tls.use
+  - postfix.myhostname
+  - postfix.localnet
+
+- No external dependencies
+- Remarks
+
+  - Configuration will accept external email delivery to the server.
+    Need to be rejected by iptables or something.
+
 privca
 ------
 
 This role will configure environment to build private CA and install some 
 scripts for certs generation. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - virt.pki.local (no default value)
   - virt.pki.subj (no default value)
@@ -314,7 +420,7 @@ hosts.
 Skelton files for list of targets are installed into 
 '/etc/prometheus/scrape_configs' and loaded from files configured by this role. 
 
-- Required configuration items
+- Required configuration items (site wide)
 
   - prometheus.external_url (no default value)
   - prometheus.route_prefix (no default value)
@@ -391,6 +497,40 @@ and to proxy lines after processing pushed syslog lines if
   - Will not touch local output lines, so comment them out by hand if in need. 
   - Will not install template for proxy if 'site_config.rsyslog.repush' is not 
     defined. 
+
+samba-server
+------
+
+This role will configure samba server for smb file sharing.
+
+- Required configuration items (host local)
+
+  - samba.address
+  - samba.export.name
+  - samba.export.comment
+  - samba.export.path
+  - samba.printer_group
+  - samba.workgroup
+
+- No dependencies
+- No remarks
+
+squid
+-----
+
+This role will configure squid proxy server. 
+
+- Required configuration items (site wide)
+
+  - squid.cache_mem (no default value)
+  - squid.maximum_object_size_in_memory (no default value)
+  - squid.maximum_object_size (no default value)
+  - squid.cache_dir (no default value)
+  - squid.cache_dir_mb (no default value)
+  - squid.syslog (no default value)
+ 
+- No dependencies
+- No remarks
 
 Roles for PFS configuration
 ======

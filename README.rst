@@ -23,6 +23,8 @@ Roles defined in this collection are listed below.
 Refer `detailed document <docs/roles.rst>`_ for details including 
 configuration parameters and results. 
 
+:apache:
+  Configure apache web server using site config on git repository
 :cron-apt:
   Periodic package update using cron-apt
 :dnsmasq:
@@ -39,12 +41,18 @@ configuration parameters and results.
   Configure grafana server (need additional configuration for auth)
 :grub-uuid:
   Add a line of GRUB_DEVICE_UUID to /etc/default/grub
+:influxdb:
+  Configure influxdb using existing data directory via NFS.
 :iscsi:
   Install packages, and just execute login (not mount)
 :ldap:
   Configuration of ldap for account
+:mount:
+  Mount local attached storage using UUID
 :munin-node:
   Configuration of munin-node
+:nat-route:
+  Configure NAT routing
 :nfs-client:
   Mount NFSv3 for targets specified by playbook argument 'nfsv3_target'
 :nfs-server:
@@ -58,6 +66,8 @@ configuration parameters and results.
   List of packages are listed in 'packages' in site config.
   Note, openssh and ansible are required to be installed by preseeded 
   installation media.
+:postfix:
+  Configure postfix mail server
 :privca:
   Configure environment to build private CA (not to build CA)
 :prometheus:
@@ -73,6 +83,10 @@ configuration parameters and results.
   Will not touch local output lines, so comment them out by hand if in need. 
   If site_config.rsyslog.repush is configured, will put config file to repush 
   syslog lines to after processing.
+:samba-server:
+  Configure samba server.
+:squid:
+  Configure squid server.
 :ssh-gateway:
   Configure a host as ssh gateway server, with accepting connections from 
   external network (iptables).

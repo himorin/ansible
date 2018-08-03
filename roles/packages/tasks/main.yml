@@ -16,7 +16,7 @@
 - name: Enable service via systemd
   become: yes
   systemd:
-    name: "{{ item.enable_service }}"
+    name: "{{ item.enable_service }}.service"
     enabled: yes
     state: started
   when: item.enable_service is defined

@@ -38,6 +38,10 @@ services listed below.
 
 List of services and their items.
 
+- `apache`: `site-config` configuration files for apache httpd
+
+  - `sites_git`: target git repository
+
 - `cron\_apt`: cron\_apt package configuration (periodic system package update)
 
   - `hour`: Target hour to run update
@@ -51,9 +55,18 @@ List of services and their items.
   - `server`: Target server name to push from client
   - `storage_nfs`: NFS mount point of storage for Elasticsearch server
 
+- `git`: git server access configuration
+
+  - `key_file`: if specified, use private key of specified file name at TARGET
+    host (not local), also need to add key to ssh agent at LOCAL
+
 - `grafana`: Grafana service configuration
 
   - `url`: URL exposed to external via reverse proxy
+
+- `influxdb`: InfluxDB configuration
+
+  - `storage_nfs`: NFS mount point of storage for influxdb server
 
 - `ldap`: LDAP server information
 
@@ -86,6 +99,18 @@ List of services and their items.
 
   - `sitewide`: Site-wide list of packages
 
+- `postfix`: Postfix service configuration
+
+  - `tls`: Group for TLS related configurations
+
+    - `use`: 'True' or 'False', flag to use TLS or not. If 'True', need other 
+      items configured.
+    - `cert_file`: Certificate file to be loaded for TLS.
+    - `key_file`: Private key file to be loaded for TLS.
+    - `CAfile`: CA chain file to be loaded for TLS.
+  - `myhostname`: 'hostname' of email server
+  - `localnet`: Address block to be accepted as local network for smarthost.
+
 - `prometheus`: Prometheus service configuration
 
   - `server`: Prometheus server name
@@ -113,6 +138,29 @@ List of services and their items.
   - `server`: rsyslog server to push
   - `repush`: If rsyslog server is required to push to another service, put 
     line here.
+
+- `samba`: Samba server configuration
+
+  - `workgroup`: workgroup name of export
+  - `address`: network addresses (address ranges) to be accessible
+  - `printer_group`: group to be accessible to printer
+  - `export`: one additional export definition is possible
+
+    - `name`: name of export
+    - `comment`: comment shown for export
+    - `path`: local path to be exported
+
+- `squid`: squid service configuration
+
+  - `cache_mem`: size of cache on memory, need white space like "1 GB"
+  - `maximum_object_size_in_memory`: size of maximum object cached on memory, 
+    need white space like "2 MB"
+  - `maximum_object_size`: size of maximum object in cached, 
+    need white space like "20 MB"
+  - `cache_dir`: target directory for hash directory of cache
+  - `cache_dir_mb`: numberic value to be stored in cache directory in MB
+  - `cache_dir_nfs`: if cache directory is on remote NFS, specify NFS target
+  - `syslog`: syslog facility and level, like "local1.info"
 
 - `system\_accounts`: List of system accounts
 

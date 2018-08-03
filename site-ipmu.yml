@@ -38,3 +38,24 @@
     - { role: packages, packages: "{{ site_config.packages.host_pfsarch }}" }
     - { role: fail2ban, jail_enable: [ sshd, apache-auth ] }
 
+- hosts: pfscalc
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - mount
+    - nat-route
+    - samba-server
+
+- hosts: pfsdisk
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - mount
+
+- hosts: lfsrv
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - { role: nfs-client, nfsv3_target: "{{ nfs_mount }}" }
+    - apache
+

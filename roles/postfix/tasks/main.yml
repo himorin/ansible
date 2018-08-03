@@ -1,0 +1,68 @@
+---
+- name: Configure postfix/main.cf
+  become: yes
+  lineinfile:
+    dest: "/etc/postfix/main.cf"
+    line: "{{ item.line }}"
+    regexp: "^{{ item.regexp }}"
+  with_items:
+    - line: "myhostname = {{ site_config.postfix.myhostname }}"
+      regexp: "myhostname"
+    - line: "mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 {{ site_config.postfix.localnet }}"
+      regexp: "mynetworks"
+    - line: "smtpd_client_restrictions = permit_mynetworks, permit"
+      regexp: "smtpd_client_restrictions"
+    - line: "smtpd_sender_restrictions = permit_mynetworks, permit"
+      regexp: "smtpd_sender_restrictions"
+    - line: "smtpd_recipient_restrictions = permit_mynetworks, reject_unauth_destination"
+      regexp: "smtpd_recipient_restrictions"
+  notify: restart postfix
+- name: Configure TLS in postfix/main.cf
+  become: yes
+  lineinfile:
+    dest: "/etc/postfix/main.cf"
+    line: "{{ item.line }}"
+    regexp: "^{{ item.regexp }}"
+  with_items:
+    - line: "smtpd_tls_cert_file = {{ site_config.postfix.tls.cert_file }}"
+      regexp: "smtpd_tls_cert_file"
+    - line: "smtpd_tls_key_file = {{ site_config.postfix.tls.key_file }}"
+      regexp: "smtpd_tls_key_file"
+    - line: "smtpd_tls_CAfile = {{ site_config.postfix.tls.CAfile }}"
+      regexp: "smtpd_tls_CAfile"
+    - line: "smtpd_use_tls=yes"
+      regexp: "smtpd_use_tls"
+    - line: "smtpd_tls_security_level = may"
+      regexp: "smtpd_tls_security_level"
+    - line: "smtp_tls_security_level = may"
+      regexp: "smtp_tls_security_level"
+  when: site_config.postfix.tls.use is defined and site_config.postfix.tls.use == True
+  notify: restart postfix
+- name: Disable TLS in postfix/main.cf
+  become: yes
+  lineinfile:
+    dest: "/etc/postfix/main.cf"
+    line: "{{ item.line }}"
+    regexp: "^{{ item.regexp }}"
+  with_items:
+    - line: "smtpd_use_tls=no"
+      regexp: "smtpd_use_tls"
+  when: site_config.postfix.tls.use is not defined or site_config.postfix.tls.use == False
+  notify: restart postfix
+- name: Configure mailname
+  become: yes
+  lineinfile:
+    dest: "/etc/mailname"
+    line: "{{ site_config.postfix.myhostname }}"
+    regexp: "^.*"
+  notify: restart postfix
+- name: Configure iptables
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v4"
+    line: "{{ item }}"
+    insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
+  with_items:
+    - "-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT"
+  notify: restart iptables-persistent
+

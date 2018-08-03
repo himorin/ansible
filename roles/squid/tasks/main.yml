@@ -1,0 +1,39 @@
+---
+- name: Modify squid.conf
+  become: yes
+  lineinfile:
+    dest: /etc/squid/squid.conf
+    insertafter: "{{ item.insertafter }}"
+    regexp: "{{ item.regexp | default(omit) }}"
+    line: "{{ item.line }}"
+  notify: restart squid
+  with_items:
+    - insertafter: "^acl CONNECT"
+      line: "acl localnet src {{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.netmask }}"
+    - insertafter: "^http_access allow"
+      line: "http_access allow localnet"
+    - insertafter: "^# cache_mem"
+      line: "cache_mem {{ site_config.squid.cache_mem }}"
+      regexp: "^cache_mem "
+    - insertafter: "^# maximum_object_size_in_memory"
+      line: "maximum_object_size_in_memory {{ site_config.squid.maximum_object_size_in_memory }}"
+      regexp: "^maximum_object_size_in_memory "
+    - insertafter: "^# maximum_object_size"
+      line: "maximum_object_size {{ site_config.squid.maximum_object_size }}"
+      regexp: "^maximum_object_size "
+    - insertafter: "^#cache_dir "
+      line: "cache_dir ufs {{ site_config.squid.cache_dir }} {{ site_config.squid.cache_dir_mb }} 16 256"
+      regexp: "^cache_dir "
+    - insertafter: "^# access_log "
+      line: "access_log syslog:{{ site_config.squid.syslog }} squid"
+      regexp: "^access_log syslog:"
+- name: Secure squid cache directory
+  become: yes
+  file:
+    path: "{{ site_config.squid.cache_dir }}"
+    state: directory
+    mode: 0755
+    owner: "proxy"
+    group: "proxy"
+  notify: restart squid
+
