@@ -119,6 +119,20 @@ List of services and their items.
   - `log_format`: Syslog output format from Prometheus service
   - `storage_nfs`: NFS mount point of storage for Prometheus server
 
+- `prometheus_exporter`: Prometheus exporter configuration
+
+  - `mysql`: mysqld exporter configurations
+
+    - `host`: target host in '<host>:<port>' format
+
+  - `pgsql`: postgresql exporter configurations
+
+    - `host`: target host in '<host>:<port>' format
+
+  - `es`: elasticsearch exporter configurations
+
+    - `host`: target hostname
+
 - `rsyslog`: rsyslog service configuration
 
   - `server`: rsyslog server to push

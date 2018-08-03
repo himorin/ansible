@@ -1,0 +1,41 @@
+---
+- name: "Check {{ exporter.name }} binary"
+  stat:
+    path: "{{ env_gopath }}/bin/{{ exporter.name }}"
+  delegate_to: 127.0.0.1
+  register: exporter_local_go_bin
+- name: Copy files to target
+  become: yes
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - src: "{{ env_gopath }}/bin/{{ exporter.name }}"
+      dest: "/usr/sbin/{{ exporter.name }}"
+      mode: "0755"
+  when: exporter_local_go_bin.stat.md5 is defined
+- name: Add systemd init script
+  become: yes
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - src: initd
+      dest: "/etc/init.d/{{ exporter.name }}"
+      mode: "0755"
+    - src: initd-default
+      dest: "/etc/default/{{ exporter.name }}"
+      mode: "0644"
+  when: exporter_local_go_bin.stat.md5 is defined
+- name: "Enable service for {{ exporter.name }}"
+  become: yes
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - "{{ exporter.name }}"
+  when: exporter_local_go_bin.stat.md5 is defined
+

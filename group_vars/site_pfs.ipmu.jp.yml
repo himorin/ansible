@@ -21,9 +21,7 @@ site_config:
   mail:
     notice_from: "pfs@pfs.ipmu.jp"
     notice_name: "PFS IPMU System"
-    smarthost: "10.100.200.2"
-  munin:
-    cidr: "10.100.200.0/24"
+    smarthost: "smarthost.pfs.ipmu.jp"
   nfs:
     common:
       - source: "10.100.200.4:/data1"
@@ -247,6 +245,15 @@ site_config:
     route_prefix: "/prometheus"
     log_format: "logger:syslog?appname=prometheus&local=7"
     storage_nfs: "10.100.200.3:/server/services/prometheus"
+  prometheus_exporter:
+    mysql:
+      host: "db2:3306"
+    pgsql:
+      host: "db2:5432"
+    es:
+      host: "elasticsearch"
+    jira:
+      host: "localhost"
   rsyslog:
     server: "rsyslog.pfs.ipmu.jp"
     repush: "10.100.200.14:10514;json-template"
@@ -286,6 +293,8 @@ site_config:
         gid: 207
       - gname: "logstash"
         gid: 208
+      - gname: "influxdb"
+        gid: 209
     users:
       - uname: "libvirt-qemu"
         uid: 200
@@ -325,6 +334,11 @@ site_config:
         group: "logstash"
         home: "/usr/share/logstash"
         shell: "/usr/sbin/nologin"
+      - uname: "influxdb"
+        uid: 208
+        group: "influxdb"
+        home: "/var/lib/influxdb"
+        shell: "/bin/false"
   virt:
     nfsdisk: "10.100.200.3:/virt"
     pki:

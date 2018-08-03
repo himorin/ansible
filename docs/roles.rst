@@ -42,6 +42,17 @@ site configuration.
 
   - This role will configure cron-apt to upgrade package automatically everyday.
 
+grub-uuid
+------
+
+This role will configure grub (/etc/default/grub) to use UUID 
+(set GRUB_DEVICE_UUID line) and run update-grub2. If system boots already 
+with UUID, do nothing. 
+
+- no required configuration item
+- no dependency
+- no remarks
+
 ldap
 ----
 
@@ -137,6 +148,20 @@ This role will confiugre NTP client.
 - Remarks
 
   - This role will remove all pool definitions from ntp.
+
+packagecloud
+------
+
+This role will configure apt-line for specified packagecloud repository, 
+but not install any package. Use `packages` role to install packages following 
+this role in meta section. Target site is operated under https, so this will 
+install https handler for apt, also. 
+
+- No required configuration item
+- No dependencies
+- Remarks
+
+  - Additional apt-key will be added per each apt-line.
 
 packages
 ------
@@ -407,6 +432,56 @@ Skelton files for list of targets are installed into
 
   - Some skelton files for list of target hosts are installed, but need to be 
     edited after running role.
+
+prometheus-exporters
+------
+
+This role will install and configure various exporters for prometheus, depends 
+on defined vars per target host. Flag to install exporters are defined as 
+`prometheus_exporters_xxxx` (see list of exporters below for one in `xxxx`)
+and need to be defined per target host. 
+Configurations are required per each target exporter, and account information 
+to connect database are prompted on ansible-playbook execution but not be 
+saved in vars configuration files (even not in vault). Just type enter 
+without any string for which exporters for database (in mysql or pgsql) you 
+will not use/configure or don't want to change configuration. 
+
+Some exporters does not have package to be installed via package manager, 
+you need to have binary in go repository of your local machine by building 
+(e.g. go get) from github etc. before executing ansible. 
+Also for these, no systemd script is supplied, and this role just installs 
+script to be run by cron at @reboot. 
+
+Current supported exporters (flag name are in bracket, if no bracket is added 
+flag name is the same to name) are:
+
+- ipmi : require to load kernel module (no reboot)
+- snmp : require binary at local, no systemd script, compile snmp.yml on 
+  execution (see detail in remarks)
+- mysql : prompted for account (see detail in remarks)
+- pgsql : prompted for account (see detail in remarks)
+- elasticsearch (es) : require binary at local, no systemd script
+
+- Required configuration items
+
+  - prometheus_exporter.mysql.host (no default value)
+  - prometheus_exporter.pgsql.host (no default value)
+
+- Dependencies
+
+  - Require pre built binary at local go repository for snmp, elasticsearch
+
+- Remarks
+
+  - snmp exporter requires mib mapping information to convert oids into 
+    prometheus name/labels, by default to `snmp.yml` and can have only one 
+    definition file. Startup script will combine all yml files (`snmp_*.yml`) 
+    in snmp exporter directory to build configuration file used by the 
+    instance. 
+  - mysql database account need to have 'select' and 'replication client' 
+    priviledges on *.* (all databases) to acquire performance parameters 
+    per database. 
+  - pgsql database account need to have suitable priviledges to run operation. 
 
 rsyslog-server
 ------
