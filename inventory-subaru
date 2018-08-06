@@ -40,6 +40,10 @@ all:
               target: /rsyslog/
         gw-ics:
           server_smarthost: true
+        prometheus-ics:
+        grafana-ics:
+        influxdb-ics:
+        elastic-ics:        
     gateway:
       hosts:
         gw-ics

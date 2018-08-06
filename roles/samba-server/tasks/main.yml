@@ -1,0 +1,50 @@
+---
+- name: Configure smb.conf
+  become: yes
+  ini_file:
+    dest: /etc/samba/smb.conf
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - section: "global"
+      option: "workgroup"
+      value: "{{ site_config.samba.workgroup }}"
+    - section: "global"
+      option: "interfaces"
+      value: "{{ site_config.samba.address }}"
+    - section: "print$"
+      option: "write list"
+      value: "{{ site_config.samba.printer_group }}"
+  notify: restart samba
+- name: Add export target
+  become: yes
+  ini_file:
+    dest: /etc/samba/smb.conf
+    section: "{{ site_config.samba.export.name }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - option: "comment"
+      value: "{{ site_config.samba.export.comment }}"
+    - option: "path"
+      value: "{{ site_config.samba.export.path }}"
+    - option: "browsable"
+      value: "yes"
+    - option: "read only"
+      value: "no"
+    - option: "create mask"
+      value: "0666"
+    - option: "directory mask"
+      value: "0777"
+- name: Configure iptables
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v4"
+    line: "{{ item }}"
+    insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
+  with_items:
+    - "-A INPUT -p tcp -m multiport --dport 137,138,139,445 -j ACCEPT"
+    - "-A INPUT -p udp -m multiport --dport 137,138,139 -j ACCEPT"
+  notify: restart iptables-persistent
+

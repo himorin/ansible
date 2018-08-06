@@ -1,0 +1,25 @@
+---
+- name: Configure sysctl
+  become: yes
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+- name: Configure iptables
+  become: yes
+  vars:
+    iface_name: "ansible_{{ nat_route.local }}"
+    iface_data: "{{ hostvars[ inventory_hostname ][ iface_name ] }}"
+    mask: "{{ iface_data.ipv4.address }}/{{ iface_data.ipv4.netmask }}"
+  lineinfile:
+    dest: "/etc/iptables/rules.v4"
+    line: "{{ item.line }}"
+    insertafter: "^# ANSIBLE_ROLE_{{ item.pos }}_PLACE"
+  with_items:
+    - line: "-A POSTROUTING -s {{ mask }} -j MASQUERADE"
+      pos: "NAT"
+    - line: "-A POSTROUTING -j LOG --log-prefix \"{{ nat_route.prefix | default('PF: ') }}\" --log-level {{ nat_route.loglevel | default('info') }} --log-tcp-sequence"
+      pos: "NAT"
+    - line: "-A FORWARD -s {{ mask }} -j ACCEPT"
+      pos: "FILTER"
+  notify: restart iptables-persistent
+

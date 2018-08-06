@@ -6,4 +6,5 @@
     job: "apt-get update"
     cron_file: "/etc/crontab"
     user: root
+    name: apt-get-update-onboot
 

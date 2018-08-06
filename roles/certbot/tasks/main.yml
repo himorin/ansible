@@ -1,0 +1,46 @@
+---
+- name: configure reload for apache2
+  become: yes
+  cron:
+    minutes: 0
+    hour: 0
+    day: "1,15"
+    job: "systemctl reload apache2.service"
+    cron_file: "/etc/crontab"
+    user: root
+    name: certbot-reload-apache2
+  when: certbot_apache2 is defined
+- name: configure reload for nginx
+  become: yes
+  cron:
+    minutes: 0
+    hour: 0
+    day: "1,15"
+    job: "systemctl reload nginx.service"
+    cron_file: "/etc/crontab"
+    user: root
+    name: certbot-reload-nginx
+  when: certbot_nginx is defined
+- name: configure reload for postfix
+  become: yes
+  cron:
+    minutes: 0
+    hour: 0
+    day: "1,15"
+    job: "systemctl reload postfix.service"
+    cron_file: "/etc/crontab"
+    user: root
+    name: certbot-reload-postfix
+  when: certbot_postfix is defined
+- name: configure reload for dovecot
+  become: yes
+  cron:
+    minutes: 0
+    hour: 0
+    day: "1,15"
+    job: "systemctl reload dovecot.service"
+    cron_file: "/etc/crontab"
+    user: root
+    name: certbot-reload-dovecot
+  when: certbot_dovecot is defined
+

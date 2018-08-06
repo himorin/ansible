@@ -43,6 +43,12 @@ site_config:
         gid: 205
       - gname: "grafana"
         gid: 206
+      - gname: "elasticsearch"
+        gid: 207
+      - gname: "logstash"
+        gid: 208
+      - gname: "influxdb"
+        gid: 209
     users:
       - uname: "libvirt-qemu"
         uid: 200
@@ -63,6 +69,21 @@ site_config:
         uid: 205
         group: "grafana"
         home: "/usr/share/grafana"
+        shell: "/bin/false"
+      - uname: "elasticsearch"
+        uid: 206
+        group: "elasticsearch"
+        home: "/home/elasticsearch"
+        shell: "/bin/false"
+      - uname: "logstash"
+        uid: 207
+        home: "/usr/share/logstash"
+        group: "logstash"
+        shell: "/usr/sbin/nologin"
+      - uname: "influxdb"
+        uid: 208
+        group: "influxdb"
+        home: "/var/lib/influxdb"
         shell: "/bin/false"
   virt:
     nfsdisk: "nfsv-ics:/virt"

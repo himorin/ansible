@@ -1,27 +1,128 @@
 ---
 all:
   children:
+    hp-dl:
+      children:
+        hp-dlb:
+          children:
+            dlbs-nonvm:
+              hosts:
+                dlb1-vm:
+                dlb6-vm:
+            dlbs-vm:
+              hosts:
+                dlb2-vm:
+                dlb3-vm:
+                dlb4-vm:
+                dlb5-vm:
+                dlb7-vm:
+                dlb8-vm:
+        hp-dlc:
+          children:
+            dlcs-nonvm:
+              hosts:
+                dlc1-vm:
+            dlcs-vm:
+              hosts:
+                dlc2-vm:
+                dlc3-vm:
+                dlc4-vm:
     virt-host:
+      children:
+        dlbs-vm:
+        dlcs-vm:
       hosts:
         rca1-vm:
         rca2-vm:
         rca3-vm:
-        dlb1-vm:
-        dlb2-vm:
-        dlb3-vm:
-        dlb4-vm:
-        dlb5-vm:
-        dlb6-vm:
-        dlb7-vm:
-        dlb8-vm:
-        dlc1-vm:
-        dlc2-vm:
-        dlc3-vm:
         dla1-vm:
         dla2-vm:
         dla3-vm:
         m3605-1a:
         rfa2-vm:
+      vars:
+        prometheus_exporters_ipmi: True
+    server:
+      hosts:
+        rsyslog:
+          server_rsyslog: True
+        mgmt-dhcp:
+          server_ntp: True
+        influxdb:
+        prometheus:
+      children:
+        pfscalc:
+          hosts:
+            pc2:
+          vars:
+            server_ntp: True
+            nat_route:
+              prefix: "PF "
+              loglevel: "info"
+              local: "ens3"
+            local_uuids:
+              - target: "/data1"
+                fstype: "jfs"
+                source: "2acbdcc6-a6d8-412b-8583-4e8f8b4c7605"
+            local_fs:
+              - xfsprogs
+              - jfsutils
+        pfsdisk:
+          hosts:
+            pd2:
+          vars:
+            local_uuids:
+              - target: "/server"
+                fstype: "jfs"
+                source: "8800ae6b-d248-4299-a1c4-79cd029cf73b"
+              - target: "/virt"
+                fstype: "jfs"
+                source: "c48ce4cd-3761-44fb-8ea2-c6c17b53920c"
+            local_fs:
+              - jfsutils
+        simdisk:
+          hosts:
+            sd2:
+          vars:
+            local_uuids:
+              - target: "/simdata"
+                fstype: "jfs"
+                source: "69ebae91-acbf-430f-8324-1c40586d5544"
+            local_fs:
+              - jfsutils
+        lfsrv:
+          hosts:
+            landfill:
+              httpd:
+                site_branch: landfill
+              apache:
+                mod_cgi: True
+                mod_ldap: True
+                mod_php: True
+                mod_php_ver: "7.0"
+              nfs_mount:
+                - source: "pfsdisk:/server/home"
+                  target: "/home"
+                - source: "pfsdisk:/server"
+                  target: "/server"
+                - source: "pfscalc:/data1"
+                  target: "/data1"
+              host_packages:
+                - libarchive-zip-perl
+                - libclass-isa-perl
+                - libconfig-simple-perl
+                - libdata-ical-perl
+                - libdatetime-format-iso8601-perl
+                - libdbd-mysql-perl
+                - libemail-mime-perl
+                - libemail-reply-perl
+                - libemail-sender-perl
+                - libfile-slurp-perl
+                - libnet-ldap-perl
+                - libtemplate-perl
+                - libtext-markdown-perl
+                - libtext-multimarkdown-perl
+                - make
     nfssrv:
       hosts:
         sd2:
@@ -46,12 +147,6 @@ all:
         lf07:
         lf08:
         lf09:
-    server:
-      hosts:
-        rsyslog:
-          server_rsyslog: True
-        mgmt-dhcp:
-          server_ntp: True
     actor:
       hosts:
         lf00-ics:
@@ -66,12 +161,14 @@ all:
         lf09-ics:
     hwraid:
       children:
-        dlb:
-          hosts:
-            dlb1-vm:
-            dlb8-vm:
+        hp-dlb:
           vars:
             hwraid_target_hp_p410: True
+            hwraid_target_hp: True
+        hp-dlc:
+          vars:
+            hwraid_target_hp_p410: True
+            hwraid_target_hp: True
       hosts:
         m3605-1a:
           hwraid_target_megasas: True
@@ -112,4 +209,13 @@ all:
         nfs27:
         nfs28:
         nfs29:
+    prometheus-exporters:
+      children:
+        virt-host:
+      hosts:
+        prometheus-snmp:
+          prometheus_exporters_es: True
+          prometheus_exporters_snmp: True
+        jirapipe-77:
+          prometheus_exporters_jira: True        
 

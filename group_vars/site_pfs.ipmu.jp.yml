@@ -7,17 +7,21 @@ site_config:
   elastic:
     server: "elasticsearch"
     storage_nfs: "10.100.200.3:/server/services/elasticsearch"
+  git:
+    key_file: "~/.ssh/id_rsa"
   grafana:
     url: "https://pfs.ipmu.jp:3000/grafana/"
+  httpd:
+    sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_httpdconfig.git"
+  influxdb:
+    storage_nfs: "10.100.200.3:/server/services/influxdb"
   ldap:
     uri: "ldap://ldap.pfs.ipmu.jp/"
     base: "dc=shell,dc=pfs,dc=ipmu,dc=jp"
   mail:
     notice_from: "pfs@pfs.ipmu.jp"
     notice_name: "PFS IPMU System"
-    smarthost: "10.100.200.2"
-  munin:
-    cidr: "10.100.200.0/24"
+    smarthost: "smarthost.pfs.ipmu.jp"
   nfs:
     common:
       - source: "10.100.200.4:/data1"
@@ -227,6 +231,14 @@ site_config:
       - python3-urllib3
       - python3-wadllib
       - python3-wheel
+  postfix:
+    tls: 
+      use: False
+      cert_file: ""
+      key_file: ""
+      CAfile: ""
+    myhostname: "pfs.ipmu.jp"
+    localnet: "10.100.200.0/23"
   postgres:
     connect_from: "10.100.200.0/23"
     data_directory: "/server/services/postgresql/"
@@ -243,9 +255,34 @@ site_config:
     route_prefix: "/prometheus"
     log_format: "logger:syslog?appname=prometheus&local=7"
     storage_nfs: "10.100.200.3:/server/services/prometheus"
+  prometheus_exporter:
+    mysql:
+      host: "db2:3306"
+    pgsql:
+      host: "db2:5432"
+    es:
+      host: "elasticsearch"
+    jira:
+      host: "localhost"
   rsyslog:
     server: "rsyslog.pfs.ipmu.jp"
     repush: "10.100.200.14:10514;json-template"
+  samba:
+    workgroup: "PFS"
+    address: "10.100.200.0/23 192.168.0.0/16"
+    printer_group: "root, @alls"
+    export:
+      name: "data1"
+      comment: "Data Storage 1"
+      path: "/data1"
+  squid:
+    cache_mem: "1 GB"
+    maximum_object_size_in_memory: "2 MB"
+    maximum_object_size: "20 MB"
+    cache_dir: "/squid"
+    cache_dir_mb: 20000
+    cache_dir_nfs: "10.100.200.3:/server/services/squid/"
+    syslog: "local1.info"
   system_accounts:
     groups:
       - gname: "libvirt-qemu"
@@ -266,6 +303,8 @@ site_config:
         gid: 207
       - gname: "logstash"
         gid: 208
+      - gname: "influxdb"
+        gid: 209
     users:
       - uname: "libvirt-qemu"
         uid: 200
@@ -305,6 +344,11 @@ site_config:
         group: "logstash"
         home: "/usr/share/logstash"
         shell: "/usr/sbin/nologin"
+      - uname: "influxdb"
+        uid: 208
+        group: "influxdb"
+        home: "/var/lib/influxdb"
+        shell: "/bin/false"
   virt:
     nfsdisk: "10.100.200.3:/virt"
     pki:

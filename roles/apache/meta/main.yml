@@ -1,0 +1,19 @@
+---
+dependencies: 
+  - role: packages
+    packages:
+      - apache2
+      - git
+  - role: packages
+    packages:
+      - libapache2-mod-encoding
+    when: "apache.mod_ldap is defined"
+  - role: packages
+    packages:
+      - libapache2-mod-php
+    when: "apache.mod_php is defined"
+  - role: packages
+    packages:
+      - libapache2-mod-python
+    when: "apache.mod_python is defined"
+
