@@ -239,6 +239,16 @@ site_config:
       CAfile: ""
     myhostname: "pfs.ipmu.jp"
     localnet: "10.100.200.0/23"
+  postgres:
+    connect_from: "10.100.200.0/23"
+    data_directory: "/server/services/postgresql/"
+    postgres_conf:
+      - label: log_min_messages
+        value: warning
+      - label: syslog_facility
+        value: LOCAL0
+      - label: log_destination
+        value: syslog
   prometheus:
     server: "prometheus"
     external_url: "https://pfs.ipmu.jp/prometheus/"
