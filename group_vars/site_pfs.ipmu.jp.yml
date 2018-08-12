@@ -258,9 +258,9 @@ site_config:
     storage_nfs: "10.100.200.3:/server/services/prometheus"
   prometheus_exporter:
     mysql:
-      host: "db2:3306"
+      host: "mysql:3306"
     pgsql:
-      host: "db2:5432"
+      host: "pgsql:5432"
     es:
       host: "elasticsearch"
     jira:
