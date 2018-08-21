@@ -358,6 +358,24 @@ This role will configure influxdb using data directory via NFS.
   - No retention policy initialization command. Need to initiate RP/CQ by 
     using influx client.
 
+mailman
+------
+
+This role will install mailman package, add symlink to existing data directory 
+for list configuration and data, and configure `mm_cfg.py`. Initialization 
+procedures like adding `Mailman` mail list need to be performed by manual. 
+
+- Required configuration
+
+  - `mailman_datasource`: data source directory name per target host
+    which shall include `archives/private` and `lists` directory. 
+
+- Dependencies
+
+  - Need to configure httpd first. If no, default httpd will be installed by 
+    package dependency.
+
+- No remarks
 
 nat-route
 ------

@@ -47,6 +47,8 @@ configuration parameters and results.
   Install packages, and just execute login (not mount)
 :ldap:
   Configuration of ldap for account
+:mailman:
+  Install mailman and configure mm_cfg
 :mount:
   Mount local attached storage using UUID
 :munin-node:
