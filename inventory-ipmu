@@ -123,6 +123,22 @@ all:
                 - libtext-markdown-perl
                 - libtext-multimarkdown-perl
                 - make
+        jupyter:
+          hosts:
+            jupyter-spt:
+              jupyter:
+                directory: "/simdata/jupyter-spt/"
+                name: "jupyter-spt"
+                base_url: "/jupyter-spt/"
+                sys_path:
+                  - "/simdata/jupyter-spt//lib/"
+            jupyter:
+                directory: "/services/jupyter/"
+                name: "jupyter"
+                base_url: "/internal/jupyter/"
+                kernel:
+                  ansible:
+                  javascript:
     nfssrv:
       hosts:
         sd2:

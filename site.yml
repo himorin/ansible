@@ -83,4 +83,9 @@
   roles:
     - prometheus-exporters
 
+- hosts: jupyter
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - jupyter
 
