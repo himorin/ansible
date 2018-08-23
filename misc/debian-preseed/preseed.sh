@@ -69,3 +69,5 @@ genisoimage -o $PRESEED_CFG.iso -r -J -no-emul-boot -boot-load-size 4 \
     -quiet \
     -boot-info-table -b isolinux/isolinux.bin -c isolinux/boot.cat $TEMP_ISO
 
+rm -Rf $TEMP_ISO $IRMOD
+
