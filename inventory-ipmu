@@ -133,12 +133,16 @@ all:
                 sys_path:
                   - "/simdata/jupyter-spt//lib/"
             jupyter:
+              jupyter:
                 directory: "/services/jupyter/"
                 name: "jupyter"
                 base_url: "/internal/jupyter/"
                 kernel:
                   ansible:
                   javascript:
+                  ipcluster:
+                parallel:
+                  profile: "jupyter"
     nfssrv:
       hosts:
         sd2:
