@@ -132,7 +132,10 @@ all:
                 base_url: "/jupyter-spt/"
                 sys_path:
                   - "/simdata/jupyter-spt//lib/"
-            jupyter:
+            jupyter1:
+              nfsv3_target:
+                - source: "pfsdisk:/server/services/jupyter"
+                  target: "/services/jupyter"
               jupyter:
                 directory: "/services/jupyter/"
                 name: "jupyter"
