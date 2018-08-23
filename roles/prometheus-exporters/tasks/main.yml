@@ -136,3 +136,11 @@
   when: prometheus_exporters_jira is defined
   notify: restart prometheus-exporter-sanitizer
 
+- name: Include exporter tasks as nvidia_gpu_prometheus_exporter
+  include: exporter.yml
+  vars:
+    exporter:
+      name: nvidia_gpu_prometheus_exporter
+  when: prometheus_exporters_nvidia_gpu is defined
+  notify: restart nvidia_gpu_prometheus_exporter
+
