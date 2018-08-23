@@ -139,5 +139,7 @@ Some support files and tools are added in [misc](/misc/) directory, as follows:
   System configurations after installation using built ISO images are assumed 
   to be done by Ansible, preseed configurations are to install bare OS with 
   Ansible to run. 
+:[RHEL/CentOS kickstart](/misc/kickstart/):
+  PFS IPMU test environment installation files.
 
 
