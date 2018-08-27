@@ -10,7 +10,7 @@ site_config:
   git:
     key_file: "~/.ssh/id_rsa"
   grafana:
-    url: "https://pfs.ipmu.jp:3000/grafana/"
+    url: "https://pfs.ipmu.jp/internal/monitors/grafana/"
   httpd:
     sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_config.git"
   influxdb:
@@ -252,8 +252,8 @@ site_config:
         value: syslog
   prometheus:
     server: "prometheus"
-    external_url: "https://pfs.ipmu.jp/prometheus/"
-    route_prefix: "/prometheus"
+    external_url: "https://pfs.ipmu.jp/internal/monitors/prometheus/"
+    route_prefix: "/internal/monitors/prometheus"
     log_format: "logger:syslog?appname=prometheus&local=7"
     storage_nfs: "10.100.200.3:/server/services/prometheus"
   prometheus_exporter:

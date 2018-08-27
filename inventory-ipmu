@@ -35,6 +35,7 @@ all:
         rca1-vm:
         rca2-vm:
         rca3-vm:
+        rca4-vm:
         dla1-vm:
         dla2-vm:
         dla3-vm:
