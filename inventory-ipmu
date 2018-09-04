@@ -40,6 +40,7 @@ all:
         dla2-vm:
         dla3-vm:
         m3605-1a:
+        rea1-vm:
         rfa2-vm:
       vars:
         prometheus_exporters_ipmi: True
@@ -171,6 +172,7 @@ all:
         lf07:
         lf08:
         lf09:
+        lf90:
     actor:
       hosts:
         lf00-ics:
