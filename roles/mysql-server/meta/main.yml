@@ -1,0 +1,14 @@
+---
+dependencies: 
+  - role: packages
+    packages:
+      - mariadb-server
+  - role: packages
+    packages:
+      - mariadb-plugin-mroonga
+    when: mysql_server.mroonga is defined
+  - role: packages
+    packages:
+      - mariadb-plugin-oqgraph
+    when: mysql_server.oqgraph is defined
+

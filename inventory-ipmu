@@ -148,6 +148,12 @@ all:
                   ipcluster:
                 parallel:
                   profile: "jupyter"
+        dbsrv:
+          hosts:
+            db3:
+              mysql_server:
+                mroonga: True
+              pgsql_server:
     nfssrv:
       hosts:
         sd2:

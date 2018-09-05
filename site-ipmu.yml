@@ -59,3 +59,12 @@
     - { role: nfs-client, nfsv3_target: "{{ nfs_mount }}" }
     - apache
 
+- hosts: dbsrv
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - role: pgsql-server
+      when: "pgsql_server is defined"
+    - role: mysql-server
+      when: "mysql_server is defined"
+

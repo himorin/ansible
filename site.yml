@@ -5,11 +5,17 @@
   roles:
     - system-accounts
     - iptables
-    - { role: packages, packages: "{{ site_config.packages.sitewide }}" }
+    - role: packages
+      packages: "{{ site_config.packages.sitewide }}"
     - cron-apt
-    - { role: ntp, when: "server_ntp is undefined" }
-    - { role: rsyslog-client, when: "server_rsyslog is undefined" }
-    - { role: exim4, when: "server_smarthost is undefined" }
+    - role: ntp
+      when: "server_ntp is undefined"
+    - role: rsyslog-client
+      when: "server_rsyslog is undefined"
+    - role: exim4
+      when: "server_smarthost is undefined"
+    - role: nfs-client
+      when: "nfsv3_target is defined"
 
 - hosts: ldap
   vars_files:
@@ -20,7 +26,6 @@
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
-    - { role: nfs-client, when: "nfsv3_target is defined" }
     - { role: ntp-server, when: "server_ntp is defined" }
     - { role: rsyslog-server, when: "server_rsyslog is defined" }
 - hosts: gateway
