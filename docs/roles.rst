@@ -582,4 +582,7 @@ Notes on roles development
   * Use `ansible_lsb.codename` if accepts all including one for testing, like 
     packagecloud. 
 
+* Some roles require pre-built go binary to be copied to target hosts
+
+  * Build them before running ansible, like `go get <repo>` or `go get ./...`.
 
