@@ -23,6 +23,8 @@ Roles are categolized into three:
 - `Roles for service configuration`_
 - `Roles for PFS configuration`_
 
+Also refer `Notes on roles development`_ for writting/modifying roles. 
+
 Roles for system configuration
 ======
 
@@ -566,5 +568,18 @@ script at your home directory after logged in to bash shell.
 - Remarks
 
   - No package is installed after running this role.
+
+Notes on roles development
+======
+
+* Keeping idempotency is **your** job, but not ansible's.
+* Debian/Ubuntu specific
+
+  * `ansible_distribution_release` could be `NA` for testing or sid etc.
+
+    * Add as 'stretch' (stable) for hw-raid.
+
+  * Use `ansible_lsb.codename` if accepts all including one for testing, like 
+    packagecloud. 
 
 

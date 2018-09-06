@@ -1,5 +1,8 @@
 ---
 dependencies:
+  - role: packages
+    packages:
+      - daemon
   - role: packagecloud
     packagecloud: 
       target_id: LovooOS/prometheus-exporters
