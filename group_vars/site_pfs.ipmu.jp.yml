@@ -285,6 +285,7 @@ site_config:
     cache_dir_nfs: "10.100.200.3:/server/services/squid/"
     syslog: "local1.info"
   system_accounts:
+    defuser_groups: "adm,dialout,cdrom,audio,netdev"
     groups:
       - gname: "libvirt-qemu"
         gid: 200
