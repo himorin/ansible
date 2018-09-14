@@ -3,6 +3,16 @@ all:
   children:
     hp-dl:
       children:
+        hp-dla:
+          children:
+            dlas-nonvm:
+              hosts:
+                dla1-vm:
+                dla4-vm:
+            dlas-vm:
+              hosts:
+                dla2-vm:
+                dla3-vm:
         hp-dlb:
           children:
             dlbs-nonvm:
@@ -32,6 +42,7 @@ all:
                 dlc4-vm:
     virt-host:
       children:
+        dlas-vm:
         dlbs-vm:
         dlcs-vm:
       hosts:
@@ -39,9 +50,6 @@ all:
         rca2-vm:
         rca3-vm:
         rca4-vm:
-        dla1-vm:
-        dla2-vm:
-        dla3-vm:
         m3605-1a:
         rea1-vm:
         rfa2-vm:
@@ -204,6 +212,11 @@ all:
           vars:
             hwraid_target_hp_p410: True
             hwraid_target_hp: True
+        dell:
+          vars:
+            hwraid_target_megasas: True
+          hosts:
+            rea1-vm:
       hosts:
         m3605-1a:
           hwraid_target_megasas: True
