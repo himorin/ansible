@@ -49,6 +49,12 @@ all:
           server_rsyslog: True
         mgmt-dhcp:
           server_ntp: True
+        mgmt3:
+          server_ntp: False
+          server_dnsmasq: True
+          nfsv3_target:
+              - source: "pfsdisk:/server/admin"
+                target: "/admin-res"
         influxdb:
         prometheus:
       children:
@@ -223,3 +229,8 @@ all:
     privca:
       hosts:
         pd2: 
+
+    ldap:
+      hosts:
+        mgmt3:
+
