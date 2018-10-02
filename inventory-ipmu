@@ -269,4 +269,7 @@ all:
           prometheus_exporters_jira: True        
         dmb1-vm:
           prometheus_exporters_nvidia_gpu: True
+    cuda:
+      hosts:
+        dmb1-vm:
 

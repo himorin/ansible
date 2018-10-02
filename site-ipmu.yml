@@ -68,3 +68,9 @@
     - role: mysql-server
       when: "mysql_server is defined"
 
+- hosts: cuda
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - cuda
+
