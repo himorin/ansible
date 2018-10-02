@@ -4,6 +4,8 @@
   register: task_psql_version
   changed_when: False
 - name: Get PostgreSQL version
+  debug:
+    msg: "Detecting PostgreSQL version"
   vars:
     task_psql_version_out_div: "{{ task_psql_version.stdout_lines[0].split(' ') }}"
     task_psql_version_full_div: "{{ task_psql_version_out_div[2].split('.') }}"
