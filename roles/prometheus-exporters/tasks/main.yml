@@ -141,7 +141,6 @@
   vars:
     exporter:
       name: nvidia_gpu_prometheus_exporter
-      opt_args:
   when: prometheus_exporters_nvidia_gpu is defined
   notify: restart nvidia_gpu_prometheus_exporter
 
