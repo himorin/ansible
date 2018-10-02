@@ -45,6 +45,7 @@ all:
         dlas-vm:
         dlbs-vm:
         dlcs-vm:
+        dmbs-vm:
       hosts:
         rca1-vm:
         rca2-vm:
@@ -272,4 +273,6 @@ all:
     cuda:
       hosts:
         dmb1-vm:
+      vars:
+        packages_setup_backport: True
 
