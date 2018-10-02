@@ -50,6 +50,7 @@ all:
         rca2-vm:
         rca3-vm:
         rca4-vm:
+        rcc1-vm:
         m3605-1a:
         rea1-vm:
         rfa2-vm:
