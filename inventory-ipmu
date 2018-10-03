@@ -277,4 +277,7 @@ all:
         dmb1-vm:
       vars:
         packages_setup_backport: True
+        nfsv3_target:
+          - source: "simdata:/simdata"
+            target: "/simdata"
 
