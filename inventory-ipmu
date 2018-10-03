@@ -167,6 +167,8 @@ all:
               mysql_server:
                 mroonga: True
               pgsql_server:
+            dbsim2-spt:
+              pgsql_server:
     nfssrv:
       hosts:
         sd2:
