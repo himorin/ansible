@@ -65,7 +65,8 @@ EOS
 md5sum `find -follow -type f` > md5sum.txt
 cd ../
 
-genisoimage -o $PRESEED_CFG.iso -r -J -no-emul-boot -boot-load-size 4 \
+genisoimage -o ${ISO_IMAGE%.iso}.${PRESEED_CFG}.iso -r -J -no-emul-boot \
+    -boot-load-size 4 \
     -quiet \
     -boot-info-table -b isolinux/isolinux.bin -c isolinux/boot.cat $TEMP_ISO
 
