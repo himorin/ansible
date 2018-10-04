@@ -61,14 +61,6 @@ all:
       hosts:
         rsyslog:
           server_rsyslog: True
-        mgmt-dhcp:
-          server_ntp: True
-        mgmt3:
-          server_ntp: False
-          server_dnsmasq: True
-          nfsv3_target:
-              - source: "pfsdisk:/server/admin"
-                target: "/admin-res"
         influxdb:
         prometheus:
       children:
@@ -173,13 +165,17 @@ all:
               mysql_server:
                 mroonga: True
               pgsql_server:
+              install_backup_mysql: True
+              install_backup_pgsql: True
             dbsim2-spt:
               pgsql_server:
         mgmt:
           hosts:
             mgmt3:
+            10.100.200.1:
           vars:
             server_ldap: True
+            server_dnsmasq: True
             install_backup_ldap: True
     nfssrv:
       hosts:

@@ -23,4 +23,16 @@
     - option: datadir
       value: /services/mysql/
   notify: restart mysql
+- name: configure backup for mysql
+  become: yes
+  cron:
+    minute: 10
+    hour: 2
+    job: "{{ site_config.system_dirs.git_clone }}/github.com/Subaru-PFS/pfs_infra_ipmu/admin-script/mysql-backup.sh"
+    cron_file: "/etc/crontab"
+    user: root
+    name: backup-mysql
+  when: install_backup_mysql is defined
+
+
 
