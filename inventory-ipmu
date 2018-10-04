@@ -169,6 +169,13 @@ all:
               install_backup_pgsql: True
             dbsim2-spt:
               pgsql_server:
+              local_uuids:
+                - target: "/pfsdbsim"
+                  fstype: "xfs"
+                  source: "b6241c44-797c-4efe-9ad9-3cf90bb2c911"
+                  option: "nobarrier,noatime,noexec,nodiratime"
+              local_fs:
+                - xfsprogs
         mgmt:
           hosts:
             mgmt3:
