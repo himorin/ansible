@@ -4,13 +4,4 @@ dependencies:
     packages: 
       - nslcd
       - libnss-ldapd
-  - role: system-gitrepo
-    system_git_repo_target:
-      - url: "github.com/Subaru-PFS/pfs_infra_ipmu"
-    when: install_backup_ldap is defined
-  - role: nfs-client
-    nfsv3_target:
-      - source: "{{ site_config.system_dirs.backup_nfs }}"
-        target: "{{ site_config.system_dirs.backup_dir }}"
-    when: install_backup_ldap is defined
 
