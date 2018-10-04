@@ -295,12 +295,7 @@ all:
         nfsv3_target:
           - source: "simdata:/simdata"
             target: "/simdata"
-
     privca:
-      hosts:
-        pd2: 
-
-    ldap:
-      hosts:
-        mgmt3:
+      children:
+        pfsdisk:
 
