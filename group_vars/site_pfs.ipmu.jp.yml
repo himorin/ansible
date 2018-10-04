@@ -351,6 +351,10 @@ site_config:
         group: "influxdb"
         home: "/var/lib/influxdb"
         shell: "/bin/false"
+  system_dirs:
+    backup_nfs: "pd2:/server/backup/"
+    backup_dir: "/server/backup/"
+    git_clone: "/usr/local/gitrepo/"
   virt:
     nfsdisk: "10.100.200.3:/virt"
     pki:

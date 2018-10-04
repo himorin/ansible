@@ -1,12 +1,4 @@
 ---
-- name: ldap package
-  become: yes
-  apt: >
-    name={{ item }}
-    state=present
-  with_items:
-    - nslcd
-    - libnss-ldapd
 - name: nslcd configuration
   become: yes
   lineinfile: >
@@ -35,4 +27,14 @@
     - "group"
     - "shadow"
   notify: restart nslcd
+- name: configure backup for slapd
+  become: yes
+  cron:
+    minute: 5
+    hour: 0
+    job: "{{ site_config.system_dirs.git_clone }}/{{ item.url }}/admin-script/ldap-backup.sh"
+    cron_file: "/etc/crontab"
+    user: root
+    name: backup-ldap
+  when: install_backup_ldap is defined
 

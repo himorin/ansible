@@ -17,17 +17,13 @@
     - role: nfs-client
       when: "nfsv3_target is defined"
 
-- hosts: ldap
-  vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
-  roles:
-    - ldap
 - hosts: server
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
     - { role: ntp-server, when: "server_ntp is defined" }
     - { role: rsyslog-server, when: "server_rsyslog is defined" }
+    - { role: ldap-server, when: "server_ldap is defined" }
 - hosts: gateway
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"

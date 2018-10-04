@@ -61,8 +61,6 @@ all:
       hosts:
         rsyslog:
           server_rsyslog: True
-        mgmt-dhcp:
-          server_ntp: True
         influxdb:
         prometheus:
       children:
@@ -169,6 +167,12 @@ all:
               pgsql_server:
             dbsim2-spt:
               pgsql_server:
+        mgmt:
+          hosts:
+            mgmt3:
+          vars:
+            server_ldap: True
+            install_backup_ldap: True
     nfssrv:
       hosts:
         sd2:
