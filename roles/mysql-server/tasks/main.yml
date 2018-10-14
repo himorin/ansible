@@ -1,11 +1,11 @@
 ---
-- name: Make mysql data directory existing
+- name: Create directory for database
   become: yes
   file:
-    path: /services/mysql/
+    path: "{{ site_config.mysql.data_directory }}"
     state: directory
-    owner: mysql
-    mode: 0755
+    owner: "mysql"
+    mode: 0700
 - name: Configure mysql server
   become: yes
   ini_file:
@@ -21,7 +21,7 @@
     - option: long_query_time
       value: 1
     - option: datadir
-      value: /services/mysql/
+      value: "{{ site_config.mysql.data_directory }}"
   notify: restart mysql
 - name: configure backup for mysql
   become: yes

@@ -22,6 +22,8 @@ site_config:
     notice_from: "pfs@pfs.ipmu.jp"
     notice_name: "PFS IPMU System"
     smarthost: "smarthost.pfs.ipmu.jp"
+  mysql:
+    data_directory: "/services/mysql/"
   nfs:
     common:
       - source: "10.100.200.4:/data1"
@@ -242,7 +244,7 @@ site_config:
     localnet: "10.100.200.0/23"
   postgres:
     connect_from: "10.100.200.0/23"
-    data_directory: "/server/services/postgresql/"
+    data_directory: "/services/postgresql/"
     postgres_conf:
       - label: log_min_messages
         value: warning

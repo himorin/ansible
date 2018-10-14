@@ -63,7 +63,8 @@
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
-    - mount
+    - role: mount
+      when: "local_uuids is defined"
     - role: pgsql-server
       when: "pgsql_server is defined"
     - role: mysql-server
