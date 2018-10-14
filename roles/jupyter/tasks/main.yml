@@ -105,7 +105,7 @@
   lineinfile:
     dest: "{{ jupyter.directory }}/{{ jupyter.name }}.py"
     line: "c.NotebookApp.server_extensions = [ \n ]"
-  when: "'c.NotebookApp.server_extensions' not in task_jupyter_ipcluster_serverext.stdout"
+  when: jupyter.kernel.ipcluster is defined and "'c.NotebookApp.server_extensions' not in task_jupyter_ipcluster_serverext.stdout and jupyter.kernel.ipcluster is defined"
 - name: Add ipyparallel to server_extensions
   lineinfile:
     dest: "{{ jupyter.directory }}/{{ jupyter.name }}.py"
