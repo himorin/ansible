@@ -32,11 +32,9 @@ all:
                 dmb1-vm:
         hp-dlc:
           children:
-            dlcs-nonvm:
-              hosts:
-                dlc1-vm:
             dlcs-vm:
               hosts:
+                dlc1-vm:
                 dlc2-vm:
                 dlc3-vm:
                 dlc4-vm:
@@ -285,10 +283,13 @@ all:
           prometheus_exporters_snmp: True
         jirapipe-77:
           prometheus_exporters_jira: True        
+        dlc1-vm:
+          prometheus_exporters_nvidia_gpu: True
         dmb1-vm:
           prometheus_exporters_nvidia_gpu: True
     cuda:
       hosts:
+        dlc1-vm:
         dmb1-vm:
       vars:
         packages_setup_backport: True
