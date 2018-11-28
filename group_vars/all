@@ -1,11 +1,4 @@
 ---
-ansible_ssh_user: pfs
+ansible_ssh_user: mnt
 env_gopath: "{{ lookup('env', 'GOPATH') }}"
-site_config:
-  ntp: 
-    - "ntp"
-  cron_apt:
-    hour: "4"
-  nfs:
-    common:
 
