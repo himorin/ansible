@@ -1,11 +1,12 @@
 ---
-- name: Prometheus package
+- name: Secure directory for prometheus
   become: yes
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - prometheus
+  file:
+    path: /prometheus
+    owner: prometheus
+    group: prometheus
+    state: directory
+    mode: 0755
 - name: Modify service parameter for multiline
   become: yes
   lineinfile:

@@ -1,4 +1,11 @@
 ---
 dependencies:
-  - { role: nfs-client, nfsv3_target: [ { source: "{{ site_config.prometheus.storage_nfs }}", target: "/prometheus" } ] }
+  - role: nfs-client
+    nfsv3_target: 
+      source: "{{ site_config.prometheus.storage_nfs }}"
+      target: "/prometheus"
+    when: "site_config.prometheus.storage_nfs is defined"
+  - role: packages
+    packages:
+      - prometheus
 
