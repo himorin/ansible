@@ -3,4 +3,5 @@ dependencies:
   - role: packages
     packages:
       - apt-transport-https
+      - debian-archive-keyring
 
