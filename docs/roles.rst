@@ -329,10 +329,14 @@ specified in site configuration.
 grafana
 ------
 
+(PROOFED)
+
 This roll will install and configure grafana server. 
 
 - Required configuration items (site wide)
 
+  - grafana.db.host
+  - grafana.db.name
   - grafana.url (no default value)
 
 - Dependencies
@@ -341,9 +345,11 @@ This roll will install and configure grafana server.
 
 - Remarks
 
-  - This role will configure minimum part in grafana.ini, so you need to edit 
-    grafana.ini for database, session, seciruty and auth by hand - after 
-    configuration of other services like database.
+  - This role will start grafana server instance at the end, but initial 
+    startup will take up to 5 min (depends on server resource). Wait for 
+    initializations and loadings. 
+  - For login, use admin:admin at first time, and you will be required 
+    to change password. 
 
 influxdb
 ------

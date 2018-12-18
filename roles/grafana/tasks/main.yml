@@ -1,5 +1,5 @@
 ---
-- name: Configure grafana.ini (NEED HAND EDIT FOR database, session, security, auth)
+- name: Configure grafana.ini (no need hand edit, initial startup takes up to 5min)
   become: yes
   ini_file:
     dest: /etc/grafana/grafana.ini
@@ -37,5 +37,26 @@
     - section: "log"
       option: "level"
       value: "warn"
+    - section: "database"
+      option: "type"
+      value: "mysql"
+    - section: "database"
+      option: "host"
+      value: "{{ site_config.grafana.db.host }}"
+    - section: "database"
+      option: "name"
+      value: "{{ site_config.grafana.db.name }}"
+    - section: "database"
+      option: "user"
+      value: "{{ site_config.grafana.db.name }}"
+    - section: "database"
+      option: "password"
+      value: "{{ site_config.grafana.db.name }}"
+    - section: "session"
+      option: "provider"
+      value: "mysql"
+    - section: "session"
+      option: "provider_config"
+      value: "{{ site_config.grafana.db.name }}:{{ site_config.grafana.db.name }}@tcp({{ site_config.grafana.db.host }})/{{ site_config.grafana.db.name }}"
   notify: restart grafana
 
