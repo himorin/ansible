@@ -1,12 +1,4 @@
 ---
-- hosts: all
-  vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
-  roles:
-    - system-accounts
-    - iptables
-    - cron-apt
-
 - hosts: normalwork
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
@@ -20,6 +12,5 @@
     - { role: packages, packages: "{{ site_config.packages.utils_normalwork }}" }
     - { role: packages, packages: "{{ site_config.packages.utils_python2 }}" }
     - { role: packages, packages: "{{ site_config.packages.utils_python3 }}" }
-    - ldap-client
     - { role: nfs-client, nfsv3_target: "{{ site_config.nfs.common }}" }
 

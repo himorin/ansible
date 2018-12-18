@@ -4,18 +4,37 @@
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
     - system-accounts
-    - iptables
     - role: packages
       packages: "{{ site_config.packages.sitewide }}"
     - cron-apt
     - role: ntp
       when: "server_ntp is undefined"
-    - role: rsyslog-client
-      when: "server_rsyslog is undefined"
     - role: exim4
       when: "server_smarthost is undefined"
-    - role: nfs-client
-      when: "nfsv3_target is defined"
+
+- hosts: dbsrv
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - role: mount
+      when: "local_uuids is defined"
+    - role: pgsql-server
+      when: "pgsql_server is defined"
+    - role: mysql-server
+      when: "mysql_server is defined"
+
+- hosts: prometheus-exporters
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  vars_prompt:
+    - name: "prometheus_exporters_mysql_account"
+      prompt: "Enter account information for mysql in \"<account>:<password>\" format\n  need 'select' and 'replication client' priv on *.*\n  just type enter when you don't configure"
+      private: yes
+    - name: "prometheus_exporters_pgsql_account"
+      prompt: "Enter account information for pgsql in \"<account>:<password>\" format\n  need connection priv on postgres\n  just type enter when you don't configure"
+      private: yes
+  roles:
+    - prometheus-exporters
 
 - hosts: server
   vars_files:
@@ -25,6 +44,29 @@
     - { role: rsyslog-server, when: "server_rsyslog is defined" }
     - { role: ldap-server, when: "server_ldap is defined" }
     - { role: dnsmasq, when: "server_dnsmasq is defined" }
+    - { role: prometheus, when: "server_prometheus is defined" }
+    - { role: grafana, when: "server_grafana is defined" }
+
+- hosts: works
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - ldap-client
+    - role: nodejs
+      when: "install_nodejs is defined"
+    - role: nfs-client
+      when: "nfsv3_target is defined"
+
+
+
+- hosts: alls
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - iptables
+    - role: rsyslog-client
+      when: "server_rsyslog is undefined"
+
 - hosts: gateway
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
@@ -71,19 +113,6 @@
     - boot-aptupdate
     - serial-console
     - { role: packages, packages: "{{ host_packages }}" }
-
-- hosts: prometheus-exporters
-  vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
-  vars_prompt:
-    - name: "prometheus_exporters_mysql_account"
-      prompt: "Enter account information for mysql in \"<account>:<password>\" format\n  need 'select' and 'replication client' priv on *.*\n  just type enter when you don't configure"
-      private: yes
-    - name: "prometheus_exporters_pgsql_account"
-      prompt: "Enter account information for pgsql in \"<account>:<password>\" format\n  need connection priv on postgres\n  just type enter when you don't configure"
-      private: yes
-  roles:
-    - prometheus-exporters
 
 - hosts: jupyter
   vars_files:

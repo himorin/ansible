@@ -1,5 +1,51 @@
 ---
 all:
-  hosts:
-    m350g6a.himor.in:
+  children:
+    hp:
+      hosts:
+        m350g6a.himor.in:
+    virt-host:
+      hosts:
+        m350g6a.himor.in:
+    server:
+      hosts:
+        samba01:
+        backend01:
+          server_prometheus: True
+          server_grafana: True
+        service01:
+          server_rsyslog: True
+        mgmt:
+          server_ntp: True
+          server_dnsmasq: True
+        db01:
+          mysql_server:
+            mroonga: True
+    works:
+      hosts:
+        shell01:
+        node01:
+          install_nodejs: True
+      vars:
+        nfsv3_target: "{{ site_config.nfs.common }}"
+    dbsrv:
+      hosts:
+        db01:
+    nfssrv:
+      hosts:
+        m350g6a.himor.in:
+          nfsv3_export:
+            - "/data1"
+    prometheus-exporters:
+      hosts:
+        db01:
+          prometheus_exporters_mysql: True
+        backend01:
+          prometheus_exporters_snmp: True
+
+    configured:
+      hosts:
+        db01:
+        shell01:
+        backend01:
 
