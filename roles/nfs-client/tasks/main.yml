@@ -1,11 +1,4 @@
 ---
-- name: Install nfs client
-  become: yes
-  apt: >
-    name={{ item }}
-    state=present
-  with_items:
-    - nfs-common
 - name: Mount NFSv3 directories
   become: yes
   mount:
