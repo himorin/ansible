@@ -11,6 +11,8 @@
       when: "server_ntp is undefined"
     - role: exim4
       when: "server_smarthost is undefined"
+    - role: rsyslog-client
+      when: "server_rsyslog is undefined"
 
 - hosts: dbsrv
   vars_files:
@@ -57,6 +59,16 @@
     - role: nfs-client
       when: "nfsv3_target is defined"
 
+- hosts: samba
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - ldap-client
+    - role: nfs-client
+      when: "nfsv3_target is defined"
+    - samba-server
+
+
 
 
 - hosts: alls
@@ -64,8 +76,6 @@
     - "group_vars/site_{{ ansible_dns.domain }}.yml"
   roles:
     - iptables
-    - role: rsyslog-client
-      when: "server_rsyslog is undefined"
 
 - hosts: gateway
   vars_files:
@@ -84,11 +94,6 @@
   roles:
     - virt-client
 
-- hosts: actor
-  vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
-  roles:
-    - eups
 - hosts: privca
   vars_files:
     - "group_vars/site_{{ ansible_dns.domain }}.yml"

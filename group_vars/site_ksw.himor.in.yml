@@ -268,12 +268,13 @@ site_config:
     es:
       host: "elasticsearch"
   rsyslog:
-    server: "rsyslog.ksq.himor.in"
-    repush: "10.100.200.14:10514;json-template"
+    server: "rsyslog.ksw.himor.in"
+    omfile: "/server/services/rsyslog/"
+#    repush: "10.100.200.14:10514;json-template"
   samba:
-    workgroup: "PFS"
-    address: "10.100.200.0/23 192.168.0.0/16"
-    printer_group: "root, @alls"
+    workgroup: "WORKGROUP"
+    address: "192.168.0.0/16"
+    printer_group: "root, @all"
     export:
       name: "data1"
       comment: "Data Storage 1"

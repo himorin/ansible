@@ -37,6 +37,9 @@
       value: "0666"
     - option: "directory mask"
       value: "0777"
+- name: Check rules.v4 exists or not
+  stat: path=/etc/iptables/rules.v4
+  register: task_iptables_rulesv4
 - name: Configure iptables
   become: yes
   lineinfile:
@@ -47,4 +50,5 @@
     - "-A INPUT -p tcp -m multiport --dport 137,138,139,445 -j ACCEPT"
     - "-A INPUT -p udp -m multiport --dport 137,138,139 -j ACCEPT"
   notify: restart iptables-persistent
+  when: task_iptables_rulesv4.stat.md5 is defined
 

@@ -3,24 +3,33 @@ all:
   children:
     hp:
       hosts:
-        m350g6a.himor.in:
-    virt-host:
-      hosts:
-        m350g6a.himor.in:
+        m350g6a:
+#    virt-host:
+#      hosts:
+#        m350g6a:
     server:
       hosts:
-        samba01:
+        m350g6a:
+          server_rsyslog: True
         backend01:
           server_prometheus: True
           server_grafana: True
         service01:
-          server_rsyslog: True
+          server_ldap: True
         mgmt:
           server_ntp: True
           server_dnsmasq: True
         db01:
           mysql_server:
             mroonga: True
+        web01:
+      children:
+        samba:
+          hosts:
+            samba01:
+              nfsv3_target:
+                - source: "nfs:/data1"
+                  target: "/data1"
     works:
       hosts:
         shell01:
@@ -33,7 +42,7 @@ all:
         db01:
     nfssrv:
       hosts:
-        m350g6a.himor.in:
+        m350g6a:
           nfsv3_export:
             - "/data1"
     prometheus-exporters:
@@ -42,10 +51,4 @@ all:
           prometheus_exporters_mysql: True
         backend01:
           prometheus_exporters_snmp: True
-
-    configured:
-      hosts:
-        db01:
-        shell01:
-        backend01:
 
