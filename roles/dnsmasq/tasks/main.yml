@@ -33,7 +33,12 @@
   become: yes
   lineinfile:
     dest: "/etc/iptables/rules.v4"
-    insertafter: "^# ANSIBLE_ROLE_MANGLE_PLACE"
-    line: "-A POSTROUTING -p udp --dport bootpc -j CHECKSUM --checksum-fill"
+    insertafter: "{{ item.insertafter }}"
+    line: "{{ item.line }}"
+  with_items:
+    - insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
+      line: "-A INPUT -p udp --dport 67:68 --sport 67:68 -j ACCEPT"
+    - insertafter: "^# ANSIBLE_ROLE_MANGLE_PLACE"
+      line: "-A POSTROUTING -p udp --dport bootpc -j CHECKSUM --checksum-fill"
   notify: restart iptables-persistent
 
