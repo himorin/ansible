@@ -4,6 +4,8 @@ all:
     hp:
       hosts:
         m350g6a:
+          hwraid_target_megasas: True
+          hwraid_target_hp_p410: True
 #    virt-host:
 #      hosts:
 #        m350g6a:
@@ -51,4 +53,6 @@ all:
           prometheus_exporters_mysql: True
         backend01:
           prometheus_exporters_snmp: True
+        m350g6a:
+          prometheus_exporters_ipmi: True
 

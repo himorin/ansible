@@ -3,12 +3,13 @@ site_config:
   cron_apt:
     hour: "4"
   dnsmasq:
-    site: "himorin"
+    git_repo: "git@github.com:himorin/serverconfig"
+    git_branch: "ksw-dnsmasq"
   elastic:
     server: "elasticsearch"
     storage_nfs: "10.100.200.3:/server/services/elasticsearch"
   git:
-    key_file: "~/.ssh/id_rsa"
+    key_file: "~/.ssh/id_rsa_github"
   grafana:
     url: "https://ksw.himor.in/internal/monitors/grafana/"
     db:
