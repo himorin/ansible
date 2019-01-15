@@ -1,27 +1,18 @@
 ---
-- name: dnsmasq package
-  become: yes
-  apt: >
-    name={{ item }}
-    state=present
-  with_items:
-    - dnsmasq
-    - dnsmasq-utils
-    - git
 - name: Remove README in dnsmasq.d
   become: yes
   file:
     path: "/etc/dnsmasq.d/README"
     state: absent
-- name: Checkout ics_dnsmasq repository
-  become: yes
+- name: Checkout target dnsmasq config github repository
   git:
-    repo: "https://github.com/Subaru-PFS/ics_dnsmasq.git"
+    repo: "{{ site_config.dnsmasq.git_repo }}"
     dest: "/etc/dnsmasq.d/"
     accept_hostkey: yes
     key_file: "{{ site_config.git.key_file }}"
     update: yes
     force: yes
+    version: "{% if site_config.dnsmasq.git_branch is defined %}{{ site_config.dnsmasq.git_branch }}{% else %}HEAD{% endif %}"
   notify: restart dnsmasq
 - name: Make symlink to dnsmasq-site
   become: yes
@@ -29,14 +20,14 @@
     src: "/etc/dnsmasq.d/dnsmasq-site.{{ site_config.dnsmasq.site }}"
     dest: "/etc/dnsmasq.d/dnsmasq-site.conf"
     state: link
+  when: site_config.dnsmasq.site is defined
 - name: dnsmasq service config
   become: yes
-  lineinfile: >
-    dest=/etc/default/dnsmasq
-    owner=root group=root mode=0644 backup=no
-    regexp="^CONFIG_DIR="
-    insertafter="^#CONFIG_DIR"
-    line="CONFIG_DIR=/etc/dnsmasq.d,*.conf"
+  lineinfile:
+    dest: "/etc/default/dnsmasq"
+    regexp: "^CONFIG_DIR="
+    insertafter: "^#CONFIG_DIR"
+    line: "CONFIG_DIR=/etc/dnsmasq.d,*.conf"
   notify: restart dnsmasq
 - name: iptables checksum-fill
   become: yes

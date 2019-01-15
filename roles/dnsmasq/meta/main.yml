@@ -1,4 +1,9 @@
 ---
 dependencies: 
+  - role: packages
+    packages: 
+      - dnsmasq
+      - dnsmasq-utils
+      - git
   - iptables
 
