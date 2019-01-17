@@ -2,38 +2,38 @@
 site_config:
   cron_apt:
     hour: "4"
-  dnsmasq:
-    site: "himorin"
-  elastic:
-    server: "elasticsearch"
-    storage_nfs: "10.100.200.3:/server/services/elasticsearch"
+#  dnsmasq:
+#    site: "himorin"
+#  elastic:
+#    server: "elasticsearch"
+#    storage_nfs: "10.100.200.3:/server/services/elasticsearch"
   git:
     key_file: "~/.ssh/id_rsa"
-  grafana:
-    url: "https://pfs.ipmu.jp/internal/monitors/grafana/"
-  httpd:
-    sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_config.git"
-  influxdb:
-    storage_nfs: "10.100.200.3:/server/services/influxdb"
+#  grafana:
+#    url: "https://pfs.ipmu.jp/internal/monitors/grafana/"
+#  httpd:
+#    sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_config.git"
+#  influxdb:
+#    storage_nfs: "10.100.200.3:/server/services/influxdb"
   ldap:
-    uri: "ldap://ldap.pfs.ipmu.jp/"
-    base: "dc=shell,dc=pfs,dc=ipmu,dc=jp"
+    uri: "ldap://ldap.himor.in/"
+    base: "dc=shell,dc=himor,dc=in"
   mail:
-    notice_from: "pfs@pfs.ipmu.jp"
-    notice_name: "PFS IPMU System"
-    smarthost: "smarthost.pfs.ipmu.jp"
+    notice_from: "root@himor.in"
+    notice_name: "himor.in System"
+    smarthost: "cvps.himor.in"
   mysql:
     data_directory: "/services/mysql/"
   nfs:
     common:
-      - source: "10.100.200.4:/data1"
-        target: "/data1"
-      - source: "10.100.200.3:/server/home"
-        target: "/home"
-    v3export_access: "10.100.200.0/23(rw,sync,no_subtree_check,no_root_squash)"
+#      - source: "10.100.200.4:/data1"
+#        target: "/data1"
+#      - source: "10.100.200.3:/server/home"
+#        target: "/home"
+#    v3export_access: "10.100.200.0/23(rw,sync,no_subtree_check,no_root_squash)"
   ntp: 
-    upstream: "157.82.226.81"
-    local: ntp.pfs.ipmu.jp
+#    upstream: "157.82.226.81"
+#    local: ntp.pfs.ipmu.jp
   packages:
     sitewide:
       - aptitude
@@ -234,58 +234,58 @@ site_config:
       - python3-urllib3
       - python3-wadllib
       - python3-wheel
-  postfix:
-    tls: 
-      use: False
-      cert_file: ""
-      key_file: ""
-      CAfile: ""
-    myhostname: "pfs.ipmu.jp"
-    localnet: "10.100.200.0/23"
-  postgres:
-    connect_from: "10.100.200.0/23"
-    data_directory: "/services/postgresql/"
-    postgres_conf:
-      - label: log_min_messages
-        value: warning
-      - label: syslog_facility
-        value: LOCAL0
-      - label: log_destination
-        value: syslog
-  prometheus:
-    server: "prometheus"
-    external_url: "https://pfs.ipmu.jp/internal/monitors/prometheus/"
-    route_prefix: "/internal/monitors/prometheus"
-    log_format: "logger:syslog?appname=prometheus&local=7"
-    storage_nfs: "10.100.200.3:/server/services/prometheus"
-  prometheus_exporter:
-    mysql:
-      host: "mysql:3306"
-    pgsql:
-      host: "pgsql:5432"
-    es:
-      host: "elasticsearch"
-    jira:
-      host: "localhost"
-  rsyslog:
-    server: "rsyslog.pfs.ipmu.jp"
-    repush: "10.100.200.14:10514;json-template"
-  samba:
-    workgroup: "PFS"
-    address: "10.100.200.0/23 192.168.0.0/16"
-    printer_group: "root, @alls"
-    export:
-      name: "data1"
-      comment: "Data Storage 1"
-      path: "/data1"
-  squid:
-    cache_mem: "1 GB"
-    maximum_object_size_in_memory: "2 MB"
-    maximum_object_size: "20 MB"
-    cache_dir: "/squid"
-    cache_dir_mb: 20000
-    cache_dir_nfs: "10.100.200.3:/server/services/squid/"
-    syslog: "local1.info"
+#  postfix:
+#    tls: 
+#      use: False
+#      cert_file: ""
+#      key_file: ""
+#      CAfile: ""
+#    myhostname: "pfs.ipmu.jp"
+#    localnet: "10.100.200.0/23"
+#  postgres:
+#    connect_from: "10.100.200.0/23"
+#    data_directory: "/services/postgresql/"
+#    postgres_conf:
+#      - label: log_min_messages
+#        value: warning
+#      - label: syslog_facility
+#        value: LOCAL0
+#      - label: log_destination
+#        value: syslog
+#  prometheus:
+#    server: "prometheus"
+#    external_url: "https://pfs.ipmu.jp/internal/monitors/prometheus/"
+#    route_prefix: "/internal/monitors/prometheus"
+#    log_format: "logger:syslog?appname=prometheus&local=7"
+#    storage_nfs: "10.100.200.3:/server/services/prometheus"
+#  prometheus_exporter:
+#    mysql:
+#      host: "mysql:3306"
+#    pgsql:
+#      host: "pgsql:5432"
+#    es:
+#      host: "elasticsearch"
+#    jira:
+#      host: "localhost"
+#  rsyslog:
+#    server: "rsyslog.pfs.ipmu.jp"
+#    repush: "10.100.200.14:10514;json-template"
+#  samba:
+#    workgroup: "PFS"
+#    address: "10.100.200.0/23 192.168.0.0/16"
+#    printer_group: "root, @alls"
+#    export:
+#      name: "data1"
+#      comment: "Data Storage 1"
+#      path: "/data1"
+#  squid:
+#    cache_mem: "1 GB"
+#    maximum_object_size_in_memory: "2 MB"
+#    maximum_object_size: "20 MB"
+#    cache_dir: "/squid"
+#    cache_dir_mb: 20000
+#    cache_dir_nfs: "10.100.200.3:/server/services/squid/"
+#    syslog: "local1.info"
   system_accounts:
     defuser_groups: "adm,dialout,cdrom,audio,netdev"
     groups:
@@ -293,8 +293,8 @@ site_config:
         gid: 200
       - gname: "munin"
         gid: 201
-      - gname: "mysql"
-        gid: 202
+#      - gname: "mysql"
+#        gid: 202
       - gname: "postgres"
         gid: 203
       - gname: "kvm"
@@ -319,10 +319,10 @@ site_config:
         uid: 201
         home: "/var/lib/munin"
         group: "munin"
-      - uname: "mysql"
-        uid: 202
-        home: "/var/lib/mysql"
-        group: "mysql"
+#      - uname: "mysql"
+#        uid: 202
+#        home: "/var/lib/mysql"
+#        group: "mysql"
       - uname: "postgres"
         uid: 203
         home: "/var/lib/postgres"
@@ -353,13 +353,13 @@ site_config:
         group: "influxdb"
         home: "/var/lib/influxdb"
         shell: "/bin/false"
-  system_dirs:
-    backup_nfs: "pd2:/server/backup/"
-    backup_dir: "/server/backup/"
-    git_clone: "/usr/local/gitrepo/"
-  virt:
-    nfsdisk: "10.100.200.3:/virt"
-    pki:
-      local: "/virt/pki/"
-      subj: "/C=JP/ST=Chiba/L=Kashiwa/O=PFS"
+#  system_dirs:
+#    backup_nfs: "pd2:/server/backup/"
+#    backup_dir: "/server/backup/"
+#    git_clone: "/usr/local/gitrepo/"
+#  virt:
+#    nfsdisk: "10.100.200.3:/virt"
+#    pki:
+#      local: "/virt/pki/"
+#      subj: "/C=JP/ST=Chiba/L=Kashiwa/O=PFS"
 

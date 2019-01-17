@@ -7,7 +7,7 @@
     - role: packages
       packages: "{{ site_config.packages.sitewide }}"
     - cron-apt
-    - role: ntp
+    - role: ntp-client
       when: "server_ntp is undefined"
     - role: exim4
       when: "server_smarthost is undefined"

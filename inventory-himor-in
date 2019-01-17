@@ -1,0 +1,18 @@
+---
+all:
+  children:
+    conoha:
+      hosts:
+        ch03.himor.in:
+        ch04.himor.in:
+    server:
+      hosts:
+        cvps.himor.in:
+        altus01.himor.in:
+        ch03.himor.in:
+        ch04.himor.in:
+#    dbsrv:
+#      hosts:
+#    nfssrv:
+#      hosts:
+
