@@ -1,0 +1,8 @@
+---
+dependencies: 
+  - role: packages
+    packages:
+      - ntp
+      - ntpdate
+      - ntpstat
+

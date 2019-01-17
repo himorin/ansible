@@ -137,7 +137,7 @@ are passed to this role at calling as variables 'nfsv3_export'.
   - This role will configure all target directories with the same NFSv3 export 
     configuration. 
 
-ntp
+ntp-client
 ---
 
 This role will confiugre NTP client. 

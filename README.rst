@@ -59,7 +59,7 @@ configuration parameters and results.
   Mount NFSv3 for targets specified by playbook argument 'nfsv3_target'
 :nfs-server:
   Configure NFSv3 exports for targets specified by playbook argument 'nfsv3_export'
-:ntp:
+:ntp-client:
   Configure NTP
 :packagecloud:
   Configure apt-line for packagecloud

@@ -1,0 +1,20 @@
+---
+- name: NTP config remove pools
+  become: yes
+  lineinfile:
+    dest: /etc/ntp.conf
+    regexp: "^pool"
+    state: absent
+  notify: restart ntp
+  when: "site_config.ntp.local is defined"
+- name: NTP config add server lines
+  become: yes
+  lineinfile:
+    dest: /etc/ntp.conf
+    regexp: "^server"
+    insertafter: "^#server"
+    line: "server {{ item }}"
+  with_items: "{{ site_config.ntp.local }}"
+  notify: restart ntp
+  when: "site_config.ntp.local is defined"
+
