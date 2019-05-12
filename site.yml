@@ -48,6 +48,7 @@
     - { role: dnsmasq, when: "server_dnsmasq is defined" }
     - { role: prometheus, when: "server_prometheus is defined" }
     - { role: grafana, when: "server_grafana is defined" }
+    - { role: certbot, when: "server_apache is defined or server_nginx is defined" }
 
 - hosts: works
   vars_files:
