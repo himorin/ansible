@@ -1,7 +1,7 @@
 ---
 - hosts: melco
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - { role: packages, packages: "{{ site_config.packages.utils_basic }}" }
     - { role: packages, packages: "{{ site_config.packages.utils_dev }}" }
@@ -10,21 +10,21 @@
 
 - hosts: nfssrv
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - nfs-server
     - ldap-client
 
 - hosts: pfsarch
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - { role: packages, packages: "{{ site_config.packages.host_pfsarch }}" }
     - { role: fail2ban, jail_enable: [ sshd, apache-auth ] }
 
 - hosts: pfscalc
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - mount
     - nat-route
@@ -32,20 +32,20 @@
 
 - hosts: pfsdisk
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - mount
 
 - hosts: lfsrv
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - { role: nfs-client, nfsv3_target: "{{ nfs_mount }}" }
     - apache
 
 - hosts: cuda
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - cuda
 

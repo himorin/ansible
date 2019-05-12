@@ -1,7 +1,7 @@
 ---
 - hosts: normalwork
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - { role: packages, packages: "{{ site_config.packages.utils_astro }}" }
     - { role: packages, packages: "{{ site_config.packages.utils_basic }}" }
