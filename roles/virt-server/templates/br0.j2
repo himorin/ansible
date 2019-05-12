@@ -6,7 +6,7 @@ iface br0 inet static
   broadcast {{ ansible_default_ipv4.broadcast }}
   gateway {{ ansible_default_ipv4.gateway }}
   dns-nameservers {{ ansible_dns.nameservers | join(" ") }}
-  dns-search {{ ansible_dns.domain }}
+  dns-search {{ ansible_domain }}
   bridge_ports {{ ansible_default_ipv4.interface }}
   bridge_maxwait 0
   bridge_fd 0

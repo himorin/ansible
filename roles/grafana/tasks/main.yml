@@ -9,7 +9,7 @@
   with_items:
     - section: "server"
       option: "domain"
-      value: "{{ ansible_dns.domain }}"
+      value: "{{ ansible_domain }}"
     - section: "server"
       option: "root_url"
       value: "{{ site_config.grafana.url }}"
