@@ -45,6 +45,8 @@ configuration parameters and results.
   Configure influxdb using existing data directory via NFS.
 :iscsi:
   Install packages, and just execute login (not mount)
+:l2tp:
+  Install L2TP VPN
 :ldap:
   Configuration of ldap for account
 :mailman:

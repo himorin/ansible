@@ -366,6 +366,24 @@ This role will configure influxdb using data directory via NFS.
   - No retention policy initialization command. Need to initiate RP/CQ by 
     using influx client.
 
+l2tp
+----
+
+This role will install and configure L2TP VPN.
+
+- Required configuration
+
+  - site_config.l2tp.local  (until third octet, exclude last ".")
+
+- Dependencies
+
+  - iptables
+
+- Remarks
+
+  - VPN local network is fixed as /24
+  - VPN host is fixed as .1
+
 mailman
 ------
 

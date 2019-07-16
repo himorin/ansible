@@ -5,12 +5,18 @@ all:
       hosts:
         ch03.himor.in:
         ch04.himor.in:
+        ch08.himor.in:
+    external:
+      children:
+        conoha:
     server:
       hosts:
         cvps.himor.in:
         altus01.himor.in:
         ch03.himor.in:
         ch04.himor.in:
+        ch08.himor.in:
+          server_l2tp: True
 #    dbsrv:
 #      hosts:
 #    nfssrv:
