@@ -101,6 +101,7 @@ site_config:
       - dh-make-perl
       - fakeroot
       - git-buildpackage
+      - golang
     utils_latex:
       - cjk-latex
       - dvi2ps
