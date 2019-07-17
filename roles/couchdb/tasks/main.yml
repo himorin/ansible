@@ -1,0 +1,33 @@
+---
+- name: Add apache/couchdb apt-key
+  become: yes
+  apt_key:
+    url: "https://couchdb.apache.org/repo/bintray-pubkey.asc"
+    state: present
+- name: Add apache/couchdb apt line
+  become: yes
+  apt_repository:
+    repo: "deb https://apache.bintray.com/couchdb-deb {{ ansible_lsb.codename }} main"
+    state: present
+    update_cache: yes
+- name: Install couchdb
+  become: yes
+  apt:
+    name: couchdb
+- name: Open couchdb interface to network
+  become: yes
+  ini_file:
+    dest: /opt/couchdb/etc/local.ini
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - section: "chttpd"
+      option: "bind_address"
+      value: "0.0.0.0"
+    - section: "httpd"
+      option: "bind_address"
+      value: "0.0.0.0"
+  when: server_couchdb_open is defined
+  notify: restart couchdb
+

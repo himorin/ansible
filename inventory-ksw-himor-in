@@ -27,6 +27,9 @@ all:
             mroonga: True
         web01:
           server_apache: True
+        lf00:
+          server_couchdb: True
+          server_couchdb_open: True
       children:
         samba:
           hosts:

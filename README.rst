@@ -25,6 +25,8 @@ configuration parameters and results.
 
 :apache:
   Configure apache web server using site config on git repository
+:couchdb:
+  Install CouchDB
 :cron-apt:
   Periodic package update using cron-apt
 :dnsmasq:
