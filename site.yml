@@ -14,6 +14,12 @@
     - role: rsyslog-client
       when: "server_rsyslog is undefined"
 
+- hosts: external
+  vars_files:
+    - "group_vars/site_{{ ansible_domain }}.yml"
+  roles:
+    - { role: fail2ban, jail_enable: [ sshd ] }
+
 - hosts: dbsrv
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
