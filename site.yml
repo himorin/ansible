@@ -18,7 +18,7 @@
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
-    - { role: fail2ban, jail_enable: [ sshd ] }
+    - ssh-gateway
 
 - hosts: dbsrv
   vars_files:
@@ -85,11 +85,6 @@
   roles:
     - iptables
 
-- hosts: gateway
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  roles:
-    - ssh-gateway
 
 - hosts: virt-host
   vars_files:
