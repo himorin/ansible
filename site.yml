@@ -47,6 +47,9 @@
 - hosts: server
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
+  vars_prompt:
+    - name: "l2tp_vpn_psk"
+      prompt: "L2TP/IPSec VPN PSK.\n  Just type enter when you don't configure"
   roles:
     - { role: ntp-server, when: "server_ntp is defined" }
     - { role: rsyslog-server, when: "server_rsyslog is defined" }
@@ -56,6 +59,7 @@
     - { role: grafana, when: "server_grafana is defined" }
     - { role: certbot, when: "server_apache is defined or server_nginx is defined" }
     - { role: couchdb, when: "server_couchdb is defined" }
+    - { role: l2tp, when: "server_l2tp is defined" }
 
 - hosts: works
   vars_files:

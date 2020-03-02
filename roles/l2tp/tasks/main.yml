@@ -1,0 +1,117 @@
+---
+- name: Add sysctl config
+  become: yes
+  template:
+    src: sysctl_l2tp.conf
+    dest: /etc/sysctl.d/sysctl_l2tp.conf
+    mode: 0644
+  notify: reload sysctl l2tp
+- name: Configure PSK
+  become: yes
+  lineinfile:
+    dest: "/etc/ipsec.secrets"
+    regexp: "^{{ ansible_default_ipv4.address }} %any : PSK "
+    line: "{{ ansible_default_ipv4.address }} %any : PSK \"{{ l2tp_vpn_psk }}\""
+  when: "l2tp_vpn_psk is defined"
+  notify: restart ipsec
+- name: Make ipsec config directory
+  become: yes
+  file:
+    dest: "/etc/ipsec.d/config/"
+    state: directory
+    mode: "0755"
+- name: Add ipsec config
+  become: yes
+  template:
+    src: ipsec-l2tp.conf
+    dest: /etc/ipsec.d/config/ipsec-l2tp.conf
+    mode: "0644"
+  notify: restart ipsec
+- name: Add include for ipsec config
+  become: yes
+  lineinfile:
+    dest: "/etc/ipsec.conf"
+    insertafter: "{{ item.insertafter }}"
+    line: "{{ item.line }}"
+  with_items:
+    - insertafter: 
+      line: "include /etc/ipsec.d/config/ipsec-l2tp.conf"
+  notify: restart ipsec
+- name: Configure xl2tpd
+  become: yes
+  ini_file:
+    dest: /etc/xl2tpd/xl2tpd.conf
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - section: "global"
+      option: "port"
+      value: "1701"
+    - section: "global"
+      option: "auth file"
+      value: "/etc/ppp/chap-secrets"
+    - section: "lns default"
+      option: "ip range"
+      value: "{{ site_config.l2tp.local }}.10 - {{ site_config.l2tp.local }}.200"
+    - section: "lns default"
+      option: "local ip"
+      value: "{{ site_config.l2tp.local }}.1"
+    - section: "lns default"
+      option: "assign ip"
+      value: "yes"
+    - section: "lns default"
+      option: "refuse pap"
+      value: "yes"
+    - section: "lns default"
+      option: "refuse chap"
+      value: "yes"
+    - section: "lns default"
+      option: "require authentication"
+      value: "yes"
+    - section: "lns default"
+      option: "name"
+      value: "l2tp"
+    - section: "lns default"
+      option: "ppp debug"
+      value: "yes"
+    - section: "lns default"
+      option: "length bit"
+      value: "yes"
+    - section: "lns default"
+      option: "pppoptfile"
+      value: "/etc/ppp/options.l2tpd.lns"
+  notify: restart xl2tpd
+- name: Add ppp/options
+  become: yes
+  template:
+    src: options.l2tpd.lns
+    dest: /etc/ppp/options.l2tpd.lns
+    mode: "0644"
+  notify: restart xl2tpd
+- name: iptables rules for NAT
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v4"
+    insertafter: "^# ANSIBLE_ROLE_NAT_PLACE"
+    line: "{{ item }}"
+  with_items:
+    - "-A POSTROUTING -o {{ ansible_default_ipv4.interface }} -s {{ site_config.l2tp.local }}.0/24 -j MASQUERADE"
+  notify: restart iptables-persistent
+- name: iptables rules for FILTER
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v4"
+    insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
+    line: "{{ item }}"
+  with_items:
+    - "-A INPUT -p esp -j ACCEPT"
+    - "-A INPUT -p ah -j ACCEPT"
+    - "-A INPUT -p udp --dport 500 -j ACCEPT"
+    - "-A INPUT -p udp --dport 1701 -j ACCEPT"
+    - "-A INPUT -p udp --dport 4500 -j ACCEPT"
+    - "-A FORWARD -i ppp+ -o ppp+ -s {{ site_config.l2tp.local }}.0/24 -d {{ site_config.l2tp.local }}.0/24 -j ACCEPT"
+    - "-A FORWARD -i ppp+ -o {{ ansible_default_ipv4.interface }} -s {{ site_config.l2tp.local }}.0/24 -j ACCEPT"
+    - "-A FORWARD -i {{ ansible_default_ipv4.interface }} -o ppp+ -d {{ site_config.l2tp.local }}.0/24 -m state --state RELATED,ESTABLISHED -j ACCEPT"
+  notify: restart iptables-persistent
+
