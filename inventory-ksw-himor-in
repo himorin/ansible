@@ -22,6 +22,9 @@ all:
         mgmt:
           server_ntp: True
           server_dnsmasq: True
+        mgmt2:
+          server_ntp: True
+          server_dnsmasq: True
         db01:
           mysql_server:
             mroonga: True
