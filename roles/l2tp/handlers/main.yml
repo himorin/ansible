@@ -1,0 +1,27 @@
+---
+- name: reload sysctl l2tp
+  command: /sbin/sysctl -p /etc/sysctl.d/sysctl_l2tp.conf
+  become: yes
+- name: restart iptables-persistent
+  systemd:
+    name: netfilter-persistent.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+- name: restart ipsec
+  systemd:
+    name: ipsec.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+- name: restart xl2tpd
+  systemd:
+    name: xl2tpd.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+
+
