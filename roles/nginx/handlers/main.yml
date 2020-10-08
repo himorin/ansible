@@ -6,3 +6,12 @@
     daemon_reload: yes
     enabled: yes
   become: yes
+- name: restart iptables-persistent
+  systemd:
+    name: iptables-persistent.service
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+
+

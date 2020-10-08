@@ -8,11 +8,14 @@ site_config:
 #    server: "elasticsearch"
 #    storage_nfs: "10.100.200.3:/server/services/elasticsearch"
   git:
-    key_file: "~/.ssh/id_rsa"
-#  grafana:
-#    url: "https://pfs.ipmu.jp/internal/monitors/grafana/"
-#  httpd:
-#    sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_config.git"
+    key_file: "~/.ssh/id_github"
+  grafana:
+    url: "https://monitor.himor.in/grafana/"
+    db:
+      host: "localhost"
+      name: "grafana"
+  httpd:
+    sites_git: "git@github.com:himorin/serverconfig"
 #  influxdb:
 #    storage_nfs: "10.100.200.3:/server/services/influxdb"
   ldap:
@@ -252,15 +255,15 @@ site_config:
 #        value: LOCAL0
 #      - label: log_destination
 #        value: syslog
-#  prometheus:
-#    server: "prometheus"
-#    external_url: "https://pfs.ipmu.jp/internal/monitors/prometheus/"
-#    route_prefix: "/internal/monitors/prometheus"
-#    log_format: "logger:syslog?appname=prometheus&local=7"
+  prometheus:
+    server: "prometheus"
+    external_url: "https://monitor.himor.in/prometheus/"
+    route_prefix: "/prometheus/"
+    log_format: "logger:syslog?appname=prometheus&local=7"
 #    storage_nfs: "10.100.200.3:/server/services/prometheus"
-#  prometheus_exporter:
-#    mysql:
-#      host: "mysql:3306"
+  prometheus_exporter:
+    mysql:
+      host: "mysql:3306"
 #    pgsql:
 #      host: "pgsql:5432"
 #    es:
@@ -293,8 +296,8 @@ site_config:
         gid: 200
       - gname: "munin"
         gid: 201
-#      - gname: "mysql"
-#        gid: 202
+      - gname: "mysql"
+        gid: 202
       - gname: "postgres"
         gid: 203
       - gname: "kvm"
@@ -319,10 +322,10 @@ site_config:
         uid: 201
         home: "/var/lib/munin"
         group: "munin"
-#      - uname: "mysql"
-#        uid: 202
-#        home: "/var/lib/mysql"
-#        group: "mysql"
+      - uname: "mysql"
+        uid: 202
+        home: "/var/lib/mysql"
+        group: "mysql"
       - uname: "postgres"
         uid: 203
         home: "/var/lib/postgres"

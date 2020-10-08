@@ -101,5 +101,16 @@
   notify: restart apache2
   with_items:
     - regexp: "^IncludeOptional sites-enabled/"
-      value: "IncludeOptional sites-enabled/http*"
+      value: "IncludeOptional sites-enabled/site-*"
+- name: Configure iptables
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v4"
+    line: "{{ item }}"
+    insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
+  with_items:
+    - "-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT"
+    - "-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT"
+  notify: restart iptables-persistent
+
 

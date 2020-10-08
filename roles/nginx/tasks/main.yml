@@ -33,4 +33,14 @@
     update: yes
     force: yes
   notify: restart nginx
+- name: Configure iptables
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v4"
+    line: "{{ item }}"
+    insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
+  with_items:
+    - "-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT"
+    - "-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT"
+  notify: restart iptables-persistent
 

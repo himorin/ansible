@@ -1,9 +1,7 @@
 ---
 dependencies:
-  - role: packagecloud
-    packagecloud: 
-      target_id: grafana/stable
   - role: packages
     packages:
-      - grafana
+      - apt-transport-https
+      - debian-archive-keyring
 

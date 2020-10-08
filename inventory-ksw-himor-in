@@ -40,10 +40,14 @@ all:
     works:
       hosts:
         shell01:
+        shell02:
         node01:
           install_nodejs: True
       vars:
         nfsv3_target: "{{ site_config.nfs.common }}"
+    normalwork:
+      hosts:
+        shell02:
     dbsrv:
       hosts:
         db01:

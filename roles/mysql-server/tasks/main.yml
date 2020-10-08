@@ -5,7 +5,7 @@
     path: "{{ site_config.mysql.data_directory }}"
     state: directory
     owner: "mysql"
-    mode: 0700
+    mode: '0700'
 - name: Configure mysql server
   become: yes
   ini_file:
@@ -22,6 +22,22 @@
       value: 1
     - option: datadir
       value: "{{ site_config.mysql.data_directory }}"
+  notify: restart mysql
+- name: Create directory for mysql custom environment value
+  become: yes
+  file:
+    path: "/etc/systemd/system/mariadb.service.d/"
+    state: directory
+    mode: '0744'
+- name: Copy custom environment file
+  become: yes
+  template:
+    src: "limit.conf"
+    dest: "/etc/systemd/system/mariadb.service.d/limit.conf"
+    backup: no
+    owner: root
+    group: root
+    mode: '0644'
   notify: restart mysql
 - name: configure backup for mysql
   become: yes

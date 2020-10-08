@@ -53,6 +53,9 @@ configuration parameters and results.
   Install mailman and configure mm_cfg
 :mount:
   Mount local attached storage using UUID
+:mysql-server:
+  Install and configure mariadb server
+  For Debian/Ubuntu, you will need to copy /var/lib/mysql contents into configured storage path (for debian starting script)
 :munin-node:
   Configuration of munin-node
 :nat-route:

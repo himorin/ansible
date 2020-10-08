@@ -75,7 +75,6 @@ site_config:
       - cadaver
       - curl
       - dnsutils
-      - ftp-ssl
       - gawk
       - git
       - git-lfs
@@ -88,8 +87,6 @@ site_config:
       - patchutils
       - rsync
       - sharutils
-      - sslscan
-      - telnet-ssl
       - time
       - w3m
       - wdiff
@@ -137,9 +134,7 @@ site_config:
       - gnuplot
       - graphviz
       - imagemagick
-      - mplayer2
       - netpbm
-      - vlc
     utils_mgmt:
       - ipmitool
       - libvirt-clients

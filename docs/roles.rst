@@ -507,6 +507,7 @@ flag name is the same to name) are:
   - mysql database account need to have 'select' and 'replication client' 
     priviledges on *.* (all databases) to acquire performance parameters 
     per database. 
+    `grant replication client on *.* to user@'addr' identified by 'pass';`
   - pgsql database account need to have suitable priviledges to run operation. 
 
 rsyslog-server
