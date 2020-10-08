@@ -5,7 +5,6 @@ all:
       hosts:
         ch03.himor.in:
         ch04.himor.in:
-        ch08.himor.in:
     external:
       children:
         conoha:
@@ -21,12 +20,14 @@ all:
         altus01.himor.in:
         ch03.himor.in:
         ch04.himor.in:
+          server_l2tp: True
         ch08.himor.in:
           server_prometheus: True
           server_grafana: True
           server_apache: True
           httpd:
             site_branch: ch04-apache
+          server_l2tp: True
     dbsrv:
       hosts:
         ch08.himor.in:

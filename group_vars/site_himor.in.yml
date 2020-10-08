@@ -18,6 +18,8 @@ site_config:
     sites_git: "git@github.com:himorin/serverconfig"
 #  influxdb:
 #    storage_nfs: "10.100.200.3:/server/services/influxdb"
+  l2tp:
+    local: "192.168.129"
   ldap:
     uri: "ldap://ldap.himor.in/"
     base: "dc=shell,dc=himor,dc=in"
@@ -35,6 +37,7 @@ site_config:
 #        target: "/home"
 #    v3export_access: "10.100.200.0/23(rw,sync,no_subtree_check,no_root_squash)"
   ntp: 
+    upstream: "ntp.jst.mfeed.ad.jp"
 #    upstream: "157.82.226.81"
 #    local: ntp.pfs.ipmu.jp
   packages:

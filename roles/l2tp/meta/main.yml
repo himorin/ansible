@@ -1,0 +1,8 @@
+---
+dependencies:
+  - role: packages
+    packages:
+      - strongswan
+      - xl2tpd
+  - iptables
+
