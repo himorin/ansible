@@ -2,13 +2,11 @@
 site_config:
   cron_apt:
     hour: "4"
-#  dnsmasq:
-#    site: "himorin"
 #  elastic:
 #    server: "elasticsearch"
 #    storage_nfs: "10.100.200.3:/server/services/elasticsearch"
   git:
-    key_file: "~/.ssh/id_github"
+#    key_file: "/home/mnt/.ssh/id_github"
   grafana:
     url: "https://monitor.himor.in/grafana/"
     db:
@@ -38,8 +36,6 @@ site_config:
 #    v3export_access: "10.100.200.0/23(rw,sync,no_subtree_check,no_root_squash)"
   ntp: 
     upstream: "ntp.jst.mfeed.ad.jp"
-#    upstream: "157.82.226.81"
-#    local: ntp.pfs.ipmu.jp
   packages:
     sitewide:
       - aptitude

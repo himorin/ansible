@@ -85,13 +85,14 @@
 - name: Checkout apache site config
   git:
     repo: "{{ site_config.httpd.sites_git }}"
-    dest: "/etc/apache2/sites-enabled/"
+    dest: "/etc/apache2/sites-enabled"
     accept_hostkey: yes
     key_file: "{{ site_config.git.key_file }}"
     update: yes
     force: yes
     version: "{{ httpd.site_branch }}"
   notify: restart apache2
+  when: site_config.httpd.sites_git is defined and site_config.git.key_file is defined
 - name: Limit site-config to be loaded
   become: yes
   lineinfile:
