@@ -12,7 +12,7 @@
     - role: exim4
       when: "server_smarthost is undefined"
     - role: rsyslog-client
-      when: "server_rsyslog is undefined"
+      when: "server_rsyslog is undefined and rsyslog is defined"
 
 - hosts: external
   vars_files:
@@ -61,6 +61,7 @@
     - { role: certbot, when: "server_apache is defined or server_nginx is defined" }
     - { role: couchdb, when: "server_couchdb is defined" }
     - { role: l2tp, when: "server_l2tp is defined" }
+    - { role: squid, when: "server_squid is defined" }
 
 - hosts: works
   vars_files:

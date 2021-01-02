@@ -284,14 +284,13 @@ site_config:
 #      name: "data1"
 #      comment: "Data Storage 1"
 #      path: "/data1"
-#  squid:
-#    cache_mem: "1 GB"
-#    maximum_object_size_in_memory: "2 MB"
-#    maximum_object_size: "20 MB"
-#    cache_dir: "/squid"
-#    cache_dir_mb: 20000
-#    cache_dir_nfs: "10.100.200.3:/server/services/squid/"
-#    syslog: "local1.info"
+  squid:
+    cache_mem: "1 GB"
+    maximum_object_size_in_memory: "2 MB"
+    maximum_object_size: "20 MB"
+    cache_dir: "/squid"
+    cache_dir_mb: 20000
+    syslog: "local1.info"
   system_accounts:
     defuser_groups: "adm,dialout,cdrom,audio,netdev"
     groups:
