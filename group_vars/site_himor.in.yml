@@ -21,6 +21,17 @@ site_config:
   ldap:
     uri: "ldap://ldap.himor.in/"
     base: "dc=shell,dc=himor,dc=in"
+  localnet:
+    - host: ch04
+      addr: 133.130.89.191
+    - host: ch07
+      addr: 150.95.148.135
+    - host: ch08
+      addr: 150.95.201.108
+    - host: cvps
+      addr: 158.199.140.49
+    - host: altus01
+      addr: 153.122.65.123
   mail:
     notice_from: "root@himor.in"
     notice_name: "himor.in System"

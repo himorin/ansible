@@ -18,7 +18,9 @@
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
+    - iptables
     - ssh-gateway
+    - localnet
 
 - hosts: dbsrv
   vars_files:
@@ -82,14 +84,6 @@
       when: "nfsv3_target is defined"
     - samba-server
 
-
-
-
-- hosts: alls
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  roles:
-    - iptables
 
 
 - hosts: virt-host

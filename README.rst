@@ -51,6 +51,8 @@ configuration parameters and results.
   Install L2TP VPN
 :ldap:
   Configuration of ldap for account
+:localnet:
+  Configure local network hosts to iptables
 :mailman:
   Install mailman and configure mm_cfg
 :mount:

@@ -16,4 +16,5 @@ dependencies:
     packages:
       - libapache2-mod-python
     when: "apache.mod_python is defined"
+  - iptables
 

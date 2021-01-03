@@ -70,6 +70,21 @@ This role will configure ldap client for system and account authentication.
 
   - No filtering by group for now. All in ldap.base will be loaded into system.
 
+localnet
+--------
+
+This module will add list of IP addresses as local network into iptables. 
+Configuration vars will be used in other possible roles.
+
+- Required configuration items (site wide)
+
+  - localnet (array of IP addresses)
+
+- depends on iptables
+- Remarks
+
+  - only IP address is acceptable, not hostname
+
 mount
 -----
 
