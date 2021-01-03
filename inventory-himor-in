@@ -26,7 +26,10 @@ all:
           server_prometheus: True
           server_grafana: True
           server_apache: True
-          apache: True
+          apache: 
+            mod_php: True
+            mod_cgi: True
+            mod_dav: True
           httpd:
             site_branch: ch08-apache
           server_l2tp: True
