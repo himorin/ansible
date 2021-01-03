@@ -12,7 +12,7 @@
     dest: "/etc/ipsec.secrets"
     regexp: "^{{ ansible_default_ipv4.address }} %any : PSK "
     line: "{{ ansible_default_ipv4.address }} %any : PSK \"{{ l2tp_vpn_psk }}\""
-  when: "l2tp_vpn_psk is defined"
+  when: l2tp_vpn_psk is defined and l2tp_vpn_psk != ""
   notify: restart ipsec
 - name: Make ipsec config directory
   become: yes
