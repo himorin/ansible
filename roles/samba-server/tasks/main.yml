@@ -50,5 +50,5 @@
     - "-A INPUT -p tcp -m multiport --dport 137,138,139,445 -j ACCEPT"
     - "-A INPUT -p udp -m multiport --dport 137,138,139 -j ACCEPT"
   notify: restart iptables-persistent
-  when: task_iptables_rulesv4.stat.md5 is defined
+  when: task_iptables_rulesv4.stat.checksum is defined
 

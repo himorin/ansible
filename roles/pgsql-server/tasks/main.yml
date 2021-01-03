@@ -56,7 +56,7 @@
   become: yes
   become_user: postgres
   shell: "/usr/lib/postgresql/{{ task_psql_vars.results[0].item.psql_ver }}/bin/initdb {{ site_config.postgres.data_directory }}"
-  when: task_postgresql_dbc.stat.md5 is not defined
+  when: task_postgresql_dbc.stat.checksum is not defined
   notify: restart postgresql
 - name: configure backup for pgsql
   become: yes

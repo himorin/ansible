@@ -20,5 +20,5 @@
     group: root
     mode: '0644'
   notify: restart iptables-persistent
-  when: task_iptables_rulesv4.stat.md5 is not defined
+  when: task_iptables_rulesv4.stat.checksum is not defined
 

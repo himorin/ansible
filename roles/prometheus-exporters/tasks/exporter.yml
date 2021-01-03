@@ -14,7 +14,7 @@
     - src: "{{ env_gopath }}/bin/{{ exporter.name }}"
       dest: "/usr/sbin/{{ exporter.name }}"
       mode: "0755"
-  when: exporter_local_go_bin.stat.md5 is defined
+  when: exporter_local_go_bin.stat.checksum is defined
 - name: Add systemd init script
   become: yes
   template:
@@ -28,7 +28,7 @@
     - src: initd-default
       dest: "/etc/default/{{ exporter.name }}"
       mode: "0644"
-  when: exporter_local_go_bin.stat.md5 is defined
+  when: exporter_local_go_bin.stat.checksum is defined
 - name: "Enable service for {{ exporter.name }}"
   become: yes
   systemd:
@@ -37,5 +37,5 @@
     state: started
   with_items:
     - "{{ exporter.name }}"
-  when: exporter_local_go_bin.stat.md5 is defined
+  when: exporter_local_go_bin.stat.checksum is defined
 
