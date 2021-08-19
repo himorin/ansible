@@ -1,12 +1,14 @@
 ---
 all:
   children:
-    hp:
+    hw-server:
       hosts:
         m350g6a:
           hwraid_target_megasas: True
           hwraid_target_hp_p410: True
           hwraid_target_hp: True
+        dell01a:
+          hwraid_target_megasas: True
 #    virt-host:
 #      hosts:
 #        m350g6a:
@@ -14,6 +16,7 @@ all:
       hosts:
         m350g6a:
           server_rsyslog: True
+        dell01a:
         backend01:
           server_prometheus: True
           server_grafana: True
@@ -30,9 +33,6 @@ all:
             mroonga: True
         web01:
           server_apache: True
-        lf00:
-          server_couchdb: True
-          server_couchdb_open: True
       children:
         samba:
           hosts:
@@ -46,6 +46,10 @@ all:
         shell02:
         node01:
           install_nodejs: True
+        lf00:
+        lf01:
+        nuc1:
+        bbb01:
       vars:
         nfsv3_target: "{{ site_config.nfs.common }}"
     normalwork:
@@ -59,6 +63,7 @@ all:
         m350g6a:
           nfsv3_export:
             - "/data1"
+#       dell01a:
     prometheus-exporters:
       hosts:
         db01:
@@ -67,4 +72,5 @@ all:
           prometheus_exporters_snmp: True
         m350g6a:
           prometheus_exporters_ipmi: True
+        dell01a:
 

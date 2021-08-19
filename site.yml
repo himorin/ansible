@@ -85,6 +85,14 @@
     - samba-server
 
 
+- hosts: hw-server
+  vars_files:
+    - "group_vars/site_{{ ansible_domain }}.yml"
+  roles:
+    - hwraid
+    - iscsi
+    - nfs-server
+
 
 - hosts: virt-host
   vars_files:
@@ -103,17 +111,6 @@
   roles:
     - privca
 
-- hosts: hwraid
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  roles:
-    - hwraid
-- hosts: fc-nfs
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  roles:
-    - iscsi
-    - nfs-server
 - hosts: landfill
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
