@@ -53,6 +53,7 @@ all:
         shell01:
         shell02:
         shell03:
+          ntp_confdir: "ntpsec/"
         node01:
           install_nodejs: True
         lf00:
@@ -65,7 +66,6 @@ all:
       hosts:
         shell02:
         shell03:
-          ntp_confdir: "ntpsec/"
     dbsrv:
       hosts:
         db01:

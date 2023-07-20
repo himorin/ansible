@@ -69,7 +69,6 @@ site_config:
     utils_astro:
       - libcfitsio-bin
       - libcfitsio-dev
-      - python-fitsio
       - python3-fitsio
     utils_basic:
       - at
