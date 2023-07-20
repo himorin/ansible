@@ -65,6 +65,7 @@ all:
       hosts:
         shell02:
         shell03:
+          ntp_confdir: "ntpsec/"
     dbsrv:
       hosts:
         db01:

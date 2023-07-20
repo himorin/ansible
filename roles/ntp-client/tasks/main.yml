@@ -1,8 +1,11 @@
 ---
+- name: set fact
+  set_fact:
+    ntp_conf_dest: "{{ '/etc/' + ntp_confdir + '/ntp.conf' }}"
 - name: NTP config remove pools
   become: yes
   lineinfile:
-    dest: /etc/ntp.conf
+    dest: "{{ ntp_conf_dest }}"
     regexp: "^pool"
     state: absent
   notify: restart ntp
@@ -10,7 +13,7 @@
 - name: NTP config add server lines
   become: yes
   lineinfile:
-    dest: /etc/ntp.conf
+    dest: "{{ ntp_conf_dest }}"
     regexp: "^server"
     insertafter: "^#server"
     line: "server {{ item }}"
