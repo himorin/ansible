@@ -128,7 +128,6 @@ site_config:
       - genisoimage
       - gimp
       - gmt
-      - gmt-doc
       - gmt-gshhg-full
       - gmt-gshhg-high
       - gmt-gshhg-low
