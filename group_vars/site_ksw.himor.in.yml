@@ -168,7 +168,7 @@ site_config:
     utils_python2:
       - python-all
       - python-astropy
-      - python-crypto
+      - python-cryptography
       - python-dateutil
       - python-dev
       - python-html5lib
@@ -180,7 +180,8 @@ site_config:
       - python-matplotlib
       - python-nose
       - python-numpy
-      - python-oauth
+      - python-oauth2client
+      - python-oauthlib
       - python-openssl
       - python-pil
       - python-pip
