@@ -12,6 +12,7 @@
       dest: "/etc/pki/libvirt/host.pem"
     - src: "{{ site_config.virt.pki.local }}/private/{{ ansible_default_ipv4.address }}.key"
       dest: "/etc/pki/libvirt/host.key"
+  when: site_config.virt.pki.local is defined
 - name: Configure libvirtd for PKI
   become: yes
   lineinfile: >
@@ -29,6 +30,7 @@
     - key: "tls_no_verify_certificate"
       value: "1"
   notify: restart libvirtd
+  when: site_config.virt.pki.local is defined
 - name: Configure libvirtd for PKI II
   become: yes
   lineinfile: >
@@ -37,6 +39,7 @@
     regexp="^libvirtd_opts="
     line="libvirtd_opts=\"-l\""
   notify: restart libvirtd
+  when: site_config.virt.pki.local is defined
 - name: Configure default network interface to br0
   become: yes
   template:

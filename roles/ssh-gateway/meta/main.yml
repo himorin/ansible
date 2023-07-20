@@ -1,6 +1,5 @@
 ---
 dependencies: 
-  - iptables
   - { role: packages, packages: [ "openssh-server" ] }
   - role: fail2ban
     jail_enable: 

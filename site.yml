@@ -3,6 +3,8 @@
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
+    - iptables
+    - localnet
     - system-accounts
     - role: packages
       packages: "{{ site_config.packages.sitewide }}"
@@ -18,9 +20,7 @@
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
-    - iptables
     - ssh-gateway
-    - localnet
 
 - hosts: dbsrv
   vars_files:
@@ -91,7 +91,10 @@
   roles:
     - hwraid
     - iscsi
-    - nfs-server
+    - role: nfs-server
+      when: nfs_user_region is defined
+    - role: ldap-client
+      when: nfs_user_region is defined
 
 
 - hosts: virt-host

@@ -8,7 +8,7 @@
     - ipmi_si
     - ipmi_devintf
   when: prometheus_exporters_ipmi is defined
-  notify: restart ipmi_exporter
+  notify: restart ipmi-exporter
 - name: Load kernel module for ipmi exporter
   become: yes
   shell: modprobe {{ item }}
@@ -17,14 +17,14 @@
     - ipmi_devintf
   when: prometheus_exporters_ipmi is defined
   changed_when: False
-  notify: restart ipmi_exporter
+  notify: restart ipmi-exporter
 - name: Include exporter tasks as ipmi_exporter
   include: exporter.yml
   vars:
     exporter:
       name: ipmi_exporter
   when: prometheus_exporters_ipmi is defined
-  notify: restart ipmi_exporter
+  notify: restart ipmi-exporter
 
 - name: Include exporter tasks as snmp_exporter
   include: exporter.yml

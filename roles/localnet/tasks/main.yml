@@ -2,9 +2,8 @@
   become: yes
   lineinfile:
     dest: "/etc/iptables/rules.v4"
-    line: "-A INPUT -s {{ item.addr }} -j INTERNAL"
+    line: "-A INPUT -s {{ site_config.localnet.addr }} -j INTERNAL"
     insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
-  with_items: "{{ site_config.localnet }}"
   notify: restart iptables-persistent
   when: site_config.localnet is defined
 

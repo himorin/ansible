@@ -22,6 +22,8 @@ site_config:
   ldap:
     uri: "ldap://ldap.ksw.himor.in/"
     base: "dc=shell,dc=himor,dc=in"
+  localnet:
+    addr: "192.168.10.0/24"
   mail:
     notice_from: "mnt@himor.in"
     notice_name: "KSW System"
@@ -356,8 +358,6 @@ site_config:
     backup_dir: "/server/backup/"
     git_clone: "/usr/local/gitrepo/"
   virt:
-    nfsdisk: "10.100.200.3:/virt"
+    nfsdisk: "nfs:/virt"
     pki:
-      local: "/virt/pki/"
-      subj: "/C=JP/ST=Chiba/L=Kashiwa/O=PFS"
 

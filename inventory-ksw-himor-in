@@ -7,11 +7,19 @@ all:
           hwraid_target_megasas: True
           hwraid_target_hp_p410: True
           hwraid_target_hp: True
+          nfs_user_region: True
         dell01a:
           hwraid_target_megasas: True
-#    virt-host:
-#      hosts:
-#        m350g6a:
+          nfs_user_region: True
+    external:
+      hosts:
+        dell01a:
+    virt-host:
+      hosts:
+        m350g6a:
+          virt_image_nomount: True
+        dell01a:
+          virt_image_nomount: True
     server:
       hosts:
         m350g6a:
@@ -44,6 +52,7 @@ all:
       hosts:
         shell01:
         shell02:
+        shell03:
         node01:
           install_nodejs: True
         lf00:
@@ -55,6 +64,7 @@ all:
     normalwork:
       hosts:
         shell02:
+        shell03:
     dbsrv:
       hosts:
         db01:
