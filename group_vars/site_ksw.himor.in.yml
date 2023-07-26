@@ -82,6 +82,7 @@ site_config:
       - httping
       - lv
       - lynx
+      - mailutils
       - nslcd
       - nslcd-utils
       - patch
@@ -100,6 +101,13 @@ site_config:
       - fakeroot
       - git-buildpackage
       - golang
+      - ansible
+      - cvs
+      - lftp
+      - sshpass
+      - telnet-ssl
+      - wakeonlan
+      - uuid
     utils_latex:
       - cjk-latex
       - dvi2ps
@@ -135,6 +143,7 @@ site_config:
       - graphviz
       - imagemagick
       - netpbm
+      - optipng
     utils_mgmt:
       - ipmitool
       - libvirt-clients
@@ -210,6 +219,7 @@ site_config:
       - python3-dev
       - python3-html5lib
       - python3-jinja2
+      - python3-keyring
       - python3-libvirt
       - python3-magic
       - python3-markupsafe
