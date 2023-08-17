@@ -6,6 +6,7 @@ all:
         ch03.himor.in:
         ch04.himor.in:
         ch08.himor.in:
+        ch09.himor.in:
     external:
       children:
         conoha:
@@ -35,9 +36,19 @@ all:
             site_branch: ch08-apache
           server_l2tp: True
           server_squid: True
+        ch09.himor.in:
+          server_apache: True
+          apache: 
+            mod_cgi: True
+            mod_php: True
+            mod_php_wp: True
+            mod_dav: True
     dbsrv:
       hosts:
         ch08.himor.in:
+          mysql_server:
+            mroonga: True
+        ch09.himor.in:
           mysql_server:
             mroonga: True
 #    nfssrv:

@@ -2,6 +2,11 @@
 - name: set fact
   set_fact:
     ntp_conf_dest: "{{ '/etc/' + ntp_confdir + '/ntp.conf' }}"
+  when: "ntp_confdir is defined"
+- name: set fact
+  set_fact:
+    ntp_conf_dest: "{{ '/etc/ntp.conf' }}"
+  when: "ntp_confdir is not defined"
 - name: NTP config remove pools
   become: yes
   lineinfile:

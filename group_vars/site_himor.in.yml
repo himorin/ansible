@@ -28,6 +28,8 @@ site_config:
       addr: 150.95.148.135
     - host: ch08
       addr: 150.95.201.108
+    - host: ch09
+      addr: 133.130.98.70
     - host: cvps
       addr: 158.199.140.49
     - host: altus01
@@ -305,10 +307,6 @@ site_config:
         gid: 200
       - gname: "munin"
         gid: 201
-      - gname: "mysql"
-        gid: 202
-      - gname: "postgres"
-        gid: 203
       - gname: "kvm"
         gid: 204
       - gname: "prometheus"
@@ -331,15 +329,6 @@ site_config:
         uid: 201
         home: "/var/lib/munin"
         group: "munin"
-      - uname: "mysql"
-        uid: 202
-        home: "/var/lib/mysql"
-        group: "mysql"
-      - uname: "postgres"
-        uid: 203
-        home: "/var/lib/postgres"
-        group: "postgres"
-        shell: "/bin/bash"
       - uname: "prometheus"
         uid: 204
         group: "prometheus"

@@ -14,6 +14,20 @@ dependencies:
     when: "apache.mod_php is defined"
   - role: packages
     packages:
+      - curl
+      - libjs-cropper
+      - libjs-underscore
+      - php-gd
+      - php-getid3
+      - php-mysqlnd
+      - php-curl
+      - php-imagick
+      - php-mbstring
+      - php-xml
+      - php-zip
+    when: "apache.mod_php_wp is defined"
+  - role: packages
+    packages:
       - libapache2-mod-python
     when: "apache.mod_python is defined"
   - iptables

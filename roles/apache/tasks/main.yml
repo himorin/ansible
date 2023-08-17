@@ -5,10 +5,10 @@
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   with_items:
-    - name: mpm_event
-      state: absent
     - name: mpm_prefork
       state: present
+    - name: mpm_event
+      state: absent
   notify: restart apache2
   when: apache.mod_php is defined or apache.mod_cgi is defined
 - name: Enable apache modules

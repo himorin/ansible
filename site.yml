@@ -4,7 +4,7 @@
     - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - iptables
-    - localnet
+#    - localnet
     - system-accounts
     - role: packages
       packages: "{{ site_config.packages.sitewide }}"

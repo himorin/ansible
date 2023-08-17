@@ -6,6 +6,9 @@
     state: directory
     owner: "mysql"
     mode: '0700'
+- name: Error could occuer with dpkg, copy files from /var/lib/mysql
+  debug:
+    msg: "Copy files from /var/lib/mysql, into {{ site_config.mysql.data_directory }}, and symlink dir"
 - name: Configure mysql server
   become: yes
   ini_file:
