@@ -13,3 +13,20 @@ follows:
 then, run ansible as 
 'ansible-playbook -k -K -i INVENTORY-FILE -l TARGET-HOSTNAME PLAYBOOK'.
 
+Manual configurations
+======
+
+mysql
+------
+
+1. run ansible first
+2. delete `/services/mysql/` and move `/var/lib/mysql` to there
+   (database assets contains debian-maintainance values)
+3. re-run ansible
+
+mod_php
+------
+
+- php version need to be configured by parameter
+- may need to run twice, for a2enmod restriction (or may need to disable once configured, and re-run)
+
