@@ -11,7 +11,7 @@ follows:
 4. Check inventory file for configuration of the target host
 
 then, run ansible as 
-'ansible-playbook -k -K -i INVENTORY-FILE -l TARGET-HOSTNAME PLAYBOOK'.
+`ansible-playbook -k -K -i INVENTORY-FILE -l TARGET-HOSTNAME PLAYBOOK`.
 
 Manual configurations
 ======
@@ -30,3 +30,11 @@ mod_php
 - php version need to be configured by parameter
 - may need to run twice, for a2enmod restriction (or may need to disable once configured, and re-run)
 
+ipv6
+------
+
+IPv6 is not enabled by preseed, so need to be added by hand.
+
+1. edit iptables/rules.v6 with assigned IPv6 address
+2. add ipv6 line to network/interfaces, e.g. `iface ens3 inet6 dhcp`
+3. reboot (or from console, restart netfilter-persistent, and down/up ens3)
