@@ -1,0 +1,83 @@
+*mangle
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-F
+
+# ANSIBLE_ROLE_MANGLE_PLACE
+
+COMMIT
+
+*nat
+:PREROUTING ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-F
+
+# ANSIBLE_ROLE_NAT_PLACE
+
+COMMIT
+
+*filter
+:INPUT DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+:FORWARD DROP [0:0]
+:LOCAL - [0:0]
+:INTERNAL - [0:0]
+:DENY - [0:0]
+
+# local defs
+####-A INPUT -s XXXX -j LOCAL
+####-A OUTPUT -s XXXX -j LOCAL
+-A INPUT -i lo -j LOCAL
+-A INPUT -s fe80::1:85ff:fe82:6246 -j LOCAL
+
+# internal defs
+#-A INPUT -s XXXX -j INTERNAL
+
+# VM/KVM
+-A FORWARD -m physdev --physdev-is-bridged -j ACCEPT
+-A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Accept all local network
+-A LOCAL -p tcp -m tcp -j ACCEPT
+-A LOCAL -p udp -m udp -j ACCEPT
+-A INTERNAL -p tcp -m tcp -j ACCEPT
+-A INTERNAL -p udp -m udp -j ACCEPT
+
+# Normal defs (just in case) - Established, ICMP, DNS
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type echo-request -m limit --limit 1/s -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type 1 -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type 2 -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type 3 -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type 4 -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type 134 -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type 135 -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type 136 -j ACCEPT
+-A OUTPUT -p icmpv6 --icmpv6-type 1 -j ACCEPT
+-A OUTPUT -p icmpv6 --icmpv6-type 2 -j ACCEPT
+-A OUTPUT -p icmpv6 --icmpv6-type 3 -j ACCEPT
+-A OUTPUT -p icmpv6 --icmpv6-type 4 -j ACCEPT
+-A OUTPUT -p icmpv6 --icmpv6-type 134 -j ACCEPT
+-A OUTPUT -p icmpv6 --icmpv6-type 135 -j ACCEPT
+-A OUTPUT -p icmpv6 --icmpv6-type 136 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT
+-A INPUT -p udp -m udp --dport 53 -j ACCEPT
+-A INPUT -p tcp -m tcp --sport 53 --dport 1024:65535 -j ACCEPT
+-A INPUT -p udp -m udp --sport 53 --dport 1024:65535 -j ACCEPT
+
+# ANSIBLE_ROLE_FILTER_PLACE
+-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 465 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 587 -j ACCEPT
+
+
+# REJECT OTHERS
+-A INPUT -j REJECT
+-A DENY -j REJECT
+
+COMMIT

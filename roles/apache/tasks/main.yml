@@ -113,5 +113,15 @@
     - "-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT"
     - "-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT"
   notify: restart iptables-persistent
+- name: Copy hide-git template
+  become: yes
+  template: 
+    src: "hide-git.conf"
+    dest: "/etc/apache2/conf-enabled/hide-git.conf"
+    backup: no
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart apache2
 
 

@@ -52,6 +52,15 @@
     user: root
     name: backup-mysql
   when: install_backup_mysql is defined
+- name: Copy backup script
+  become: yes
+  template:
+    src: "mysql-backup.sh"
+    dest: "/usr/local/sbin/mysql-backup.sh"
+    backup: no
+    owner: root
+    group: root
+    mode: '0755'
 
 
 

@@ -2,6 +2,9 @@
 - name: Check rules.v4 exists or not
   stat: path=/etc/iptables/rules.v4
   register: task_iptables_rulesv4
+- name: Check rules.v6 exists or not
+  stat: path=/etc/iptables/rules.v6
+  register: task_iptables_rulesv6
 - name: Install iptables-persistent package
   become: yes
   apt: 
@@ -21,4 +24,15 @@
     mode: '0644'
   notify: restart iptables-persistent
   when: task_iptables_rulesv4.stat.checksum is not defined
+- name: Copy ip6tables templates
+  become: yes
+  template: 
+    src: "iptables_v6.j2"
+    dest: "/etc/iptables/rules.v6"
+    backup: no
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart iptables-persistent
+  when: task_iptables_rulesv6.stat.checksum is not defined
 

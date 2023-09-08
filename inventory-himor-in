@@ -7,6 +7,8 @@ all:
         ch04.himor.in:
         ch08.himor.in:
         ch09.himor.in:
+        ch10.himor.in:
+        ch11.himor.in:
     external:
       children:
         conoha:
@@ -41,6 +43,23 @@ all:
           apache: 
             mod_cgi: True
             mod_php: True
+            mod_php_ver: 8.2
+            mod_php_wp: True
+            mod_dav: True
+        ch10.himor.in:
+          server_apache: True
+          apache: 
+            mod_cgi: True
+#            mod_php: True
+            mod_php_ver: 8.2
+            mod_php_wp: True
+            mod_dav: True
+        ch11.himor.in:
+          server_apache: True
+          apache: 
+            mod_cgi: True
+#            mod_php: True
+            mod_php_ver: 8.2
             mod_php_wp: True
             mod_dav: True
     dbsrv:
@@ -49,6 +68,12 @@ all:
           mysql_server:
             mroonga: True
         ch09.himor.in:
+          mysql_server:
+            mroonga: True
+        ch10.himor.in:
+          mysql_server:
+            mroonga: True
+        ch11.himor.in:
           mysql_server:
             mroonga: True
 #    nfssrv:
