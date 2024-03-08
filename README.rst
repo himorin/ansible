@@ -13,6 +13,9 @@ ToC
 Also refer `quick instruction of ansible <docs/instruction.rst>`_ in 
 `detailed documents <docs/>`_ directory. 
 
+example: 
+`ansible-playbook -i <inventry> -k -K -l <host> site.yml`
+
 List of definitions
 ******
 
