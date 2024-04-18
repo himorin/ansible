@@ -13,6 +13,8 @@ follows:
 then, run ansible as 
 `ansible-playbook -k -K -i INVENTORY-FILE -l TARGET-HOSTNAME PLAYBOOK`.
 
+* you need to enable authorized_keys if you use ssh-agent locally
+
 Manual configurations
 ======
 
