@@ -1,5 +1,4 @@
-Instruction to run ansible
-======
+# Instruction to run ansible
 
 Once you prepare a target host (as VM guest or physical host), execute as 
 follows:
@@ -15,8 +14,7 @@ then, run ansible as
 
 * you need to enable authorized_keys if you use ssh-agent locally
 
-Manual configurations
-======
+# Manual configurations
 
 mysql
 ------
