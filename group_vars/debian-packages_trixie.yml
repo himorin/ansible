@@ -1,0 +1,9 @@
+---
+debian:
+  packages:
+    ntp_client:
+      - ntpsec
+      - ntpsec-ntpdate
+
+ntp_confdir: "ntpsec"
+

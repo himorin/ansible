@@ -1,8 +1,5 @@
 ---
 dependencies: 
   - role: packages
-    packages:
-      - ntp
-      - ntpdate
-      - ntpstat
+    packages: "{{ debian.packages.ntp_client }}"
 

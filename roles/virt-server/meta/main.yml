@@ -4,5 +4,5 @@ dependencies:
   - role: packages
     packages: 
       - "libvirt-daemon-system"
-      - "virt-top"
+      - "bridge-utils"
 

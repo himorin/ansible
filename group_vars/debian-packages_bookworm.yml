@@ -1,0 +1,8 @@
+---
+debian:
+  packages:
+    ntp_client:
+      - ntp
+      - ntpdate
+      - ntpstat
+

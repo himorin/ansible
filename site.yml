@@ -2,6 +2,7 @@
 - hosts: all
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
+    - "group_vars/debian-packages_{{ ansible_distribution_release }}.yml"
   roles:
     - iptables
 #    - localnet

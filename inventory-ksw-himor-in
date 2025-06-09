@@ -1,5 +1,6 @@
----
 all:
+  hosts:
+    lf02:
   children:
     hw-server:
       hosts:
@@ -11,14 +12,23 @@ all:
         dell01a:
           hwraid_target_megasas: True
           nfs_user_region: True
+        nuc2:
+          nfs_user_region: True
+          ntp_confdir: ntpsec
     external:
       hosts:
         dell01a:
+        nuc1:
+        nuc2:
     virt-host:
       hosts:
         m350g6a:
           virt_image_nomount: True
         dell01a:
+          virt_image_nomount: True
+        nuc1:
+          virt_image_nomount: True
+        nuc2:
           virt_image_nomount: True
     server:
       hosts:
@@ -41,6 +51,8 @@ all:
             mroonga: True
         web01:
           server_apache: True
+        nuc1:
+        nuc2:
       children:
         samba:
           hosts:
@@ -59,6 +71,7 @@ all:
         lf00:
         lf01:
         nuc1:
+          ntp_confdir: ntpsec
         bbb01:
       vars:
         nfsv3_target: "{{ site_config.nfs.common }}"
