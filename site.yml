@@ -8,7 +8,7 @@
 #    - localnet
     - system-accounts
     - role: packages
-      packages: "{{ site_config.packages.sitewide }}"
+      packages: "{{ debian.packages.sitewide }}"
     - cron-apt
     - role: ntp-client
       when: "server_ntp is undefined"

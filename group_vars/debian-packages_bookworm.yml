@@ -5,4 +5,14 @@ debian:
       - ntp
       - ntpdate
       - ntpstat
+    sitewide:
+      - aptitude
+      - package: prometheus-node-exporter
+        enable_service: prometheus-node-exporter
+      - screen
+      - vim-nox
+      - vim-addon-manager
+      - vim-scripts
+      - tcsh
+      - zsh
 

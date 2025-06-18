@@ -16,16 +16,6 @@ site_config:
   ntp: 
     local: "ntp-ics.pfs.sum.subaru.nao.ac.jp"
     upstream: "ntp.sum.subaru.nao.ac.jp"
-  packages:
-    sitewide:
-      - package: prometheus-node-exporter
-        enable_service: prometheus-node-exporter
-      - screen
-      - vim-nox
-      - vim-addon-manager
-      - vim-scripts
-      - tcsh
-      - zsh
   rsyslog:
     omfile: "/rsyslog/"
     server: "rsyslog-ics.pfs.sum.subaru.nao.ac.jp"
