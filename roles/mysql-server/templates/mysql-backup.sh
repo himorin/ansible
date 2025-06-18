@@ -37,6 +37,9 @@ backup_single() {
     if [ $DIFF_NUM -ne 0 ]; then
         echo "new"
         mv $BACKUP_DIR/$TEMP_FILE $BACKUP_DIR/$BACKUP_FILE
+        if [ -z $LAST_FILE ]; then
+            gzip $BACKUP_DIR/$LAST_FILE
+        fi
     else
         echo "stable"
         rm $BACKUP_DIR/$TEMP_FILE

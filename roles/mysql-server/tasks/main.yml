@@ -6,9 +6,6 @@
     state: directory
     owner: "mysql"
     mode: '0700'
-- name: Error could occuer with dpkg, copy files from /var/lib/mysql
-  debug:
-    msg: "Copy files from /var/lib/mysql, into {{ site_config.mysql.data_directory }}, and symlink dir"
 - name: Configure mysql server
   become: yes
   ini_file:
@@ -42,16 +39,6 @@
     group: root
     mode: '0644'
   notify: restart mysql
-- name: configure backup for mysql
-  become: yes
-  cron:
-    minute: 10
-    hour: 2
-    job: "{{ site_config.system_dirs.git_clone }}/github.com/Subaru-PFS/pfs_infra_ipmu/admin-script/mysql-backup.sh"
-    cron_file: "/etc/crontab"
-    user: root
-    name: backup-mysql
-  when: install_backup_mysql is defined
 - name: Copy backup script
   become: yes
   template:
@@ -61,6 +48,20 @@
     owner: root
     group: root
     mode: '0755'
+  when: install_backup_mysql is defined
+- name: configure backup for mysql
+  become: yes
+  cron:
+    minute: 10
+    hour: 2
+    job: "/usr/local/sbin/mysql-backup.sh"
+    cron_file: "/etc/crontab"
+    user: root
+    name: backup-mysql
+  when: install_backup_mysql is defined
+- name: Error could occuer with dpkg, copy files from /var/lib/mysql
+  debug:
+    msg: "Copy files from /var/lib/mysql, into {{ site_config.mysql.data_directory }}, and symlink dir"
 
 
 

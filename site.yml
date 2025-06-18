@@ -23,17 +23,6 @@
   roles:
     - ssh-gateway
 
-- hosts: dbsrv
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  roles:
-    - role: mount
-      when: "local_uuids is defined"
-    - role: pgsql-server
-      when: "pgsql_server is defined"
-    - role: mysql-server
-      when: "mysql_server is defined"
-
 - hosts: prometheus-exporters
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
@@ -54,6 +43,7 @@
     - name: "l2tp_vpn_psk"
       prompt: "L2TP/IPSec VPN PSK.\n  Just type enter when you don't configure"
   roles:
+    - { role: mount, when: "local_uuids is defined" }
     - { role: ntp-server, when: "server_ntp is defined" }
     - { role: rsyslog-server, when: "server_rsyslog is defined" }
     - { role: ldap-server, when: "server_ldap is defined" }
@@ -65,6 +55,8 @@
     - { role: couchdb, when: "server_couchdb is defined" }
     - { role: l2tp, when: "server_l2tp is defined" }
     - { role: squid, when: "server_squid is defined" }
+    - { role: pgsql-server, when: "pgsql_server is defined" }
+    - { role: mysql-server, when: "mysql_server is defined" }
 
 - hosts: works
   vars_files:
@@ -128,4 +120,19 @@
     - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - jupyter
+
+- hosts: nfssrv
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - nfs-server
+    - ldap-client
+
+- hosts: fc-nfs
+  vars_files:
+    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+  roles:
+    - iscsi
+    - nfs-server
+
 

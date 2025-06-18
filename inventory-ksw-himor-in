@@ -53,6 +53,9 @@ all:
           server_apache: True
         nuc1:
         nuc2:
+        lf02:
+          mysql_server:
+            mroonga: True
       children:
         samba:
           hosts:

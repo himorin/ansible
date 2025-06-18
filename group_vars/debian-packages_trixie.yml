@@ -4,6 +4,131 @@ debian:
     ntp_client:
       - ntpsec
       - ntpsec-ntpdate
+    sitewide:
+      - aptitude
+      - package: prometheus-node-exporter
+        enable_service: prometheus-node-exporter
+      - screen
+      - vim-nox
+      - vim-addon-manager
+      - vim-scripts
+      - tcsh
+      - zsh
+    sitewide:
+      - aptitude
+      - package: prometheus-node-exporter
+        enable_service: prometheus-node-exporter
+      - screen
+      - vim-nox
+      - vim-addon-manager
+      - vim-scripts
+      - tcsh
+      - zsh
+    basic:
+      - at
+      - bc
+      - cadaver
+      - curl
+      - dnsutils
+      - ftp-ssl
+      - gawk
+      - git
+      - httping
+      - lv
+      - lynx
+      - mailutils
+      - nslcd
+      - nslcd-utils
+      - patch
+      - patchutils
+      - rsync
+      - sharutils
+      - sslscan
+      - sshpass
+      - telnet-ssl
+      - time
+      - w3m
+      - wdiff
+      - whois
+    dev:
+      - ansible
+      - cvs
+      - wakeonlan
+      - uuid
+    media:
+      - ffmpeg
+      - fuseiso9660
+      - genisoimage
+      - gimp
+      - gmt
+      - gmt-gshhg-full
+      - gmt-gshhg-high
+      - gmt-gshhg-low
+      - gnuplot
+      - graphviz
+      - imagemagick
+      - netpbm
+      - optipng
+      - smplayer
+      - vlc
+    mgmt:
+      - ipmitool
+      - libvirt-clients
+      - ldap-utils
+      - openipmi
+      - parted
+    normalwork:
+      - altermime
+      - aspell-en
+      - ethtool
+      - fetchmail
+      - mariadb-client
+      - mscompress
+      - net-tools
+      - netcat-openbsd
+      - p7zip-full
+      - pbzip2
+      - shared-mime-info
+      - smitools
+      - snmp
+      - strace
+    python3:
+      - python3-all
+      - python3-astropy
+      - python3-cryptography
+      - python3-dateutil
+      - python3-dev
+      - python3-html5lib
+      - python3-jinja2
+      - python3-keyring
+      - python3-libvirt
+      - python3-magic
+      - python3-markupsafe
+      - python3-matplotlib
+      - python3-nose2
+      - python3-numpy
+      - python3-oauth2token
+      - python3-oauthlib
+      - python3-openssl
+      - python3-pil
+      - python3-pip
+      - python3-pycurl
+      - python3-pyparsing
+      - python3-pysnmp4
+      - python3-pythonmagick
+      - python3-scipy
+      - python3-serial
+      - python3-setuptools
+      - python3-simplejson
+      - python3-sphinx
+      - python3-tk
+      - python3-twisted
+      - python3-tz
+      - python3-urllib3
+      - python3-wadllib
+      - python3-wheel
+
+
 
 ntp_confdir: "ntpsec"
 
