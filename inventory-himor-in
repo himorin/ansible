@@ -9,6 +9,7 @@ all:
         ch09.himor.in:
         ch10.himor.in:
         ch11.himor.in:
+        ch12.himor.in:
     external:
       children:
         conoha:

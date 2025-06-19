@@ -1,6 +1,7 @@
 all:
   hosts:
     lf02:
+    shell04:
   children:
     hw-server:
       hosts:
@@ -56,6 +57,8 @@ all:
         lf02:
           mysql_server:
             mroonga: True
+          server_apache: True
+          server_squid: True
       children:
         samba:
           hosts:
@@ -63,6 +66,11 @@ all:
               nfsv3_target:
                 - source: "nfs:/data1"
                   target: "/data1"
+    workshell:
+      hosts:
+        shell04:
+      vars:
+        nfsv3_target: "{{ site_config.nfs.common }}"
     works:
       hosts:
         shell01:

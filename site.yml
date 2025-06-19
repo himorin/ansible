@@ -10,6 +10,7 @@
     - role: packages
       packages: "{{ debian.packages.sitewide }}"
     - cron-apt
+    - ssh-gateway
     - role: ntp-client
       when: "server_ntp is undefined"
     - role: exim4
@@ -17,28 +18,10 @@
     - role: rsyslog-client
       when: "server_rsyslog is undefined and rsyslog is defined"
 
-- hosts: external
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  roles:
-    - ssh-gateway
-
-- hosts: prometheus-exporters
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  vars_prompt:
-    - name: "prometheus_exporters_mysql_account"
-      prompt: "(prometheus_exporters_mysql_account)\nEnter account information for mysql in \"<account>:<password>\" format\n  need 'select' and 'replication client' priv on *.*\n  just type enter when you don't configure"
-      private: yes
-    - name: "prometheus_exporters_pgsql_account"
-      prompt: "prometheus_exporters_pgsql_account)\nEnter account information for pgsql in \"<account>:<password>\" format\n  need connection priv on postgres\n  just type enter when you don't configure"
-      private: yes
-  roles:
-    - prometheus-exporters
-
 - hosts: server
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
+    - "group_vars/debian-packages_{{ ansible_distribution_release }}.yml"
   vars_prompt:
     - name: "l2tp_vpn_psk"
       prompt: "L2TP/IPSec VPN PSK.\n  Just type enter when you don't configure"
@@ -57,6 +40,51 @@
     - { role: squid, when: "server_squid is defined" }
     - { role: pgsql-server, when: "pgsql_server is defined" }
     - { role: mysql-server, when: "mysql_server is defined" }
+
+- hosts: workshell
+  vars_files:
+    - "group_vars/site_{{ ansible_domain }}.yml"
+    - "group_vars/debian-packages_{{ ansible_distribution_release }}.yml"
+  roles:
+    - ldap-client
+    - role: nfs-client
+      when: "nfsv3_target is defined"
+    - role: packages
+      packages: "{{ debian.packages.basic }}"
+    - role: packages
+      packages: "{{ debian.packages.dev }}"
+    - role: packages
+      packages: "{{ debian.packages.dev_go }}"
+    - role: packages
+      packages: "{{ debian.packages.media }}"
+    - role: packages
+      packages: "{{ debian.packages.normalwork }}"
+    - role: packages
+      packages: "{{ debian.packages.python3 }}"
+
+
+
+
+######### WILL BE UPDATED
+
+#- hosts: external
+#  vars_files:
+#    - "group_vars/site_{{ ansible_domain }}.yml"
+#    - "group_vars/debian-packages_{{ ansible_distribution_release }}.yml"
+#  roles:
+
+- hosts: prometheus-exporters
+  vars_files:
+    - "group_vars/site_{{ ansible_domain }}.yml"
+  vars_prompt:
+    - name: "prometheus_exporters_mysql_account"
+      prompt: "(prometheus_exporters_mysql_account)\nEnter account information for mysql in \"<account>:<password>\" format\n  need 'select' and 'replication client' priv on *.*\n  just type enter when you don't configure"
+      private: yes
+    - name: "prometheus_exporters_pgsql_account"
+      prompt: "prometheus_exporters_pgsql_account)\nEnter account information for pgsql in \"<account>:<password>\" format\n  need connection priv on postgres\n  just type enter when you don't configure"
+      private: yes
+  roles:
+    - prometheus-exporters
 
 - hosts: works
   vars_files:

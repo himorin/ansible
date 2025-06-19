@@ -14,16 +14,6 @@ debian:
       - vim-scripts
       - tcsh
       - zsh
-    sitewide:
-      - aptitude
-      - package: prometheus-node-exporter
-        enable_service: prometheus-node-exporter
-      - screen
-      - vim-nox
-      - vim-addon-manager
-      - vim-scripts
-      - tcsh
-      - zsh
     basic:
       - at
       - bc
@@ -37,6 +27,7 @@ debian:
       - lv
       - lynx
       - mailutils
+      - nfs-common
       - nslcd
       - nslcd-utils
       - patch
@@ -55,6 +46,12 @@ debian:
       - cvs
       - wakeonlan
       - uuid
+      - isc-dhcp-client
+      - lftp
+      - libffi8
+      - libgnutls30
+    dev_go: 
+      - golang
     media:
       - ffmpeg
       - fuseiso9660
@@ -92,6 +89,14 @@ debian:
       - smitools
       - snmp
       - strace
+      - gh
+      - git-lfs
+      - gpgv
+      - lhasa
+      - media-types
+      - xterm
+    perl:
+      - libdatetime-perl
     python3:
       - python3-all
       - python3-astropy
@@ -127,8 +132,13 @@ debian:
       - python3-urllib3
       - python3-wadllib
       - python3-wheel
-
-
+    hwhost:
+      - discover
+      - dmsetup
+      - exfat-fuse
+      - hyperv-daemons
+      - ntfs-3g
+      - testdisk
 
 ntp_confdir: "ntpsec"
 
