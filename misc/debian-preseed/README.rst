@@ -1,6 +1,12 @@
 Debian preseed configurations and tools
 ******
 
+Use with iso
+======
+
+Select "Help", and type "auto url=xxx" to go.
+
+
 Preseed configurations
 ======
 
