@@ -10,9 +10,6 @@ all:
         ch10.himor.in:
         ch11.himor.in:
         ch12.himor.in:
-    external:
-      children:
-        conoha:
     prometheus-exporters:
       children:
         conoha:
@@ -39,6 +36,8 @@ all:
             site_branch: ch08-apache
           server_l2tp: True
           server_squid: True
+          mysql_server:
+            mroonga: True
         ch09.himor.in:
           server_apache: True
           apache: 
@@ -47,6 +46,8 @@ all:
             mod_php_ver: 8.2
             mod_php_wp: True
             mod_dav: True
+          mysql_server:
+            mroonga: True
         ch10.himor.in:
           server_apache: True
           apache: 
@@ -55,28 +56,20 @@ all:
             mod_php_ver: 8.2
             mod_php_wp: True
             mod_dav: True
+          mysql_server:
+            mroonga: True
         ch11.himor.in:
           server_apache: True
           apache: 
             mod_cgi: True
 #            mod_php: True
-            mod_php_ver: 8.2
+            mod_php_ver: 8.4
             mod_php_wp: True
             mod_dav: True
-    dbsrv:
-      hosts:
-        ch08.himor.in:
+        ch12.himor.in:
           mysql_server:
             mroonga: True
-        ch09.himor.in:
-          mysql_server:
-            mroonga: True
-        ch10.himor.in:
-          mysql_server:
-            mroonga: True
-        ch11.himor.in:
-          mysql_server:
-            mroonga: True
+            backup: True
 #    nfssrv:
 #      hosts:
 

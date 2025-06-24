@@ -5,7 +5,7 @@
     repo: "deb http://deb.debian.org/debian {{ ansible_lsb.codename }}-backports main contrib non-free"
     state: present
     update_cache: yes
-  when: packages_setup_backport is defined and ansible_lsb.release != 'testing'
+  when: packages_setup_backport is defined and ansible_lsb.release != 'testing' and ansible_lsb.major_release | int <= 12
 
 - name: Install packages via apt
   become: yes

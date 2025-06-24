@@ -15,6 +15,6 @@ dependencies:
     nfsv3_target:
       - source: "{{ site_config.system_dirs.backup_nfs }}"
         target: "{{ site_config.system_dirs.backup_dir }}"
-    when: install_backup_mysql is defined
+    when: mysql_server.backup is defined and site_config.system_dirs is defined and site_config.system_dirs.backup_nfs is defined
 
 

@@ -48,17 +48,25 @@
     owner: root
     group: root
     mode: '0755'
-  when: install_backup_mysql is defined
+  when: mysql_server.backup is defined
+- name: Create backup target directory
+  become: yes
+  file:
+    path: "/server/backup/mysql/"
+    state: directory
+    owner: root
+    group: adm
+    mode: 755
+  when: mysql_server.backup is defined
 - name: configure backup for mysql
   become: yes
   cron:
     minute: 10
-    hour: 2
+    hour: 4
     job: "/usr/local/sbin/mysql-backup.sh"
-    cron_file: "/etc/crontab"
     user: root
     name: backup-mysql
-  when: install_backup_mysql is defined
+  when: mysql_server.backup is defined
 - name: Error could occuer with dpkg, copy files from /var/lib/mysql
   debug:
     msg: "Copy files from /var/lib/mysql, into {{ site_config.mysql.data_directory }}, and symlink dir"

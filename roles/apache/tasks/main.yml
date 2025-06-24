@@ -5,10 +5,10 @@
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   with_items:
-    - name: mpm_prefork
-      state: present
     - name: mpm_event
       state: absent
+    - name: mpm_prefork
+      state: present
   notify: restart apache2
   when: apache.mod_php is defined or apache.mod_cgi is defined
 - name: Enable apache modules
@@ -103,10 +103,20 @@
   with_items:
     - regexp: "^IncludeOptional sites-enabled/"
       value: "IncludeOptional sites-enabled/site-*"
-- name: Configure iptables
+- name: Configure iptables v4
   become: yes
   lineinfile:
     dest: "/etc/iptables/rules.v4"
+    line: "{{ item }}"
+    insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
+  with_items:
+    - "-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT"
+    - "-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT"
+  notify: restart iptables-persistent
+- name: Configure iptables v6
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v6"
     line: "{{ item }}"
     insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
   with_items:
