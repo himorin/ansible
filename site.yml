@@ -34,6 +34,9 @@
     - { role: prometheus, when: "server_prometheus is defined" }
     - { role: grafana, when: "server_grafana is defined" }
     - { role: apache, when: "server_apache is defined" }
+    - role: packages
+      packages: "{{ debian.packages.python3 }}"
+      when: "server_apache is defined and server_apache.python3 is defined"
     - { role: certbot, when: "server_apache is defined or server_nginx is defined" }
     - { role: couchdb, when: "server_couchdb is defined" }
     - { role: l2tp, when: "server_l2tp is defined" }

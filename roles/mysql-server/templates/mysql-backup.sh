@@ -46,7 +46,7 @@ backup_single() {
     fi
 }
 
-LIST=`mysqlshow $MYSQL_CONNOPT | cut -d' ' -f 2 | egrep -iv 'information_schema|performance_schema|mysql|test|-'`
+LIST=`mariadb-show $MYSQL_CONNOPT | cut -d' ' -f 2 | egrep -iv 'information_schema|performance_schema|mysql|test|-'`
 
 for i in $LIST
 do
