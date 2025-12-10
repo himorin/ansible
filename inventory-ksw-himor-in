@@ -108,6 +108,11 @@ all:
       hosts:
         shell02:
         shell03:
+    server_data:
+      hosts:
+        web02:
+      vars:
+        nfsv3_target: "{{ site_config.nfs.common }}"
     dbsrv:
       hosts:
         db01:

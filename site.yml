@@ -155,14 +155,14 @@
 
 - hosts: nfssrv
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - nfs-server
     - ldap-client
 
 - hosts: fc-nfs
   vars_files:
-    - "group_vars/site_{{ ansible_dns.domain }}.yml"
+    - "group_vars/site_{{ ansible_domain }}.yml"
   roles:
     - iscsi
     - nfs-server
