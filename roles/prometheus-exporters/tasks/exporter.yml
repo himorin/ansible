@@ -4,6 +4,7 @@
     path: "{{ env_gopath }}/bin/{{ exporter.name }}"
   delegate_to: 127.0.0.1
   register: exporter_local_go_bin
+  notify: restart {{ exporter.name }}
 - name: Copy files to target
   become: yes
   copy:
@@ -15,6 +16,7 @@
       dest: "/usr/sbin/{{ exporter.name }}"
       mode: "0755"
   when: exporter_local_go_bin.stat.checksum is defined
+  notify: restart {{ exporter.name }}
 - name: Add systemd init script
   become: yes
   template:
@@ -29,6 +31,7 @@
       dest: "/etc/default/{{ exporter.name }}"
       mode: "0644"
   when: exporter_local_go_bin.stat.checksum is defined
+  notify: restart {{ exporter.name }}
 - name: "Enable service for {{ exporter.name }}"
   become: yes
   systemd:
@@ -38,4 +41,5 @@
   with_items:
     - "{{ exporter.name }}"
   when: exporter_local_go_bin.stat.checksum is defined
+  notify: restart {{ exporter.name }}
 

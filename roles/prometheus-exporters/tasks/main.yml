@@ -8,7 +8,7 @@
     - ipmi_si
     - ipmi_devintf
   when: prometheus_exporters_ipmi is defined
-  notify: restart ipmi-exporter
+  notify: restart ipmi_exporter
 - name: Load kernel module for ipmi exporter
   become: yes
   shell: modprobe {{ item }}
@@ -17,14 +17,13 @@
     - ipmi_devintf
   when: prometheus_exporters_ipmi is defined
   changed_when: False
-  notify: restart ipmi-exporter
+  notify: restart ipmi_exporter
 - name: Include exporter tasks as ipmi_exporter
   include_tasks: exporter.yml
   vars:
     exporter:
       name: ipmi_exporter
   when: prometheus_exporters_ipmi is defined
-  notify: restart ipmi-exporter
 
 - name: Include exporter tasks as snmp_exporter
   include_tasks: exporter.yml
@@ -34,7 +33,6 @@
       opt_args:
         - "--config.file=\"/usr/share/snmp_exporter/snmp.yml\""
   when: prometheus_exporters_snmp is defined
-  notify: restart snmp-exporter
 - name: Create directory for snmp exporter binary
   become: yes
   file:
@@ -43,7 +41,7 @@
     owner: root
     mode: 0755
   when: prometheus_exporters_snmp is defined
-  notify: restart snmp-exporter
+  notify: restart snmp_exporter
 - name: Copy snmp definition for snmp exporter
   become: yes
   template:
@@ -54,7 +52,7 @@
     - snmp_orig.yml
     - snmp_ushaups.yml
   when: prometheus_exporters_snmp is defined
-  notify: restart snmp-exporter
+  notify: restart snmp_exporter
   register: snmp_exporter_definition
 - name: Copy openssl.conf
   become: yes
@@ -62,7 +60,7 @@
   args:
     creates: /usr/share/snmp_exporter/snmp.yml
   when: snmp_exporter_definition.changed
-  notify: restart snmp-exporter
+  notify: restart snmp_exporter
 
 - name: Add database connection for mysql exporter
   become: yes
@@ -75,7 +73,7 @@
     - key: "DATA_SOURCE_NAME"
       value: "DATA_SOURCE_NAME=\"{{ prometheus_exporters_mysql_account }}@({{ site_config.prometheus_exporter.mysql.host }})/mysql\""
   when: prometheus_exporters_mysql is defined and prometheus_exporters_mysql_account != ""
-  notify: restart prometheus-mysqld-exporter
+  notify: restart prometheus_mysqld_exporter
 
 - name: Add database connection for pgsql exporter
   become: yes
@@ -89,7 +87,7 @@
     - key: "ARGS"
       value: "\\\n"
   when: prometheus_exporters_pgsql is defined and prometheus_exporters_pgsql_account != ""
-  notify: restart prometheus-postgres-exporter
+  notify: restart prometheus_postgres_exporter
 - name: Add service configuration for pgsql exporter
   become: yes
   lineinfile:
@@ -99,7 +97,7 @@
   with_items:
     - "--extend.query-path=\"/etc/default/prometheus-postgres-exporter-queries.yaml\" \\"
   when: prometheus_exporters_pgsql is defined
-  notify: restart prometheus-postgres-exporter
+  notify: restart prometheus_postgres_exporter
 - name: Add pgsql query definition yaml
   become: yes
   template:
@@ -109,7 +107,7 @@
   with_items:
     - prometheus-postgres-exporter-queries.yaml
   when: prometheus_exporters_pgsql is defined
-  notify: restart prometheus-postgres-exporter
+  notify: restart prometheus_postgres_exporter
 
 - name: Include exporter tasks as elasticsearch_exporter
   include_tasks: exporter.yml
@@ -121,7 +119,6 @@
         - "--es.all=true"
         - "--es.indices=true"
   when: prometheus_exporters_es is defined
-  notify: restart elasticsearch-exporter
 
 - name: Include exporter tasks as hpraid_exporter
   include_tasks: exporter.yml
@@ -131,7 +128,6 @@
       opt_args:
         - "-cmd /usr/sbin/hpacucli"
   when: hwraid_target_hp is defined
-  notify: restart hpraid-exporter
 
 - name: Include exporter tasks as prometheus_exporter_sanitizer for jira
   include_tasks: exporter.yml
@@ -141,7 +137,6 @@
       opt_args:
         - "-origin http://{{ site_config.prometheus_exporter.jira.host }}:8081/jira/plugins/servlet/prometheus/metrics"
   when: prometheus_exporters_jira is defined
-  notify: restart prometheus-exporter-sanitizer
 
 - name: Include exporter tasks as nvidia_gpu_prometheus_exporter
   include_tasks: exporter.yml
@@ -149,7 +144,6 @@
     exporter:
       name: nvidia_gpu_prometheus_exporter
   when: prometheus_exporters_nvidia_gpu is defined
-  notify: restart nvidia_gpu_prometheus_exporter
 
 - name: Configure megacli text exporter
   become: yes
