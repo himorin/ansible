@@ -7,7 +7,7 @@ all:
       site_nfs: True
     web02:
   children:
-    hw-server:
+    hw_server:
       hosts:
         m350g6a:
           hwraid_target_megasas: True
@@ -25,7 +25,7 @@ all:
         dell01a:
         nuc1:
         nuc2:
-    virt-host:
+    virt_host:
       hosts:
         m350g6a:
           virt_image_nomount: True
@@ -111,7 +111,7 @@ all:
         dell01a:
           nfsv3_export:
             - "/data1"
-    prometheus-exporters:
+    prometheus_exporters:
       hosts:
         db01:
           prometheus_exporters_mysql: True

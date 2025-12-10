@@ -10,7 +10,7 @@ all:
         ch10.himor.in:
         ch11.himor.in:
         ch12.himor.in:
-    prometheus-exporters:
+    prometheus_exporters:
       children:
         conoha:
       hosts:
