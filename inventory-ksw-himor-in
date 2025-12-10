@@ -1,5 +1,7 @@
 ---
 all:
+  vars:
+    ansible_domain: ksw.himor.in
   hosts:
     lf00:
       site_nfs: True
@@ -8,6 +10,11 @@ all:
       site_nfs: True
     web02:
   children:
+    debian_trixie:
+      hosts:
+        web02:
+      vars:
+        ansible_distribution_release: trixie
     hw_server:
       hosts:
         m350g6a:
