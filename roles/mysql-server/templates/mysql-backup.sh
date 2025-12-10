@@ -25,7 +25,7 @@ backup_single() {
     # backup from database
     mysqldump $MYSQL_CONNOPT -r $BACKUP_DIR/$TEMP_FILE --opt $DB
 
-    # check database update
+    # check database update, create if old file does not exist
     if [ -z $LAST_FILE ]; then
         DIFF_NUM=1
     else
@@ -37,7 +37,8 @@ backup_single() {
     if [ $DIFF_NUM -ne 0 ]; then
         echo "new"
         mv $BACKUP_DIR/$TEMP_FILE $BACKUP_DIR/$BACKUP_FILE
-        if [ -z $LAST_FILE ]; then
+        # gzip old file if new backup made and old exists
+        if [ ! -z $LAST_FILE ]; then
             gzip $BACKUP_DIR/$LAST_FILE
         fi
     else

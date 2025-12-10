@@ -15,8 +15,6 @@ site_config:
     db:
       host: "mysql.ksw.himor.in"
       name: "grafana"
-  httpd:
-    sites_git: "git@github.com:/Subaru-PFS/pfs_ipmu_config.git"
   influxdb:
     storage_nfs: "10.100.200.3:/server/services/influxdb"
   ldap:

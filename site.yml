@@ -1,8 +1,8 @@
 ---
 - hosts: all
   vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-    - "group_vars/debian-packages_{{ ansible_distribution_release }}.yml"
+    - 'group_vars/site_{{ ansible_domain }}.yml'
+    - 'group_vars/debian-packages_{{ ansible_distribution_release }}.yml'
   roles:
     - iptables
 #    - localnet
@@ -17,6 +17,9 @@
       when: "server_smarthost is undefined"
     - role: rsyslog-client
       when: "server_rsyslog is undefined and rsyslog is defined"
+    - role: nfs-client
+      nfsv3_target: "{{ site_config.nfs.common }}"
+      when: "site_nfs is defined"
 
 - hosts: server
   vars_files:
@@ -50,8 +53,6 @@
     - "group_vars/debian-packages_{{ ansible_distribution_release }}.yml"
   roles:
     - ldap-client
-    - role: nfs-client
-      when: "nfsv3_target is defined"
     - role: packages
       packages: "{{ debian.packages.basic }}"
     - role: packages

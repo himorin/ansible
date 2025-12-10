@@ -1,7 +1,11 @@
 all:
   hosts:
+    lf00:
+      site_nfs: True
     lf02:
     shell04:
+      site_nfs: True
+    web02:
   children:
     hw-server:
       hosts:
@@ -52,6 +56,14 @@ all:
             mroonga: True
         web01:
           server_apache: True
+        web02:
+          server_apache: 
+            python3: True
+          apache: 
+            mod_cgi: True
+            mod_php_ver: 8.4
+            mod_php_wp: True
+            mod_dav: True
         nuc1:
         nuc2:
         lf02:
@@ -69,8 +81,6 @@ all:
     workshell:
       hosts:
         shell04:
-      vars:
-        nfsv3_target: "{{ site_config.nfs.common }}"
     works:
       hosts:
         shell01:
