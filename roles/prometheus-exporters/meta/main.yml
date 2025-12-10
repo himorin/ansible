@@ -12,7 +12,7 @@ dependencies:
       - prometheus-postgres-exporter
     when: prometheus_exporters_pgsql is defined
     vars:
-      - packages_setup_backport: True
+      packages_setup_backport: True
   - role: packages
     packages:
       - "git"
