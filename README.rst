@@ -14,7 +14,9 @@ Also refer `quick instruction of ansible <docs/instruction.rst>`_ in
 `detailed documents <docs/>`_ directory. 
 
 example: 
-`ansible-playbook -i <inventry> -k -K -l <host> site.yml`
+
+- `ansible-playbook -i <inventry> -k -K -l <host> site.yml`
+- `ansible-playbook -i inventory-ksw-himor-in -k -K -l web02 -e ansible_domain=ksw.himor.in -e ansible_distribution_release=trixie site.yml` (issue #14)
 
 List of definitions
 ******
