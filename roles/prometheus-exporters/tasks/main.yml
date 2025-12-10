@@ -19,7 +19,7 @@
   changed_when: False
   notify: restart ipmi-exporter
 - name: Include exporter tasks as ipmi_exporter
-  include: exporter.yml
+  include_tasks: exporter.yml
   vars:
     exporter:
       name: ipmi_exporter
@@ -27,7 +27,7 @@
   notify: restart ipmi-exporter
 
 - name: Include exporter tasks as snmp_exporter
-  include: exporter.yml
+  include_tasks: exporter.yml
   vars:
     exporter:
       name: snmp_exporter
@@ -112,7 +112,7 @@
   notify: restart prometheus-postgres-exporter
 
 - name: Include exporter tasks as elasticsearch_exporter
-  include: exporter.yml
+  include_tasks: exporter.yml
   vars:
     exporter:
       name: elasticsearch_exporter
@@ -124,7 +124,7 @@
   notify: restart elasticsearch-exporter
 
 - name: Include exporter tasks as hpraid_exporter
-  include: exporter.yml
+  include_tasks: exporter.yml
   vars:
     exporter:
       name: hpraid_exporter
@@ -134,7 +134,7 @@
   notify: restart hpraid-exporter
 
 - name: Include exporter tasks as prometheus_exporter_sanitizer for jira
-  include: exporter.yml
+  include_tasks: exporter.yml
   vars:
     exporter:
       name: prometheus_exporter_sanitizer
@@ -144,7 +144,7 @@
   notify: restart prometheus-exporter-sanitizer
 
 - name: Include exporter tasks as nvidia_gpu_prometheus_exporter
-  include: exporter.yml
+  include_tasks: exporter.yml
   vars:
     exporter:
       name: nvidia_gpu_prometheus_exporter
