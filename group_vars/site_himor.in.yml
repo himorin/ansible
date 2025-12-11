@@ -39,7 +39,7 @@ site_config:
   mail:
     notice_from: "root@himor.in"
     notice_name: "himor.in System"
-    smarthost: "cvps.himor.in"
+    smarthost: "smarthost.himor.in"
   mysql:
     data_directory: "/services/mysql/"
   nfs:

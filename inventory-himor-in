@@ -28,8 +28,7 @@ all:
           server_grafana: True
           server_apache: True
           apache: 
-            mod_php: True
-            mod_php_ver: 7.3
+            mod_php: 7.3
             mod_cgi: True
             mod_dav: True
           httpd:
@@ -42,8 +41,7 @@ all:
           server_apache: True
           apache: 
             mod_cgi: True
-            mod_php: True
-            mod_php_ver: 8.2
+            mod_php: 8.2
             mod_php_wp: True
             mod_dav: True
           mysql_server:
@@ -52,7 +50,7 @@ all:
           server_apache: True
           apache: 
             mod_cgi: True
-            mod_php_ver: 8.2
+            mod_php: 8.2
             mod_php_wp: True
             mod_dav: True
           mysql_server:
@@ -62,7 +60,7 @@ all:
             python3: True
           apache: 
             mod_cgi: True
-            mod_php_ver: 8.4
+            mod_php: 8.4
             mod_php_wp: True
             mod_dav: True
         ch12.himor.in:

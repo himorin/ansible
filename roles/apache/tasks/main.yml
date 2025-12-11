@@ -59,7 +59,7 @@
   apache2_module:
     name: "{{ item }}"
   with_items:
-    - "php{{ apache.mod_php_ver }}"
+    - "php{{ apache.mod_php }}"
   notify: restart apache2
   when: apache.mod_php is defined
 - name: Enable apache modules for python

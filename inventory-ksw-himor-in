@@ -69,7 +69,7 @@ all:
             python3: True
           apache: 
             mod_cgi: True
-            mod_php_ver: 8.4
+            mod_php: 8.4
             mod_php_wp: True
             mod_dav: True
         nuc1:
@@ -112,7 +112,7 @@ all:
       hosts:
         web02:
       vars:
-        nfsv3_target: "{{ site_config.nfs.common }}"
+        site_nfs: True
     dbsrv:
       hosts:
         db01:
