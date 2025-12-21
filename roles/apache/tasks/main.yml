@@ -16,7 +16,7 @@
   apache2_module:
     name: "{{ item }}"
   with_items:
-    - authnz_ldap
+    - authz_groupfile
     - expires
     - headers
     - info

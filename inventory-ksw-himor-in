@@ -72,6 +72,7 @@ all:
             mod_php: 8.4
             mod_php_wp: True
             mod_dav: True
+            mod_ldap: True
         nuc1:
         nuc2:
         lf02:
