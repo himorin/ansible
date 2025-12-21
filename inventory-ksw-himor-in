@@ -86,6 +86,15 @@ all:
               nfsv3_target:
                 - source: "nfs:/data1"
                   target: "/data1"
+        web:
+          hosts:
+            web02:
+          vars:
+            server_httpddir:
+              - source: "nfs:/data1/server/httpd"
+                target: "/server/httpd"
+              - source: "nfs:/data1/web"
+                target: "/server/web"
     workshell:
       hosts:
         shell04:
@@ -108,11 +117,6 @@ all:
       hosts:
         shell02:
         shell03:
-    server_data:
-      hosts:
-        web02:
-      vars:
-        site_nfs: True
     dbsrv:
       hosts:
         db01:

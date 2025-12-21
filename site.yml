@@ -36,6 +36,9 @@
     - { role: dnsmasq, when: "server_dnsmasq is defined" }
     - { role: prometheus, when: "server_prometheus is defined" }
     - { role: grafana, when: "server_grafana is defined" }
+    - role: nfs-client
+      nfsv3_target: "{{ server_httpddir }}"
+      when: "server_httpddir is defined and site_nfs is defined"
     - { role: apache, when: "server_apache is defined" }
     - role: packages
       packages: "{{ debian.packages.python3 }}"
