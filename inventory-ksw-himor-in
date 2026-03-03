@@ -1,7 +1,5 @@
 ---
 all:
-  vars:
-    ansible_domain: ksw.himor.in
   hosts:
     lf00:
       site_nfs: True
@@ -10,11 +8,6 @@ all:
       site_nfs: True
     web02:
   children:
-    debian_trixie:
-      hosts:
-        web02:
-      vars:
-        ansible_distribution_release: trixie
     hw_server:
       hosts:
         m350g6a:
@@ -27,7 +20,8 @@ all:
           nfs_user_region: True
         nuc2:
           nfs_user_region: True
-          ntp_confdir: ntpsec
+        nuc1:
+          nfs_user_region: True
     external:
       hosts:
         dell01a:
@@ -48,6 +42,7 @@ all:
         m350g6a:
           server_rsyslog: True
         dell01a:
+        nuc1:
         backend01:
           server_prometheus: True
           server_grafana: True
@@ -73,8 +68,6 @@ all:
             mod_php_wp: True
             mod_dav: True
             mod_ldap: True
-        nuc1:
-        nuc2:
         lf02:
           mysql_server:
             mroonga: True
@@ -104,13 +97,10 @@ all:
         shell01:
         shell02:
         shell03:
-          ntp_confdir: "ntpsec/"
         node01:
           install_nodejs: True
         lf00:
         lf01:
-        nuc1:
-          ntp_confdir: ntpsec
         bbb01:
       vars:
         nfsv3_target: "{{ site_config.nfs.common }}"
