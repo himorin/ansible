@@ -50,12 +50,23 @@
     - { role: pgsql-server, when: "pgsql_server is defined" }
     - { role: mysql-server, when: "mysql_server is defined" }
 
+# optional packages shall be included in works
+- hosts: works
+  vars_files:
+    - "group_vars/site_{{ ansible_domain }}.yml"
+  roles:
+    - ldap-client
+    - role: nfs-client
+      when: "nfsv3_target is defined"
+    - role: nodejs
+      when: "install_nodejs is defined"
+
+# all hosts runs workshell required to run works
 - hosts: workshell
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
     - "group_vars/debian-packages_{{ ansible_distribution_release }}.yml"
   roles:
-    - ldap-client
     - role: packages
       packages: "{{ debian.packages.basic }}"
     - role: packages
@@ -68,6 +79,17 @@
       packages: "{{ debian.packages.normalwork }}"
     - role: packages
       packages: "{{ debian.packages.python3 }}"
+
+- hosts: virt-host
+  vars_files:
+    - "group_vars/site_{{ ansible_domain }}.yml"
+  roles:
+    - virt-server
+- hosts: virt-client
+  vars_files:
+    - "group_vars/site_{{ ansible_domain }}.yml"
+  roles:
+    - virt-client
 
 
 
@@ -93,16 +115,6 @@
   roles:
     - prometheus-exporters
 
-- hosts: works
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  roles:
-    - ldap-client
-    - role: nodejs
-      when: "install_nodejs is defined"
-    - role: nfs-client
-      when: "nfsv3_target is defined"
-
 - hosts: samba
   vars_files:
     - "group_vars/site_{{ ansible_domain }}.yml"
@@ -124,17 +136,6 @@
     - role: ldap-client
       when: nfs_user_region is defined
 
-
-- hosts: virt-host
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  roles:
-    - virt-server
-- hosts: virt-client
-  vars_files:
-    - "group_vars/site_{{ ansible_domain }}.yml"
-  roles:
-    - virt-client
 
 - hosts: privca
   vars_files:

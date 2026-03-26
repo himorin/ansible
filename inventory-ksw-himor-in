@@ -97,6 +97,8 @@ all:
         shell01:
         shell02:
         shell03:
+        shell04:
+        dev00:
         node01:
           install_nodejs: True
         lf00:
@@ -104,10 +106,6 @@ all:
         bbb01:
       vars:
         nfsv3_target: "{{ site_config.nfs.common }}"
-    normalwork:
-      hosts:
-        shell02:
-        shell03:
     dbsrv:
       hosts:
         db01:
