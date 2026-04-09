@@ -17,6 +17,7 @@ example:
 
 - `ansible-playbook -i <inventry> -k -K -l <host> site.yml`
 - `ansible-playbook -i inventory-ksw-himor-in -k -K -l web02 -e ansible_domain=ksw.himor.in -e ansible_distribution_release=trixie site.yml` (issue #14)
+- `ansible XXX -m setup -i hosts.lst --tree /tmp/facts`
 
 List of definitions
 ******
