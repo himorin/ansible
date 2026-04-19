@@ -27,7 +27,7 @@ all:
         dell01a:
         nuc1:
         nuc2:
-    virt_host:
+    virt-host:
       hosts:
         m350g6a:
           virt_image_nomount: True
@@ -43,6 +43,7 @@ all:
           server_rsyslog: True
         dell01a:
         nuc1:
+        nuc2:
         backend01:
           server_prometheus: True
           server_grafana: True
