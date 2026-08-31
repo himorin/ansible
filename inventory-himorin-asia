@@ -1,0 +1,75 @@
+---
+all:
+  children:
+    conoha:
+      hosts:
+        ch03.himorin.asia:
+        ch04.himorin.asia:
+        ch08.himorin.asia:
+        ch09.himorin.asia:
+        ch10.himorin.asia:
+        ch11.himorin.asia:
+        ch12.himorin.asia:
+        ch13.himorin.asia:
+    prometheus_exporters:
+      children:
+        conoha:
+      hosts:
+        ch08.himorin.asia:
+          prometheus_exporters_mysql: True
+    server:
+      hosts:
+        cvps.himorin.asia:
+        altus01.himorin.asia:
+        ch03.himorin.asia:
+        ch04.himorin.asia:
+          server_l2tp: True
+        ch08.himorin.asia:
+          server_prometheus: True
+          server_grafana: True
+          server_apache: True
+          apache: 
+            mod_php: 7.3
+            mod_cgi: True
+            mod_dav: True
+          httpd:
+            site_branch: ch08-apache
+          server_l2tp: True
+          server_squid: True
+          mysql_server:
+            mroonga: True
+        ch09.himorin.asia:
+          server_apache: True
+          apache: 
+            mod_cgi: True
+            mod_php: 8.2
+            mod_php_wp: True
+            mod_dav: True
+          mysql_server:
+            mroonga: True
+        ch10.himorin.asia:
+          server_apache:
+            python3: True
+          apache: 
+            mod_cgi: True
+            mod_php: 8.4
+            mod_php_wp: True
+            mod_dav: True
+        ch11.himorin.asia:
+          server_apache: 
+            python3: True
+          apache: 
+            mod_cgi: True
+            mod_php: 8.4
+            mod_php_wp: True
+            mod_dav: True
+        ch12.himorin.asia:
+          mysql_server:
+            mroonga: True
+            backup: True
+        ch13.himorin.asia:
+          postfix:
+            mailname: smtp.himorin.asia
+#    nfssrv:
+#      hosts:
+
