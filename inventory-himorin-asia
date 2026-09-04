@@ -70,6 +70,9 @@ all:
         ch13.himorin.asia:
           postfix:
             mailname: smtp.himorin.asia
+          server_nginx: True
+          httpd:
+            site_branch: ch13-nginx
 #    nfssrv:
 #      hosts:
 

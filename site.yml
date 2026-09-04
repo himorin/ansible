@@ -43,6 +43,7 @@
     - role: packages
       packages: "{{ debian.packages.python3 }}"
       when: "server_apache is defined and server_apache.python3 is defined"
+    - { role: nginx, when: "server_nginx is defined" }
     - { role: certbot, when: "server_apache is defined or server_nginx is defined" }
     - { role: couchdb, when: "server_couchdb is defined" }
     - { role: l2tp, when: "server_l2tp is defined" }

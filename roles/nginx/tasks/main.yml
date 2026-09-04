@@ -19,7 +19,6 @@
     repo: "{{ site_config.httpd.sites_git }}"
     dest: /etc/nginx/sites-enabled/
     accept_hostkey: yes
-    key_file: "{{ site_config.git.key_file }}"
     update: yes
     force: yes
     version: "{{ httpd.site_branch }}"
@@ -29,14 +28,23 @@
     repo: https://github.com/knyar/nginx-lua-prometheus.git
     dest: /etc/nginx/metrics-lua
     accept_hostkey: yes
-    key_file: "{{ site_config.git.key_file }}"
     update: yes
     force: yes
   notify: restart nginx
-- name: Configure iptables
+- name: Configure iptables v4
   become: yes
   lineinfile:
     dest: "/etc/iptables/rules.v4"
+    line: "{{ item }}"
+    insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
+  with_items:
+    - "-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT"
+    - "-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT"
+  notify: restart iptables-persistent
+- name: Configure iptables v6
+  become: yes
+  lineinfile:
+    dest: "/etc/iptables/rules.v6"
     line: "{{ item }}"
     insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
   with_items:

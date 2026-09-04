@@ -37,8 +37,9 @@ site_config:
     - host: ch12
       addr: 192.168.91.145
   mail:
-    notice_from: "root@himor.in"
+    notice_from: "root@internal.himorin.asia"
     notice_name: "himor.in System"
+    readhost: "internal.himorin.asia"
     smarthost: "192.168.250.5"
   mysql:
     data_directory: "/services/mysql/"

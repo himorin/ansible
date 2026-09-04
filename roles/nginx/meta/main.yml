@@ -4,5 +4,6 @@ dependencies:
     packages:
       - nginx-extras
       - git
+      - gpg
   - iptables
 
