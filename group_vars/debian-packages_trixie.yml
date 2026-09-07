@@ -14,6 +14,8 @@ debian:
       - vim-scripts
       - tcsh
       - zsh
+      - git
+      - gpg
     basic:
       - at
       - bc
