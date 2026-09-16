@@ -1,0 +1,14 @@
+---
+dependencies:
+  - iptables
+  - role: packages
+    packages:
+      - dovecot-pop3d
+  - role: packages
+    package:
+      - dovecot-imapd
+    when: "dovecog.imapd is defined"
+  - role: packages
+    package:
+      - dovecot-lmtpd
+    when: "dovecot.lmtpd is defined"

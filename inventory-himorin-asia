@@ -50,6 +50,9 @@ all:
         ch10.himorin.asia:
           server_apache:
             python3: True
+          postfix: True
+          dovecot: 
+            lmtpd: True
           apache: 
             mod_cgi: True
             mod_php: 8.4

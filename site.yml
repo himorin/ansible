@@ -51,6 +51,7 @@
     - { role: pgsql-server, when: "pgsql_server is defined" }
     - { role: mysql-server, when: "mysql_server is defined" }
     - { role: postfix, when: "postfix is defined" }
+    - { role: dovecot, when: "dovecot is defined" }
 
 # optional packages shall be included in works
 - hosts: works

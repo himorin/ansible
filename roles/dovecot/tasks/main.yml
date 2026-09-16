@@ -1,12 +1,4 @@
 ---
-- name: Configure mailname
-  become: yes
-  lineinfile:
-    dest: "/etc/mailname"
-    line: "{{ postfix.mailname }}"
-    regexp: "^.*"
-  notify: restart postfix
-  when: postfix.mailname is defined
 - name: Configure iptables v4
   become: yes
   lineinfile:
@@ -14,8 +6,7 @@
     line: "{{ item }}"
     insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
   with_items:
-    - "-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT"
-    - "-A INPUT -p tcp -m tcp --dport 465 -j ACCEPT"
+    - "-A INPUT -p tcp -m tcp --dport 995 -j ACCEPT"
   notify: restart iptables-persistent
 - name: Configure iptables v6
   become: yes
@@ -24,7 +15,7 @@
     line: "{{ item }}"
     insertafter: "^# ANSIBLE_ROLE_FILTER_PLACE"
   with_items:
-    - "-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT"
-    - "-A INPUT -p tcp -m tcp --dport 465 -j ACCEPT"
+    - "-A INPUT -p tcp -m tcp --dport 995 -j ACCEPT"
   notify: restart iptables-persistent
+
 
